@@ -1,15 +1,9 @@
 package DAO;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-
 import DBcontrol.DBconnection;
-import DTO.FavoriteDTO;
+
+import java.sql.*;
+import java.time.LocalDateTime;
 
 public class FavoriteDAO {
     private PreparedStatement psmt;
