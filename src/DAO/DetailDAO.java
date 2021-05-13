@@ -1,19 +1,19 @@
 package DAO;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 
 import DBcontrol.DBconnection;
 import DTO.BeachDTO;
 import DTO.ForestLodgeDTO;
+import DTO.ReviewDTO;
 import DTO.TouristSpotDTO;
 
 public class DetailDAO {
     private PreparedStatement pstmt;
     private Connection conn;
     private ResultSet rs;
+    private Savepoint sp;
 
     //해수욕장 상세정보 가져오기
     public BeachDTO detailBeach(String beachCode) {
@@ -153,5 +153,161 @@ public class DetailDAO {
         }
         return null;
     }
+
+    // 리뷰 가져오기
+    public ArrayList<ReviewDTO> inquireReview(String selDestination){
+        ArrayList<ReviewDTO> dtos= new ArrayList<ReviewDTO>();
+        try {
+            String query = "select * from review where destination_code=?";
+
+            conn= DBconnection.getConnection();
+            pstmt = conn.prepareStatement(query);
+            pstmt.setString(1,selDestination);
+            rs = pstmt.executeQuery();
+
+            while(rs.next()){
+                int no = rs.getInt("no");
+                String user_id= rs.getString("user_id");
+                String content= rs.getString("content");
+                int scope= rs.getInt("scope");
+                Timestamp reporting_date = rs.getTimestamp("reporting_date");
+                String destination_code =rs.getString("destination_code");
+                String destination_name = rs.getString("destination_name");
+                Timestamp modify_date = rs.getTimestamp("modify_date)");
+                byte[] image = rs.getBytes("image");
+
+                ReviewDTO dto = new ReviewDTO(no, user_id, content,scope, destination_code, destination_name,modify_date, reporting_date, image);
+                dtos.add(dto);
+            }
+
+        }
+        catch (SQLException sqle) {
+            sqle.printStackTrace();
+        } finally {
+            try {
+                conn.setAutoCommit(true);
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (Exception e) {
+                throw new RuntimeException(e.getMessage());
+            }
+        }
+        return dtos;
+    }
+
+    // 리뷰 추가
+    public boolean inquireReview(ReviewDTO dto){
+        boolean check =false;
+        try {
+            String query = "insert into reviews values(?,?,?,?,?,?,?,?,?)";
+            String query2= "select sum(scope)/cnt(*) from review where destination_code =?";
+            String query3 = "update destination set scope=? where code= ?";
+
+            conn= DBconnection.getConnection();
+            conn.setAutoCommit(false);
+            sp = conn.setSavepoint("Savepoint1");
+
+            pstmt = conn.prepareStatement(query);
+            pstmt.setString(1,dto.getUser_id());
+            pstmt.setString(2,dto.getContent());
+            pstmt.setInt(3,dto.getScope());
+            pstmt.setString(4,dto.getDestination_code());
+            pstmt.setString(5,dto.getDestination_name());
+            pstmt.setTimestamp(6,dto.getModify_date());
+            pstmt.setTimestamp(7, dto.getReporting_date());
+            pstmt.setBytes(8,dto.getImage());
+            pstmt.executeUpdate();
+
+            int scope=0;
+            pstmt = conn.prepareStatement(query2);
+            pstmt.setString(1,dto.getDestination_code());
+            rs= pstmt.executeQuery();
+            while(rs.next()){
+                scope= rs.getInt(1);
+            }
+
+            pstmt = conn.prepareStatement(query3);
+            pstmt.setInt(1,scope);
+            pstmt.setString(2,dto.getDestination_code());
+            pstmt.executeUpdate();
+
+            conn.commit();
+            check =true;
+
+        }
+        catch (SQLException sqlException) {
+            try {
+                System.out.println("rollback 실행");
+                conn.rollback(sp);
+                sqlException.printStackTrace();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } finally {
+            try {
+                conn.setAutoCommit(true);
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (Exception e) {
+                throw new RuntimeException(e.getMessage());
+            }
+        }
+        return check;
+    }
+
+    // 성별 통계 가져오기
+    public String genderStatistic(String desCode){
+        int manCnt=0;
+        int womanCnt=0;
+        try {
+            String query = "select cnt(*) from review where destination_code = ? and user_id = (select id from user where gender = 'M')";
+            String query2 = "select cnt(*) from review where destination_code = ? and user_id = (select id from user where gender = 'W')";
+
+            conn= DBconnection.getConnection();
+
+            pstmt = conn.prepareStatement(query);
+            pstmt.setString(1,desCode);
+            rs = pstmt.executeQuery();
+
+            while(rs.next()){
+              manCnt = rs.getInt(1);
+            }
+
+            pstmt = conn.prepareStatement(query2);
+            pstmt.setString(1,desCode);
+            rs = pstmt.executeQuery();
+
+            while(rs.next()){
+                womanCnt = rs.getInt(1);
+            }
+
+        }
+        catch (SQLException sqle) {
+            sqle.printStackTrace();
+        } finally {
+            try {
+                conn.setAutoCommit(true);
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (Exception e) {
+                throw new RuntimeException(e.getMessage());
+            }
+        }
+        return Integer.toString(manCnt)+"/"+Integer.toString(womanCnt);
+    }
+
+
 
 }
