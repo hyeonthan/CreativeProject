@@ -24,6 +24,11 @@ public class DestinationDTO {
         this.address = address;
         this.scope = scope;
     }
+    
+    public DestinationDTO(String name, double scope) {
+        this.name = name;
+        this.scope = scope;
+    }
 
     public String getCode() {
         return code;

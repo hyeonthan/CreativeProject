@@ -12,10 +12,10 @@ public class UserDTO{
     private String city;
     private String address;
     private Timestamp creation_date;
-    private Timestamp modify_data;
+    private Timestamp modify_date;
 
     public UserDTO(String id, String password, String name, int age, String gender, String do1, String city,
-            String address, Timestamp creation_date, Timestamp modify_data) {
+            String address, Timestamp creation_date, Timestamp modify_date) {
         this.id = id;
         this.password = password;
         this.name = name;
@@ -25,7 +25,7 @@ public class UserDTO{
         this.city = city;
         this.address = address;
         this.creation_date = creation_date;
-        this.modify_data = modify_data;
+        this.modify_date = modify_date;
     }
     public String getId() {
         return id;
@@ -81,10 +81,10 @@ public class UserDTO{
     public void setCreation_date(Timestamp creation_date) {
         this.creation_date = creation_date;
     }
-    public Timestamp getModify_data() {
-        return modify_data;
+    public Timestamp getModify_date() {
+        return modify_date;
     }
-    public void setModify_data(Timestamp modify_data) {
-        this.modify_data = modify_data;
+    public void setModify_date(Timestamp modify_date) {
+        this.modify_date = modify_date;
     }
 }

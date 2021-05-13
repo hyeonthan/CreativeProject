@@ -31,7 +31,7 @@ public class UserDAO {
             pstmt.setString(8, dto.getCity());
             pstmt.setString(9,dto.getAddress());
             pstmt.setTimestamp(10,dto.getCreation_date());
-            pstmt.setTimestamp(11,dto.getModify_data());
+            pstmt.setTimestamp(11,dto.getModify_date());
 
             pstmt.executeUpdate();
             conn.commit();
