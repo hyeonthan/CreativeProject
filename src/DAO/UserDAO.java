@@ -99,7 +99,7 @@ public class UserDAO {
     boolean checkUser(String id,String pwd){
         boolean check = false;
         try {
-            String sql = "SELECT id, password FROM user WHERE id = ? AND password = ?";
+            String sql = "SELECT id, password FROM user WHERE id = ? AND password = (select CONCAT('*', UPPER(SHA1(UNHEX(SHA1((?)))))) as password) ";
             conn = DBconnection.getConnection();
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, id);
