@@ -42,8 +42,8 @@ public class InquireByLocationDAO {
                 String city = rs.getString("city");
                 String address = rs.getString("address");
                 double scope = rs.getDouble("scope");
-
-                DestinationDTO dto = new DestinationDTO(code,sortation,forest_lodge_code,beach_code,tourist_code,name,Do,city,address,scope);
+                int views = rs.getInt("views");
+                DestinationDTO dto = new DestinationDTO(code,sortation,forest_lodge_code,beach_code,tourist_code,name,Do,city,address,scope,views);
                 dtos.add(dto);
             }
         }

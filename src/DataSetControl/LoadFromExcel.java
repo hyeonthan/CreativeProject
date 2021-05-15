@@ -488,7 +488,8 @@ public class LoadFromExcel {
         String city;
         String address;
         double scope;
-        
+        int views;
+
         int cnt = 0;
         String dt = "dt";
         Iterator<BeachDTO> bIt = bList.iterator();
@@ -524,7 +525,8 @@ public class LoadFromExcel {
             city = beachDTO.getCity();
             address = beachDTO.getAddress();
             scope = 0;
-            destinationDTO = new DestinationDTO(code, sortation, forestLodge_code, beach_code, touristSpot_code, name, Do, city, address, scope);
+            views = 0;
+            destinationDTO = new DestinationDTO(code, sortation, forestLodge_code, beach_code, touristSpot_code, name, Do, city, address, scope, views);
             list.add(destinationDTO);
             System.out.println(code + " " + sortation + " " + forestLodge_code + " " + beach_code + " " + touristSpot_code + " " + name + " " + Do + " " + city + " " + address + " " + scope);
             
@@ -554,7 +556,8 @@ public class LoadFromExcel {
             city = forestLodgeDTO.getCity();
             address = forestLodgeDTO.getAddress();
             scope = 0;
-            destinationDTO = new DestinationDTO(code, sortation, forestLodge_code, beach_code, touristSpot_code, name, Do, city, address, scope);
+            views = 0;
+            destinationDTO = new DestinationDTO(code, sortation, forestLodge_code, beach_code, touristSpot_code, name, Do, city, address, scope, views);
             list.add(destinationDTO);
             System.out.println(code + " " + sortation + " " + forestLodge_code + " " + beach_code + " " + touristSpot_code + " " + name + " " + Do + " " + city + " " + address + " " + scope);
             
@@ -584,7 +587,8 @@ public class LoadFromExcel {
             city = touristSpotDTO.getCity();
             address = touristSpotDTO.getAddress();
             scope = 0;
-            destinationDTO = new DestinationDTO(code, sortation, forestLodge_code, beach_code, touristSpot_code, name, Do, city, address, scope);
+            views = 0;
+            destinationDTO = new DestinationDTO(code, sortation, forestLodge_code, beach_code, touristSpot_code, name, Do, city, address, scope, views);
             list.add(destinationDTO);
             System.out.println(code + " " + sortation + " " + forestLodge_code + " " + beach_code + " " + touristSpot_code + " " + name + " " + Do + " " + city + " " + address + " " + scope);
         }

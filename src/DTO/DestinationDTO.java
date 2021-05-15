@@ -1,5 +1,6 @@
 package DTO;
 
+
 public class DestinationDTO {
     private String code;
     private String sortation;
@@ -11,8 +12,10 @@ public class DestinationDTO {
     private String city;
     private String address;
     private double scope;
+    private int views;
 
-    public DestinationDTO(String code, String sortation, String forestLodge_code, String beach_code, String touristSpot_code, String name, String aDo, String city, String address, double scope) {
+    private int count;
+    public DestinationDTO(String code, String sortation, String forestLodge_code, String beach_code, String touristSpot_code, String name, String aDo, String city, String address, double scope, int views) {
         this.code = code;
         this.sortation = sortation;
         this.forestLodge_code = forestLodge_code;
@@ -23,13 +26,36 @@ public class DestinationDTO {
         this.city = city;
         this.address = address;
         this.scope = scope;
+        this.views = views;
     }
-    
-    public DestinationDTO(String name, double scope) {
+    public DestinationDTO(String code, String sortation, String name, String Do) {
+        this.code = code;
+        this.sortation = sortation;
+        this.name = name;
+        this.Do = Do;
+    }
+    public DestinationDTO(String code, String sortation, String name, double scope) {
+        this.code = code;
+        this.sortation = sortation;
         this.name = name;
         this.scope = scope;
     }
-
+    public DestinationDTO(String code, String sortation, String name, int count) {
+        this.code = code;
+        this.sortation = sortation;
+        this.name = name;
+        this.count = count;
+    }
+    public DestinationDTO(String code, String name, double scope) {
+        this.code = code;
+        this.name = name;
+        this.scope = scope;
+    }
+    public DestinationDTO(String code, String name, int count) {
+        this.code = code;
+        this.name = name;
+        this.count = count;
+    }
     public String getCode() {
         return code;
     }
@@ -109,4 +135,12 @@ public class DestinationDTO {
     public void setScope(double scope) {
         this.scope = scope;
     }
+    public int getViews() {
+        return views;
+    }
+    public void setViews(int views) {
+        this.views = views;
+    }
+
+    
 }

@@ -8,6 +8,7 @@ import java.sql.Savepoint;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import DBcontrol.DBconnection;
 import DTO.FavoriteDTO;
@@ -181,6 +182,8 @@ public class MyPageDAO {
             }
         }
     }
+    //  최근 조회 리스트 불러오기
+   
 
      // 내가 쓴 리뷰 가져오기
      public ArrayList<ReviewDTO> inquireMyReview(String id){
