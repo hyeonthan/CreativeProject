@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.PTController">
+   <children>
+      <ComboBox layoutX="53.0" layoutY="125.0" prefWidth="150.0" promptText="구분" />
+      <Button layoutX="220.0" layoutY="125.0" mnemonicParsing="false" text="검색" />
+      <TableView layoutX="377.0" layoutY="125.0" prefHeight="340.0" prefWidth="380.0">
+        <columns>
+          <TableColumn prefWidth="75.0" text="구분" />
+          <TableColumn prefWidth="75.0" text="이름" />
+            <TableColumn prefWidth="75.0" text="위치" />
+            <TableColumn prefWidth="75.0" text="요금" />
+        </columns>
+      </TableView>
+      <StackPane layoutX="43.0" layoutY="173.0" prefHeight="292.0" prefWidth="298.0" />
+   </children>
+</AnchorPane>
