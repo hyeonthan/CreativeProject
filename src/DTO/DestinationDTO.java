@@ -14,7 +14,9 @@ public class DestinationDTO {
     private double scope;
     private int views;
 
+    // not column
     private int count;
+    
     public DestinationDTO(String code, String sortation, String forestLodge_code, String beach_code, String touristSpot_code, String name, String aDo, String city, String address, double scope, int views) {
         this.code = code;
         this.sortation = sortation;
@@ -45,6 +47,11 @@ public class DestinationDTO {
         this.sortation = sortation;
         this.name = name;
         this.count = count;
+    }
+    public DestinationDTO(String code, String sortation, String name) {
+        this.code = code;
+        this.sortation = sortation;
+        this.name = name;
     }
     public DestinationDTO(String code, String name, double scope) {
         this.code = code;
@@ -140,6 +147,12 @@ public class DestinationDTO {
     }
     public void setViews(int views) {
         this.views = views;
+    }
+    public int getCount() {
+        return count;
+    }
+    public void setCount(int count) {
+        this.count = count;
     }
 
     
