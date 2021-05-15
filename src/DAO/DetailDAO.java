@@ -2,6 +2,7 @@ package DAO;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import DBcontrol.DBconnection;
 import DTO.BeachDTO;
@@ -269,7 +270,7 @@ public class DetailDAO {
         int womanCnt=0;
         try {
             String query = "select cnt(*) from review where destination_code = ? and user_id = (select id from user where gender = 'M')";
-            String query2 = "select cnt(*) from review where destination_code = ? and user_id = (select id from user where gender = 'W')";
+            String query2 = "select cnt(*) from review where destination_code = ? and user_id = (select id from user where gender = 'F')";
 
             conn= DBconnection.getConnection();
 
@@ -306,6 +307,44 @@ public class DetailDAO {
             }
         }
         return Integer.toString(manCnt)+"/"+Integer.toString(womanCnt);
+    }
+
+    // 지역별 통계 가져오기
+    public HashMap<String,Integer> regionStatistic(String desCode){
+        HashMap<String, Integer> hsMap = new HashMap<String, Integer>();
+        try {
+            final String[] region = {"충청북도", "충청남도", "제주특별자치도", "전라북도", "전라남도", "인천광역시", "울산광역시", "경상북도","경상남도", "경기도", "강원도", "서울특별시", "부산광역시", "대전광역시", "대구광역시"};
+            for(int i = 0; i < region.length; i++){
+                hsMap.put(region[i], 0);
+            }
+
+            String query = "select do from user WHERE id IN (select user_id from review where destination_code = ?)"
+            conn= DBconnection.getConnection();
+
+            pstmt = conn.prepareStatement(query);
+            pstmt.setString(1,desCode);
+            rs = pstmt.executeQuery();
+
+            while(rs.next()){
+                 hsMap.put(rs.getString("do"),hsMap.get(rs.getString("do"))+1);
+            }
+        }
+        catch (SQLException sqle) {
+            sqle.printStackTrace();
+        } finally {
+            try {
+                conn.setAutoCommit(true);
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (Exception e) {
+                throw new RuntimeException(e.getMessage());
+            }
+        }
+        return hsMap;
     }
 
 
