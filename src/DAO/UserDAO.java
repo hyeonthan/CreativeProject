@@ -15,23 +15,22 @@ public class UserDAO {
     public boolean insertUser(UserDTO dto){
         boolean check = false;
         try{
-            String query = "insert into User values(?,?,?,?,?,?,?,?,?,?,?)";
+            String query = "insert into User values(?,(select CONCAT('*', UPPER(SHA1(UNHEX(SHA1((?)))))) as password),?,?,?,?,?,?,?,?)";
             conn = DBconnection.getConnection();
             conn.setAutoCommit(false);
             sp = conn.setSavepoint("Savepoint1");
 
             pstmt = conn.prepareStatement(query);
             pstmt.setString(1,dto.getId());
-            pstmt.setString(2,dto.getId());
-            pstmt.setString(3,dto.getPassword());
-            pstmt.setString(4,dto.getName());
-            pstmt.setInt(5,dto.getAge());
-            pstmt.setString(6, dto.getGender());
-            pstmt.setString(7, dto.getDo());
-            pstmt.setString(8, dto.getCity());
-            pstmt.setString(9,dto.getAddress());
-            pstmt.setTimestamp(10,dto.getCreation_date());
-            pstmt.setTimestamp(11,dto.getModify_date());
+            pstmt.setString(2,dto.getPassword());
+            pstmt.setString(3,dto.getName());
+            pstmt.setInt(4,dto.getAge());
+            pstmt.setString(5, dto.getGender());
+            pstmt.setString(6, dto.getDo());
+            pstmt.setString(7, dto.getCity());
+            pstmt.setString(8,dto.getAddress());
+            pstmt.setTimestamp(9,dto.getCreation_date());
+            pstmt.setTimestamp(10,dto.getModify_date());
 
             pstmt.executeUpdate();
             conn.commit();

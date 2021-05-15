@@ -163,6 +163,7 @@ public class StatisticsDAO {
         }
         return list;
     }
+
     //  여행지별 사용자 출신지 통계
     public ArrayList<DestinationDTO> birthRegionStat(){
         //  hashMap을 사용하여 지역 구분
