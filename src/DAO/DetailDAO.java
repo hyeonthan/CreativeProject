@@ -318,7 +318,7 @@ public class DetailDAO {
                 hsMap.put(region[i], 0);
             }
 
-            String query = "select do from user WHERE id IN (select user_id from review where destination_code = ?)"
+            String query = "select do from user WHERE id IN (select user_id from review where destination_code = ?)";
             conn= DBconnection.getConnection();
 
             pstmt = conn.prepareStatement(query);
