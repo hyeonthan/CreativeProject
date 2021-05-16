@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ReviewDetail">
+   <children>
+      <ImageView fx:id="iv_reviewImage" fitHeight="150.0" fitWidth="200.0" layoutX="47.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true" />
+      <Text fx:id="t_content" layoutX="263.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="내용" wrappingWidth="128.0">
+         <font>
+            <Font size="22.0" />
+         </font></Text>
+      <Text layoutX="326.0" layoutY="196.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" / 5" />
+      <Text fx:id="t_star" layoutX="307.0" layoutY="195.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="21.474605798721313" />
+      <Text layoutX="270.0" layoutY="195.0" strokeType="OUTSIDE" strokeWidth="0.0" text="별점" />
+      <Text fx:id="t_writer" layoutX="269.0" layoutY="129.0" strokeType="OUTSIDE" strokeWidth="0.0" text="작성자 : " />
+   </children>
+</AnchorPane>
