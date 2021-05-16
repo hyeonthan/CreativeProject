@@ -1,14 +1,14 @@
-package application;
+package FxController;
 
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.ResourceBundle;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
+import DAO.UserDAO;
+import DTO.UserDTO;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -52,7 +52,7 @@ public class SignUp {
 	
 	@FXML
 	public Button btn_cancle;
-	
+
 	@FXML
 	public void selectGender(ActionEvent event) {
 		try {
@@ -312,13 +312,77 @@ public class SignUp {
 	
 	@FXML // 회원가입버튼 클릭
 	public void signUp(ActionEvent event) {
+		if(tf_id.getText().equals("")){
+			ShowAlert.showAlert("WARNING", "경고", "ID 미입력");
+			return;
+		}
+		else if(pf_password.getText().equals("")){
+			ShowAlert.showAlert("WARNING", "경고", "PASSWORD 미입력");
+			return;
+		}
+		else if(pf_passwordCheck.getText().equals("")){
+			ShowAlert.showAlert("WARNING", "경고", "PASSWORD 확인 미입력");
+			return;
+		}
+		else if(tf_name.getText().equals("")){
+			ShowAlert.showAlert("WARNING", "경고", "이름 미입력");
+			return;
+		}
+		else if(tf_age.getText().equals("")){
+			ShowAlert.showAlert("WARNING", "경고", "나이 미입력");
+			return;
+		}
+		else if(mb_gender.getText().equals("성별")){
+			ShowAlert.showAlert("WARNING", "경고", "성별 미입력");
+			return;
+		}
+		else if(mb_do.getText().equals("도")){
+			ShowAlert.showAlert("WARNING", "경고", "도 미입력");
+			return;
+		}
+		else if(mb_city.getText().equals("시/군") && !(mb_do.getText().equals("서울특별시") || mb_do.getText().equals("인천광역시") || mb_do.getText().equals("울산광역시")
+		&& mb_do.getText().equals("대전광역시") || mb_do.getText().equals("대구광역시") || mb_do.getText().equals("세종특별자치시") || mb_do.getText().equals("제주특별자치도"))){
+			ShowAlert.showAlert("WARNING", "경고", "시/군 미입력");
+			return;
+		}
 		
+		try{
+			int checkAgeValue = Integer.parseInt(tf_age.getText());
+
+		}catch(Exception e){
+			ShowAlert.showAlert("WARNING", "경고", "나이 입력 오류(정수만 입력하시오)");
+			return;
+		}
+		String id = tf_id.getText();
+		String password = pf_password.getText();
+		String name = tf_name.getText();
+		int age = Integer.parseInt(tf_age.getText());
+		String gender = mb_gender.getText();
+		String Do = mb_do.getText();
+		String city = mb_city.getText();
+		String address = tf_detailAddress.getText();
+		Timestamp creation_date = Timestamp.valueOf(LocalDateTime.now());
+		Timestamp modify_date = null;
+		UserDTO userDTO = new UserDTO(id, password, name, age, gender, Do, city, address, creation_date, modify_date);
+		UserDAO userDAO = new UserDAO();
+		//	DB insert
+		userDAO.insertUser(userDTO);
+		ShowAlert.showAlert("INFORMATION", "알림창", "회원가입 성공!");
+		try {
+			Parent root = FXMLLoader.load(Main.class.getResource("../FXML/login.fxml"));
+			Scene scene = new Scene(root);
+			Stage primaryStage = (Stage) btn_cancle.getScene().getWindow();
+			primaryStage.setScene(scene);
+			primaryStage.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@FXML // 취소버튼 클릭
 	public void cancle(ActionEvent evnet) {
 		try {
-			Parent root = FXMLLoader.load(Main.class.getResource("xml/login.fxml"));
+			Parent root = FXMLLoader.load(Main.class.getResource("../FXML/login.fxml"));
 			Scene scene = new Scene(root);
 			Stage primaryStage = (Stage) btn_cancle.getScene().getWindow();
 			primaryStage.setScene(scene);
