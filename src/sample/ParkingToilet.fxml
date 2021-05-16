@@ -3,10 +3,12 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import javafx.scene.web.WebView?>
 <AnchorPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.PTController">
    <children>
       <ComboBox fx:id="combobox" layoutX="53.0" layoutY="125.0" prefWidth="150.0" promptText="구분" />
       <Button layoutX="220.0" layoutY="125.0" mnemonicParsing="false" text="검색" />
+      <WebView fx:id="webView" layoutX="43.0" layoutY="173.0" prefHeight="292.0" prefWidth="298.0" />
       <TableView fx:id="myTableView" layoutX="377.0" layoutY="125.0" prefHeight="340.0" prefWidth="380.0">
         <columns>
           <TableColumn fx:id="sortColumn" prefWidth="75.0" text="구분" />
@@ -15,6 +17,5 @@
             <TableColumn fx:id="feeColumn" prefWidth="75.0" text="요금" />
         </columns>
       </TableView>
-      <StackPane layoutX="43.0" layoutY="173.0" prefHeight="292.0" prefWidth="298.0" />
    </children>
 </AnchorPane>

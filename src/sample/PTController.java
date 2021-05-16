@@ -9,15 +9,38 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class PTController implements Initializable {
     @FXML
     public ComboBox<String> combobox;
-
     ObservableList<String> list = FXCollections.observableArrayList("주차장", "화장실");
+
+    @FXML
+    private WebView webView;
+
+    @FXML
+    private void initialize() {
+            try {
+                webView = new WebView();
+                webView.setVisible(true);
+                WebEngine engine = webView.getEngine();
+                engine.setJavaScriptEnabled(true);
+                //File file = new File("http://localhost:8080/map.html");
+                //System.out.println(file.exists() + " file exitence");
+                //webengine.load(file.toURI().toURL().toString());
+                engine.load("http://localhost:8080/map.html");
+            } catch (Exception ex) {
+                System.err.print("error " + ex.getMessage());
+                ex.printStackTrace();
+            }
+
+    }
 
     @FXML
     private TableView<PTTable> myTableView;
