@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.web.*?>
+
+<AnchorPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ParkingToilet.PTController">
+    <children>
+        <ComboBox fx:id="combobox" layoutX="54.0" layoutY="190.0" prefWidth="150.0" promptText="구분" />
+        <Button layoutX="221.0" layoutY="190.0" mnemonicParsing="false" text="다음" />
+        <WebView fx:id="webView" layoutX="390.0" layoutY="30.0" prefHeight="372.0" prefWidth="580.0" />
+        <TableView fx:id="myTableView" layoutX="25.0" layoutY="420.0" prefHeight="170.0" prefWidth="950.0">
+            <columns>
+                <TableColumn fx:id="sortColumn" prefWidth="55.0" text="구분" />
+                <TableColumn fx:id="nameColumn" prefWidth="125.0" text="이름" />
+                <TableColumn fx:id="addressColumn" prefWidth="230.0" text="위치" />
+                <TableColumn prefWidth="60.0" text="구획수" />
+                <TableColumn prefWidth="70.0" text="운영요일" />
+                <TableColumn prefWidth="120.0" text="평일 운영시간" />
+                <TableColumn prefWidth="120.0" text="토요일 운영시간" />
+                <TableColumn prefWidth="120.0" text="일요일/공휴일 운영시간" />
+                <TableColumn fx:id="feeColumn" prefWidth="49.0" text="요금" />
+            </columns>
+        </TableView>
+      <Text layoutX="47.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="주차장/화장실 찾기" wrappingWidth="211.998046875">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+    </children>
+</AnchorPane>
