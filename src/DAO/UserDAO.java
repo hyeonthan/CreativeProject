@@ -15,11 +15,10 @@ public class UserDAO {
     public boolean insertUser(UserDTO dto){
         boolean check = false;
         try{
-            String query = "insert into User values(?,(select CONCAT('*', UPPER(SHA1(UNHEX(SHA1((?)))))) as password),?,?,?,?,?,?,?,?)";
+            String query = "insert into User(id, password, name, age, gender, do, city, address, creation_date, modify_date) values(?,(select CONCAT('*', UPPER(SHA1(UNHEX(SHA1((?)))))) as password),?,?,?,?,?,?,?,?)";
             conn = DBconnection.getConnection();
             conn.setAutoCommit(false);
             sp = conn.setSavepoint("Savepoint1");
-
             pstmt = conn.prepareStatement(query);
             pstmt.setString(1,dto.getId());
             pstmt.setString(2,dto.getPassword());

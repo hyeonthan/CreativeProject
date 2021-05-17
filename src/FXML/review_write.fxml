@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ReviewWrite">
+   <children>
+      <ImageView fx:id="iv_uploadedImg" fitHeight="150.0" fitWidth="200.0" layoutX="37.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true" />
+      <Button fx:id="btn_imgUpload" layoutX="38.0" layoutY="214.0" mnemonicParsing="false" onAction="#upload" text="이미지 업로드" />
+      <Text layoutX="247.0" layoutY="196.0" strokeType="OUTSIDE" strokeWidth="0.0" text="별점" />
+      <RadioButton fx:id="rbtn_1" layoutX="283.0" layoutY="181.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="15.0" text="1">
+         <toggleGroup>
+            <ToggleGroup fx:id="star" />
+         </toggleGroup>
+      </RadioButton>
+      <RadioButton fx:id="rbtn_2" layoutX="326.0" layoutY="180.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="15.0" text="2" toggleGroup="$star" />
+      <RadioButton fx:id="rbtn_3" layoutX="368.0" layoutY="180.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="15.0" text="3" toggleGroup="$star" />
+      <RadioButton fx:id="rbtn_4" layoutX="414.0" layoutY="180.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="15.0" text="4" toggleGroup="$star" />
+      <RadioButton fx:id="rbtn_5" layoutX="457.0" layoutY="180.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="15.0" text="5" toggleGroup="$star" />
+      <Button fx:id="btn_register" layoutX="394.0" layoutY="214.0" mnemonicParsing="false" onAction="#register" text="등록" />
+      <Button layoutX="443.0" layoutY="214.0" mnemonicParsing="false" text="취소" />
+      <Text layoutX="40.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="광안리 해수욕장" />
+      <TextArea fx:id="ta_content" layoutX="247.0" layoutY="32.0" prefHeight="142.0" prefWidth="250.0" promptText="내용" />
+   </children>
+</AnchorPane>

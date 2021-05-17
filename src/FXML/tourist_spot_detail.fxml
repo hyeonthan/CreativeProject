@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="849.0" prefWidth="1093.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.TouristSpotDetail">
+   <children>
+      <TableView fx:id="tv_favorite" layoutX="98.0" layoutY="397.0" prefHeight="268.0" prefWidth="263.0">
+        <columns>
+          <TableColumn fx:id="tc_favoriteType" prefWidth="83.0" text="구분" />
+          <TableColumn fx:id="tc_favoriteName" prefWidth="179.0" text="이름" />
+        </columns>
+      </TableView>
+      <TableView fx:id="tv_recent" layoutX="371.0" layoutY="397.0" prefHeight="268.0" prefWidth="263.0">
+         <columns>
+            <TableColumn fx:id="tc_recentType" prefWidth="83.0" text="구분" />
+            <TableColumn fx:id="tc_recentName" prefWidth="179.0" text="이름" />
+         </columns>
+      </TableView>
+      <TableView fx:id="tv_review" layoutX="647.0" layoutY="397.0" prefHeight="362.0" prefWidth="388.0">
+         <columns>
+            <TableColumn fx:id="tc_reviewDate" prefWidth="90.0" text="작성날짜" />
+            <TableColumn fx:id="tc_reviewName" prefWidth="77.0" text="이름" />
+            <TableColumn fx:id="tc_reviewContent" prefWidth="220.0" text="리뷰내용" />
+         </columns>
+      </TableView>
+      <Text fx:id="t_id" layoutX="98.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ID : " />
+      <Text fx:id="t_name" layoutX="97.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" text="이름 : " />
+      <Text fx:id="t_age" layoutX="97.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" text="나이 : " />
+      <Text fx:id="t_gender" layoutX="97.0" layoutY="125.0" strokeType="OUTSIDE" strokeWidth="0.0" text="성별 : " />
+      <Text fx:id="t_address" layoutX="98.0" layoutY="146.0" strokeType="OUTSIDE" strokeWidth="0.0" text="주소 : " />
+      <Button fx:id="btn_deleteFavorite" layoutX="321.0" layoutY="674.0" mnemonicParsing="false" onAction="#deleteFavorite" text="삭제" />
+      <Button fx:id="btn_deleteReview" layoutX="995.0" layoutY="768.0" mnemonicParsing="false" onAction="#deleteReview" text="삭제" />
+   </children>
+</AnchorPane>

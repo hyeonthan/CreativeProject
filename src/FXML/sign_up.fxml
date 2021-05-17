@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FxController.SignUp">
+   <children>
+      <Text layoutX="222.0" layoutY="110.0" strokeType="OUTSIDE" strokeWidth="0.0" text="회원가입">
+         <font>
+            <Font size="39.0" />
+         </font>
+      </Text>
+      <TextField fx:id="tf_id" layoutX="133.0" layoutY="143.0" prefHeight="28.0" prefWidth="132.0" promptText="아이디" />
+      <PasswordField fx:id="pf_password" layoutX="133.0" layoutY="181.0" prefHeight="23.0" prefWidth="132.0" promptText="비밀번호" />
+      <PasswordField fx:id="pf_passwordCheck" layoutX="130.0" layoutY="214.0" prefHeight="23.0" prefWidth="132.0" promptText="비밀번호 확인" />
+      <TextField fx:id="tf_name" layoutX="130.0" layoutY="246.0" prefHeight="28.0" prefWidth="132.0" promptText="이름" />
+      <TextField fx:id="tf_age" layoutX="347.0" layoutY="143.0" prefHeight="28.0" prefWidth="132.0" promptText="나이" />
+      <TextField fx:id="tf_detailAddress" layoutX="347.0" layoutY="274.0" prefHeight="28.0" prefWidth="132.0" promptText="상세주소" />
+      <MenuButton fx:id="mb_gender" layoutX="347.0" layoutY="181.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="132.0" text="성별">
+        <items>
+          <MenuItem mnemonicParsing="false" onAction="#selectGender" text="M" />
+          <MenuItem mnemonicParsing="false" onAction="#selectGender" text="F" />
+        </items>
+      </MenuButton>
+      <MenuButton fx:id="mb_do" layoutX="347.0" layoutY="214.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="132.0" text="도">
+         <items>
+            <MenuItem fx:id="mi_seoul" mnemonicParsing="false" onAction="#seoul" text="서울특별시" />
+            <MenuItem fx:id="mi_gyeonggi" mnemonicParsing="false" onAction="#gyeonggi" text="경기도" />
+            <MenuItem fx:id="mi_incheon" mnemonicParsing="false" onAction="#incheon" text="인천광역시" />
+            <MenuItem fx:id="mi_daejeon" mnemonicParsing="false" onAction="#daejeon" text="대전광역시" />
+            <MenuItem fx:id="mi_daegu" mnemonicParsing="false" onAction="#daegu" text="대구광역시" />
+            <MenuItem fx:id="mi_busan" mnemonicParsing="false" onAction="#busan" text="부산광역시" />
+            <MenuItem fx:id="mi_ulsan" mnemonicParsing="false" onAction="#ulsan" text="울산광역시" />
+            <MenuItem fx:id="mi_gwangju" mnemonicParsing="false" onAction="#gwangju" text="광주광역시" />
+            <MenuItem fx:id="mi_gangwon" mnemonicParsing="false" onAction="#gangwon" text="강원도" />
+            <MenuItem fx:id="mi_sejong" mnemonicParsing="false" onAction="#sejong" text="세종특별자치시" />
+            <MenuItem fx:id="mi_chungbuk" mnemonicParsing="false" onAction="#chungbuk" text="충청북도" />
+            <MenuItem fx:id="mi_chungnam" mnemonicParsing="false" onAction="#chungnam" text="충청남도" />
+            <MenuItem fx:id="mi_gyeongbuk" mnemonicParsing="false" onAction="#gyeongbuk" text="경상북도" />
+            <MenuItem fx:id="mi_gyeongnam" mnemonicParsing="false" onAction="#gyeongnam" text="경상남도" />
+            <MenuItem fx:id="mi_jeonbuk" mnemonicParsing="false" onAction="#jeonbuk" text="전라북도" />
+            <MenuItem fx:id="mi_jeonnam" mnemonicParsing="false" onAction="#jeonnam" text="전라남도" />
+            <MenuItem fx:id="mi_jeju" mnemonicParsing="false" onAction="#jeju" text="제주특별자치도" />
+         </items>
+      </MenuButton>
+      <MenuButton fx:id="mb_city" layoutX="347.0" layoutY="246.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="132.0" text="시/군" />
+      <Button fx:id="btn_signUp" layoutX="234.0" layoutY="319.0" mnemonicParsing="false" onAction="#signUp" text="가입" />
+      <Button fx:id="btn_cancle" layoutX="347.0" layoutY="319.0" mnemonicParsing="false" onAction="#cancle" text="취소" />
+   </children>
+</AnchorPane>
