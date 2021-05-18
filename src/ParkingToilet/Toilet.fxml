@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.web.*?>
+
+<AnchorPane prefHeight="570.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.201" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ParkingToilet.TController">
+    <WebView fx:id="webView" layoutX="25.0" prefHeight="372.0" prefWidth="950.0" />
+    <TableView fx:id="myTableView" layoutX="25.0" layoutY="380.0" prefHeight="170.0" prefWidth="950.0">
+        <columns>
+            <TableColumn fx:id="sortColumn" prefWidth="55.0" text="구분" />
+            <TableColumn fx:id="nameColumn" prefWidth="125.0" text="이름" />
+            <TableColumn fx:id="addressColumn" prefWidth="268.0" text="위치" />
+            <TableColumn fx:id="PublicColumn" prefWidth="66.0" text="남녀공용" />
+            <TableColumn fx:id="opening_timeColumn" prefWidth="110.0" text="개방시간" />
+            <TableColumn fx:id="managementAgencyColumn" prefWidth="170.0" text="관리기관명" />
+        </columns>
+    </TableView>
+</AnchorPane>
