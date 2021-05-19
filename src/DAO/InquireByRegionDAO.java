@@ -28,7 +28,7 @@ public class InquireByRegionDAO {
                 String sortation = rs.getString("sortation");
                 String forest_lodge_code = rs.getString("forest_lodge_code");
                 String beach_code = rs.getString("beach_code");
-                String tourist_code = rs.getString("tourist_code");
+                String tourist_code = rs.getString("tourist_spot_code");
                 String name = rs.getString("name");
                 String address = rs.getString("address");
                 double scope = rs.getDouble("scope");
