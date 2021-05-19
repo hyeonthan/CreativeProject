@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<GridPane fx:controller="FxController.DestinationController" alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <columnConstraints>
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+   </rowConstraints>
+   <children>
+      <Pane prefHeight="584.0" prefWidth="1068.0">
+         <children>
+            <ComboBox fx:id="comboBoxClassification" layoutX="30.0" layoutY="105.0" prefWidth="150.0" promptText="구분" />
+            <ComboBox fx:id="comboBoxDo" layoutX="200.0" layoutY="105.0" prefWidth="150.0" promptText="도" />
+            <ComboBox fx:id="comboBoxCity" layoutX="367.0" layoutY="105.0" prefWidth="150.0" promptText="시/군" />
+            <Button layoutX="537.0" layoutY="105.0" mnemonicParsing="false" text="검색" onAction="#handleBtnSearch"/>
+            <TableView fx:id="myTableView" layoutX="25.0" layoutY="152.0" prefHeight="418.0" prefWidth="1024.0">
+                <columns>
+                <TableColumn fx:id="sortColumn" prefWidth="75.0" text="구분" />
+                <TableColumn fx:id="nameColumn" prefWidth="261.0" text="이름" />
+                  <TableColumn fx:id="addressColumn" prefWidth="599.0" text="주소" />
+                  <TableColumn fx:id="gradeColumn" prefWidth="88.0" text="별점" />
+              </columns>
+            </TableView>
+            <Text layoutX="25.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="여행지 검색">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Text>
+         </children>
+      </Pane>
+   </children>
+</GridPane>
