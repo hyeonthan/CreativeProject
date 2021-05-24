@@ -81,7 +81,7 @@ public class Main extends Application {
 	@Override // 로그인 화면 출력
 	public void start(Stage primaryStage) {
 		try {
-			Parent root = FXMLLoader.load(Main.class.getResource("../FXML/login.fxml"));
+			Parent root = FXMLLoader.load(Main.class.getResource("../FXML/Destination.fxml"));
 			Scene scene = new Scene(root);
 			primaryStage.setScene(scene);
 			primaryStage.show();

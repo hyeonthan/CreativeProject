@@ -22,10 +22,10 @@
       <Pane prefHeight="584.0" prefWidth="1068.0">
          <children>
             <ComboBox fx:id="comboBoxClassification" layoutX="30.0" layoutY="105.0" prefWidth="150.0" promptText="구분" />
-            <ComboBox fx:id="comboBoxDo" layoutX="200.0" layoutY="105.0" prefWidth="150.0" promptText="도" />
+            <ComboBox fx:id="comboBoxDo" layoutX="200.0" layoutY="105.0" prefWidth="150.0" promptText="도" onAction="#handleCbBoxDo"/>
             <ComboBox fx:id="comboBoxCity" layoutX="367.0" layoutY="105.0" prefWidth="150.0" promptText="시/군" />
             <Button layoutX="537.0" layoutY="105.0" mnemonicParsing="false" text="검색" onAction="#handleBtnSearch"/>
-            <TableView fx:id="myTableView" layoutX="25.0" layoutY="152.0" prefHeight="418.0" prefWidth="1024.0">
+            <TableView fx:id="myTableView" layoutX="25.0" layoutY="152.0" prefHeight="418.0" prefWidth="1024.0" onMouseClicked="#doubleClickMouse"> 
                 <columns>
                 <TableColumn fx:id="sortColumn" prefWidth="75.0" text="구분" />
                 <TableColumn fx:id="nameColumn" prefWidth="261.0" text="이름" />
