@@ -364,14 +364,29 @@ public class DetailDAO {
             rs = pstmt.executeQuery();
 
             while(rs.next()){
-                if(rs.getInt("age")<20){
-                    hsMap.put(10,hsMap.get(10)+1);
-                }
-                else if(rs.getInt("age")>60){
-                    hsMap.put(60,hsMap.get(60)+1);
-                }
-                else {
-                    hsMap.put(rs.getInt("age"), hsMap.get(rs.getInt("age")) + 1);
+                switch (rs.getInt("age")/10){
+                    case 0 :
+                    case 1 :
+                        hsMap.put(10,hsMap.get(10)+1);
+                        break;
+                    case 2 :
+                        hsMap.put(20,hsMap.get(20)+1);
+                        break;
+                    case 3 :
+                        hsMap.put(30,hsMap.get(30)+1);
+                        break;
+                    case 4 :
+                        hsMap.put(40,hsMap.get(40)+1);
+                        break;
+                    case 5 :
+                        hsMap.put(50,hsMap.get(50)+1);
+                        break;
+                    case 6 :
+                    case 7:
+                    case 8:
+                    case 9:
+                        hsMap.put(60,hsMap.get(60)+1);
+                        break;
                 }
             }
         }
