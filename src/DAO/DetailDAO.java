@@ -347,6 +347,50 @@ public class DetailDAO {
         return hsMap;
     }
 
+    // 나이별 통계 가져오기
+    public HashMap<Integer,Integer> ageStatistic(String desCode){
+        HashMap<Integer, Integer> hsMap = new HashMap<Integer, Integer>();
+        try {
+            final int[] age = {10,20, 30, 40, 50, 60};
+            for(int i = 0; i < age.length; i++){
+                hsMap.put(age[i], 0);
+            }
 
+            String query = "select age from user WHERE id IN (select user_id from review where destination_code = ?)";
+            conn= DBconnection.getConnection();
+
+            pstmt = conn.prepareStatement(query);
+            pstmt.setString(1,desCode);
+            rs = pstmt.executeQuery();
+
+            while(rs.next()){
+                if(rs.getInt("age")<20){
+                    hsMap.put(10,hsMap.get(10)+1);
+                }
+                else if(rs.getInt("age")>60){
+                    hsMap.put(60,hsMap.get(60)+1);
+                }
+                else {
+                    hsMap.put(rs.getInt("age"), hsMap.get(rs.getInt("age")) + 1);
+                }
+            }
+        }
+        catch (SQLException sqle) {
+            sqle.printStackTrace();
+        } finally {
+            try {
+                conn.setAutoCommit(true);
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (Exception e) {
+                throw new RuntimeException(e.getMessage());
+            }
+        }
+        return hsMap;
+    }
 
 }
