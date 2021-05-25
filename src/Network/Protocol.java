@@ -1,4 +1,4 @@
-package protocol;
+package Network;
 
 public class Protocol {
     // 프로토콜 타입
