@@ -36,14 +36,14 @@ public class InquireByLocationDAO {
                 String sortation = rs.getString("sortation");
                 String forest_lodge_code = rs.getString("forest_lodge_code");
                 String beach_code = rs.getString("beach_code");
-                String tourist_code = rs.getString("tourist_code");
+                String tourist_spot_code = rs.getString("tourist_spot_code");
                 String name = rs.getString("name");
                 String Do = rs.getString("do");
                 String city = rs.getString("city");
                 String address = rs.getString("address");
                 double scope = rs.getDouble("scope");
                 int views = rs.getInt("views");
-                DestinationDTO dto = new DestinationDTO(code,sortation,forest_lodge_code,beach_code,tourist_code,name,Do,city,address,scope,views);
+                DestinationDTO dto = new DestinationDTO(code,sortation,forest_lodge_code,beach_code,tourist_spot_code,name,Do,city,address,scope,views);
                 dtos.add(dto);
             }
         }

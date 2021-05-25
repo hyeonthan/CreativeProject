@@ -347,6 +347,65 @@ public class DetailDAO {
         return hsMap;
     }
 
+    // 나이별 통계 가져오기
+    public HashMap<Integer,Integer> ageStatistic(String desCode){
+        HashMap<Integer, Integer> hsMap = new HashMap<Integer, Integer>();
+        try {
+            final int[] age = {10,20, 30, 40, 50, 60};
+            for(int i = 0; i < age.length; i++){
+                hsMap.put(age[i], 0);
+            }
 
+            String query = "select age from user WHERE id IN (select user_id from review where destination_code = ?)";
+            conn= DBconnection.getConnection();
+
+            pstmt = conn.prepareStatement(query);
+            pstmt.setString(1,desCode);
+            rs = pstmt.executeQuery();
+
+            while(rs.next()){
+                switch (rs.getInt("age")/10){
+                    case 0 :
+                    case 1 :
+                        hsMap.put(10,hsMap.get(10)+1);
+                        break;
+                    case 2 :
+                        hsMap.put(20,hsMap.get(20)+1);
+                        break;
+                    case 3 :
+                        hsMap.put(30,hsMap.get(30)+1);
+                        break;
+                    case 4 :
+                        hsMap.put(40,hsMap.get(40)+1);
+                        break;
+                    case 5 :
+                        hsMap.put(50,hsMap.get(50)+1);
+                        break;
+                    case 6 :
+                    case 7:
+                    case 8:
+                    case 9:
+                        hsMap.put(60,hsMap.get(60)+1);
+                        break;
+                }
+            }
+        }
+        catch (SQLException sqle) {
+            sqle.printStackTrace();
+        } finally {
+            try {
+                conn.setAutoCommit(true);
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (Exception e) {
+                throw new RuntimeException(e.getMessage());
+            }
+        }
+        return hsMap;
+    }
 
 }
