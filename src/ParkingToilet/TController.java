@@ -40,7 +40,7 @@ public class TController implements Initializable {
 
     public void initialize(URL location, ResourceBundle resources) {
         engine = webView.getEngine();
-        setData();
+        getLatLng();
         engine.load("http://localhost:8080/map.html");
         sortColumn.setCellValueFactory(cellData -> cellData.getValue().sort());
         nameColumn.setCellValueFactory(cellData -> cellData.getValue().name());
@@ -51,7 +51,7 @@ public class TController implements Initializable {
         myTableView.setItems(myList);
     }
 
-    public void setData() { //위경도 값 가져오기
+    public void getLatLng() { //위경도 값 가져오기
         engine.setOnAlert(event ->
         {
             String lat = event.getData().split(" ")[0];
