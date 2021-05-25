@@ -6,11 +6,15 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -19,6 +23,7 @@ public class PController implements Initializable {
 
     @FXML
     private WebView webView;
+    private WebEngine engine;
     @FXML
     private TableView<ParkingTable> myTableView;
     @FXML
@@ -46,7 +51,8 @@ public class PController implements Initializable {
     );
 
     public void initialize(URL location, ResourceBundle resources) {
-        WebEngine engine = webView.getEngine();
+        engine = webView.getEngine();
+        setData();
         engine.load("http://localhost:8080/map.html");
         sortColumn.setCellValueFactory(cellData -> cellData.getValue().sortProperty());
         nameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
@@ -58,5 +64,19 @@ public class PController implements Initializable {
         holiday_opening_timeColumn.setCellValueFactory(cellData -> cellData.getValue().holiday_opening_timeProperty());
         feeColumn.setCellValueFactory(cellData -> cellData.getValue().feeProperty().asObject());
         myTableView.setItems(myList);
+    }
+
+    public void setData() { //위경도 값 가져오기
+        engine.setOnAlert (event ->
+        {
+            String lat = event.getData().split(" ")[0];
+            String lng = event.getData().split(" ")[1];
+            try {
+                System.out.println(lat);
+                System.out.println(lng);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
     }
 }

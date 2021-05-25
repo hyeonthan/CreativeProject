@@ -17,6 +17,7 @@ public class TController implements Initializable {
 
     @FXML
     private WebView webView;
+    private WebEngine engine;
     @FXML
     private TableView<ToiletTable> myTableView;
     @FXML
@@ -38,7 +39,8 @@ public class TController implements Initializable {
     );
 
     public void initialize(URL location, ResourceBundle resources) {
-        WebEngine engine = webView.getEngine();
+        engine = webView.getEngine();
+        setData();
         engine.load("http://localhost:8080/map.html");
         sortColumn.setCellValueFactory(cellData -> cellData.getValue().sort());
         nameColumn.setCellValueFactory(cellData -> cellData.getValue().name());
@@ -47,5 +49,19 @@ public class TController implements Initializable {
         opening_timeColumn.setCellValueFactory(cellData -> cellData.getValue().opening_time());
         managementAgencyColumn.setCellValueFactory(cellData -> cellData.getValue().managementAgency());
         myTableView.setItems(myList);
+    }
+
+    public void setData() { //위경도 값 가져오기
+        engine.setOnAlert(event ->
+        {
+            String lat = event.getData().split(" ")[0];
+            String lng = event.getData().split(" ")[1];
+            try {
+                System.out.println(lat);
+                System.out.println(lng);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
     }
 }
