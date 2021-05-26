@@ -36,6 +36,7 @@ public class Protocol {
     public static final String REQ_DESTINATION_LOCATION = "6-7";    //주변 여행지 조회 요청
     public static final String REQ_STATISTICS = "6-8";              //통계정보 조회 요청
     public static final String REQ_MYPAGE = "6-9";                  //마이페이지 조회 요청
+    public static final String REQ_ID_DUPLICATION = "6-A";          //아이디 중복 확인 요청
 
     //조회 요청에 대한 응답
     public static final String RES_DESTINATION_REGION_Y = "7-0";      //여행지 조회 요청 승인
@@ -58,6 +59,9 @@ public class Protocol {
     public static final String RES_STATISTICS_N = "7-11";             //통계정보 조회 요청 거절
     public static final String RES_MYPAGE_Y = "7-12";                 //마이페이지 조회 요청 승인
     public static final String RES_MYPAGE_N = "7-13";                 //마이페이지 조회 요청 거절
+    public static final String RES_ID_DUPLICATION_Y = "6-A";          //아이디 중복 확인 요청 승인
+    public static final String REQ_ID_DUPLICATION_N = "6-A";          //아이디 중복 확인 요청 거절
+
 
     // 갱신 요청
     public static final String REQ_SINGUP = "8-0";                  //회원가입 요청
