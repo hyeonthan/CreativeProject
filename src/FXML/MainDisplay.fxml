@@ -20,7 +20,7 @@
             </Text>
             <Button fx:id="btnDestinationSearch" layoutX="14.0" layoutY="46.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="106.0" text="여행지 검색" onAction="#handleBtnDestinationSearch"/>
             <Button fx:id="btnAroundSearch" layoutX="144.0" layoutY="46.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="106.0" text="주변 검색" onAction="#handleBtnAroundSearch"/>
-            <Button layoutX="271.0" layoutY="46.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="106.0" text="주차장/화장실" />
+            <Button layoutX="271.0" layoutY="46.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="106.0" text="주차장/화장실" onAction="#handleBtnParkingToiletSearch"/>
             <Button layoutX="399.0" layoutY="46.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="106.0" text="통계" />
             <Button layoutX="998.0" layoutY="46.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="106.0" text="로그아웃" />
             <Button layoutX="885.0" layoutY="46.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="106.0" text="마이페이지" />

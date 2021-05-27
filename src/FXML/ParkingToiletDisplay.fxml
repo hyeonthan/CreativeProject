@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane fx:id="bp" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.201" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FxController.ParkingToiletDisplayController">
+    <top>
+        <ToolBar>
+            <Text text="주차장 / 화장실 찾기" wrappingWidth="220">
+                <font>
+                    <Font size="15.0" />
+                </font>
+            </Text>
+            <Button fx:id="btnP" layoutX="221.0" layoutY="190.0" mnemonicParsing="false" text="주차장" />
+            <Button fx:id="btnT" layoutX="221.0" layoutY="190.0" mnemonicParsing="false" text="화장실" />
+        </ToolBar>
+    </top>
+   <center>
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="주차장 및 화장실을 선택해주세요." BorderPane.alignment="CENTER">
+          <font>
+              <Font size="20.0" />
+          </font>
+      </Text>
+   </center>
+</BorderPane>
