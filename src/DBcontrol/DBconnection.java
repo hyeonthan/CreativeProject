@@ -7,7 +7,7 @@ public class DBconnection {
     public static Connection getConnection() {
         String url = "jdbc:mysql://localhost:3306/teamproject1";
         String user = "root";
-        String pass = "tn030498";
+        String pass = "saera1203!";
 
         Connection conn = null;
 
