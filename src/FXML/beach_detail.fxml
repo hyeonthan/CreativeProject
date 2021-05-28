@@ -29,7 +29,7 @@
       <Text fx:id="t_introduction" layoutX="75.0" layoutY="147.0" strokeType="OUTSIDE" strokeWidth="0.0" text="소개 : " />
       <Text fx:id="t_availableTime" layoutX="75.0" layoutY="212.0" strokeType="OUTSIDE" strokeWidth="0.0" text="수영가능시간 : " />
       <TextArea fx:id="ta_reviewContent" layoutX="769.0" layoutY="535.0" prefHeight="275.0" prefWidth="314.0" />
-      <ComboBox fx:id="cb_star" layoutX="935.0" layoutY="497.0" onAction="#starSelect" prefHeight="23.0" prefWidth="68.0" promptText="별점" />
+      <ComboBox fx:id="cb_star" layoutX="935.0" layoutY="497.0" prefHeight="23.0" prefWidth="68.0" promptText="별점" />
       <Text layoutX="778.0" layoutY="513.0" strokeType="OUTSIDE" strokeWidth="0.0" text="리뷰 작성" />
       <Button fx:id="btn_registerImg" layoutX="874.0" layoutY="497.0" mnemonicParsing="false" onAction="#registerImg" text="이미지" />
    </children>

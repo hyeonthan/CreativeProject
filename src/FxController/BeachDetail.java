@@ -1,5 +1,9 @@
 package FxController;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -13,7 +17,10 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 
 public class BeachDetail implements Initializable {
 	
@@ -70,12 +77,23 @@ public class BeachDetail implements Initializable {
 
 	@FXML
 	public void registerImg (ActionEvent event) {
-		
-	}
-	
-	@FXML
-	public void starSelect (ActionEvent event) {
-		
+        // 사진 선택 창
+        FileChooser fc = new FileChooser();
+        fc.setTitle("이미지 선택");
+        fc.setInitialDirectory(new File("C:")); // default 디렉토리 설정
+        // 확장자 제한
+        ExtensionFilter imgType = new ExtensionFilter("image file", "*.jpg", "*.gif", "*.png");
+        fc.getExtensionFilters().add(imgType);
+         
+        File selectedFile =  fc.showOpenDialog(null); // showOpenDialog는 창을 띄우는데 어느 위치에 띄울건지 인자를 받고 선택한 파일의 경로값을 반환한다.
+        //System.out.println(selectedFile);               // 선택한 경로가 출력된다.
+        try {
+            FileInputStream fis = new FileInputStream(selectedFile);
+            BufferedInputStream bis = new BufferedInputStream(fis);
+            Image img = new Image(bis);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
 	}
 	
 	@FXML
