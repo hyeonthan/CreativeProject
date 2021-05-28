@@ -7,6 +7,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.sql.SQLException;
 
+
 public class ServerSystem {
 	private static final int SERVER_PORT = 5000;
 	
@@ -23,19 +24,19 @@ public class ServerSystem {
 	// 메인문과 같은 원리 대부분의 시스템 동작흐름
 	public void start()
 	{
-		ServerSocket sSocket;
+		ServerSocket serverSocket;
 		Socket socket;
 		
 		try
 		{
-			sSocket = new ServerSocket();
+			serverSocket = new ServerSocket();
 			String localHostAddress = InetAddress.getLocalHost().getHostAddress();
-			sSocket.bind(new InetSocketAddress(localHostAddress, SERVER_PORT));
+			serverSocket.bind(new InetSocketAddress(localHostAddress, SERVER_PORT));
 			System.out.println("[server] binding! \n[server] address:" + localHostAddress + ", port:" + SERVER_PORT);
 			System.out.println("클라이언트 접속 대기중...");
 			while (true)
 			{
-				socket = sSocket.accept();
+				socket = serverSocket.accept();
 				System.out.println("[" + socket.getInetAddress() + ":" + socket.getPort() + "]" + "에서 접속 하였습니다.");
 				Server serverThread = new Server(socket);
 				serverThread.start();

@@ -41,7 +41,7 @@ public class BeachDetail implements Initializable {
 	public Button btn_favorite;
 	
 	@FXML
-	public Button btn_resistReview;
+	public Button btn_registerReview;
 	
 	@FXML
 	public TableView<Review> tv_review;
