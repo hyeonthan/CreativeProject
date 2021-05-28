@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="849.0" prefWidth="1104.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FxController.ForestLodgeDetail">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="849.0" prefWidth="1104.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FxController.BeachDetail">
    <children>
       <Text fx:id="t_name" layoutX="75.0" layoutY="76.0" strokeType="OUTSIDE" strokeWidth="0.0" text="해수욕장명 : " />
       <Text fx:id="t_address" layoutX="75.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="주소 : " />
@@ -28,9 +28,9 @@
       <Text fx:id="t_homePage" layoutX="75.0" layoutY="236.0" strokeType="OUTSIDE" strokeWidth="0.0" text="홈페이지 : " />
       <Text fx:id="t_introduction" layoutX="75.0" layoutY="147.0" strokeType="OUTSIDE" strokeWidth="0.0" text="소개 : " />
       <Text fx:id="t_availableTime" layoutX="75.0" layoutY="212.0" strokeType="OUTSIDE" strokeWidth="0.0" text="수영가능시간 : " />
-      <TextArea layoutX="769.0" layoutY="535.0" prefHeight="275.0" prefWidth="314.0" />
-      <ComboBox layoutX="935.0" layoutY="497.0" prefHeight="23.0" prefWidth="68.0" promptText="별점" />
+      <TextArea fx:id="ta_reviewContent" layoutX="769.0" layoutY="535.0" prefHeight="275.0" prefWidth="314.0" />
+      <ComboBox fx:id="cb_star" layoutX="935.0" layoutY="497.0" onAction="#starSelect" prefHeight="23.0" prefWidth="68.0" promptText="별점" />
       <Text layoutX="778.0" layoutY="513.0" strokeType="OUTSIDE" strokeWidth="0.0" text="리뷰 작성" />
-      <Button layoutX="874.0" layoutY="497.0" mnemonicParsing="false" text="이미지" />
+      <Button fx:id="btn_registerImg" layoutX="874.0" layoutY="497.0" mnemonicParsing="false" onAction="#registerImg" text="이미지" />
    </children>
 </AnchorPane>

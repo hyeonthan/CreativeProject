@@ -3,12 +3,16 @@ package FxController;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.text.Text;
 
 public class ForestLodgeDetail implements Initializable {
@@ -35,7 +39,17 @@ public class ForestLodgeDetail implements Initializable {
 	public Button btn_favorite;
 	
 	@FXML
-	public Button btn_resistReview;
+	public Button btn_registerImg;
+	
+	@FXML
+	public ComboBox<Integer> cb_star;
+	ObservableList<Integer> starList = FXCollections.observableArrayList(1, 2, 3, 4, 5);
+
+	@FXML
+	public Button btn_registerReview;
+	
+	@FXML
+	public TextArea ta_reviewContent;
 	
 	@FXML
 	public TableView<Review> tv_review;
@@ -49,13 +63,23 @@ public class ForestLodgeDetail implements Initializable {
 	public TableColumn<Review, String> tc_writer;
 
 	@FXML
-	public void resistReview (ActionEvent event) {
+	public void registerImg (ActionEvent event) {
+		
+	}
+	
+	@FXML
+	public void starSelect (ActionEvent event) {
+		
+	}
+	
+	@FXML
+	public void registerReview (ActionEvent event) {
 		
 	}
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		
+		cb_star.setItems(starList);
 	}
 	
 	class Review {
