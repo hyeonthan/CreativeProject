@@ -154,9 +154,9 @@ public class Server extends Thread{
         }
     }
 
-    public void writePacket(String source) throws Exception{
+    public void writePacket(String packet) {
         try{
-            bufferedWriter.write(source + "\n");
+            bufferedWriter.write(packet + "\n");
             bufferedWriter.flush();
         }
         catch (Exception e){
