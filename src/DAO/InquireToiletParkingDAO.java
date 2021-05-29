@@ -11,12 +11,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class InquireToiletParkingDAO {
-    private PreparedStatement pstmt;
-    private Connection conn;
-    private ResultSet rs;
+    private static PreparedStatement pstmt;
+    private static Connection conn;
+    private static ResultSet rs;
 
     // 화장실 위치로 검색
-    public ArrayList<ToiletDTO> inquireToiletByLocation(double selLatitude, double selLongitude, int range){
+    public static ArrayList<ToiletDTO> inquireToiletByLocation(double selLatitude, double selLongitude, int range){
         ArrayList<ToiletDTO> dtos= new ArrayList<ToiletDTO>();
         try {
             String query = "select * from toilet where power((latitude-?),2)+power((longitude-?),2)<?";
@@ -63,16 +63,14 @@ public class InquireToiletParkingDAO {
     }
 
     // 주차장 위치로 검색
-    public ArrayList<ParkingLotsDTO> inquireParkingLotByLocation(double selLatitude, double selLongitude, int range){
+    public static ArrayList<ParkingLotsDTO> inquireParkingLotByLocation(String selLatitude, String selLongitude, String range){
         ArrayList<ParkingLotsDTO> dtos= new ArrayList<ParkingLotsDTO>();
         try {
-            String query = "select * from parking_lot where power((latitude-?),2)+power((longitude-?),2)<?";
-
+            String query = "SELECT *,(6371*acos(cos(radians(" + selLatitude + "))*cos(radians(latitude))*cos(radians(longitude)-radians(" + selLongitude + "))+sin(radians("+ selLatitude + "))*sin(radians(latitude)))) AS distance FROM parking_lot HAVING distance <= " + range;
+            System.out.println(query);
             conn= DBconnection.getConnection();
             pstmt = conn.prepareStatement(query);
-            pstmt.setDouble(1,selLatitude);
-            pstmt.setDouble(2,selLongitude);
-            pstmt.setInt(3,range);
+          
             rs = pstmt.executeQuery();
 
             while(rs.next()){

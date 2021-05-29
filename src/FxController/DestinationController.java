@@ -38,7 +38,7 @@ public class DestinationController implements Initializable{
         String[] DoList = RegionList.Do;
         comboBoxDo.getItems().addAll(DoList);
         comboBoxClassification.setItems(FXCollections.observableArrayList(
-				"통합", "해수욕장", "휴양림", "관광지"));
+				"통합검색", "해수욕장", "휴양림", "관광지"));
         sortColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getSortation()));
 		nameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
 		addressColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDo() + " " + cellData.getValue().getCity() + " " + cellData.getValue().getAddress()));
@@ -121,7 +121,6 @@ public class DestinationController implements Initializable{
                     Parent root = (Parent)loader.load();
                     Stage stage = new Stage();
                     stage.setScene(new Scene(root));
-                    System.out.println(12314);
                    // ModifyController modifyController = loader.<ModifyController>getController();
                    // modifyController.setData(dataList, list, temp, expenseList, incomeList);
                     stage.showAndWait();

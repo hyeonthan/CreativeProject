@@ -48,5 +48,15 @@ public class MainDisplayController implements Initializable{
 		}
 		
 	}
-
+	@FXML
+	public void handleBtnParkingToiletSearch(ActionEvent e) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ParkingToiletDisplay.fxml"));
+			Parent inquiry = (Parent)loader.load();
+			borderpaneId.setCenter(inquiry);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		
+	}
 }
