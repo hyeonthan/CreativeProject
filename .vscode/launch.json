@@ -1,0 +1,36 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Launch Main",
+            "request": "launch",
+            "mainClass": "ParkingToilet.Main",
+            "projectName": "CreativeProject_a8f270d8"
+        },
+        {
+            "type": "java",
+            "name": "Launch Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "Launch Controller",
+            "request": "launch",
+            "mainClass": "DBcontrol.Controller",
+            "projectName": "CreativeProject_a8f270d8"
+        },
+        {
+            "type": "java",
+            "name": "Launch Main",
+            "request": "launch",
+            "vmArgs": "--module-path C:/Users/ehskf/Git-Storage/CreativeProject/lib --add-modules javafx.controls,javafx.fxml,javafx.web",
+            "mainClass": "FxController.Main",
+            "projectName": "CreativeProject_a8f270d8"
+        }
+    ]
+}

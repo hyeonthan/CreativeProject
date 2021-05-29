@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="849.0" prefWidth="1104.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.TouristSpotDetail">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="849.0" prefWidth="1093.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FxController.TouristSpotDetail">
    <children>
       <Text fx:id="t_name" layoutX="70.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" text="관광지명 : " />
       <Text fx:id="t_address" layoutX="70.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" text="주소 : " />

@@ -7,8 +7,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<BorderPane fx:id="borderpaneId" fx:controller="FxController.MainDisplayController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="716.0" prefWidth="1118.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="borderpaneId" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="716.0" prefWidth="1118.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FxController.MainDisplayController">
    <top>
       <AnchorPane layoutX="-1.0" prefHeight="92.0" prefWidth="958.0" BorderPane.alignment="CENTER">
          <children>
@@ -18,12 +17,12 @@
                   <Font size="28.0" />
                </font>
             </Text>
-            <Button fx:id="btnDestinationSearch" layoutX="14.0" layoutY="46.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="106.0" text="여행지 검색" onAction="#handleBtnDestinationSearch"/>
-            <Button fx:id="btnAroundSearch" layoutX="144.0" layoutY="46.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="106.0" text="주변 검색" onAction="#handleBtnAroundSearch"/>
-            <Button layoutX="271.0" layoutY="46.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="106.0" text="주차장/화장실" onAction="#handleBtnParkingToiletSearch"/>
+            <Button fx:id="btnDestinationSearch" layoutX="14.0" layoutY="46.0" mnemonicParsing="false" onAction="#handleBtnDestinationSearch" prefHeight="42.0" prefWidth="106.0" text="여행지 검색" />
+            <Button fx:id="btnAroundSearch" layoutX="144.0" layoutY="46.0" mnemonicParsing="false" onAction="#handleBtnAroundSearch" prefHeight="42.0" prefWidth="106.0" text="주변 검색" />
+            <Button layoutX="271.0" layoutY="46.0" mnemonicParsing="false" onAction="#handleBtnParkingToiletSearch" prefHeight="42.0" prefWidth="106.0" text="주차장/화장실" />
             <Button layoutX="399.0" layoutY="46.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="106.0" text="통계" />
-            <Button layoutX="998.0" layoutY="46.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="106.0" text="로그아웃" />
-            <Button layoutX="885.0" layoutY="46.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="106.0" text="마이페이지" />
+            <Button fx:id="btnLogout" layoutX="998.0" layoutY="46.0" mnemonicParsing="false" onAction="#handleBtnLogout" prefHeight="42.0" prefWidth="106.0" text="로그아웃" />
+            <Button layoutX="885.0" layoutY="46.0" mnemonicParsing="false" onAction="#handleBtnMypage" prefHeight="42.0" prefWidth="106.0" text="마이페이지" />
          </children>
       </AnchorPane>
    </top>

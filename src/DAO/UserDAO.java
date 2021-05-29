@@ -60,7 +60,7 @@ public class UserDAO {
 
 
     //아이디 중복 체크
-    boolean duplicationId(String id){
+    public boolean duplicationId(String id){
         boolean check = false;
         try{
             String sql = "SELECT ID FROM USERS WHERE ID = ?";
@@ -94,19 +94,22 @@ public class UserDAO {
     }
 
     //아이디 비번 체크
-    boolean checkUser(String id,String pwd){
+    public boolean checkUser(String id,String pwd){
         boolean check = false;
         try {
-            String sql = "SELECT id, password FROM user WHERE id = ? AND password = (select CONCAT('*', UPPER(SHA1(UNHEX(SHA1((?)))))) as password) ";
+            String sql = "SELECT id, password FROM user WHERE id = ? AND password = (select CONCAT('*', UPPER(SHA1(UNHEX(SHA1((?)))))) as password)";
             conn = DBconnection.getConnection();
-            pstmt = conn.prepareStatement(sql);
+            pstmt = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
             pstmt.setString(1, id);
             pstmt.setString(2, pwd);
             rs = pstmt.executeQuery();
             rs.last();
             int num = rs.getRow();
-            if(num == 1) 	// 맞는 ID, pwd 입력시 true 입력
+            // 맞는 ID, pwd 입력시 true 입력
+            System.out.println(num);
+            if(num == 1) {
                 check = true;
+            }
         }
         catch(SQLException sqle) {
             System.out.println(sqle);
@@ -128,4 +131,5 @@ public class UserDAO {
         }
         return check;
     }
+    
 }

@@ -24,6 +24,5 @@
             <Font size="11.0" />
          </font>
       </Text>
-      <Button fx:id="btn_review" layoutX="266.0" layoutY="323.0" mnemonicParsing="false" onAction="#review" text="리뷰" />
    </children>
 </AnchorPane>
