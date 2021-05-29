@@ -20,7 +20,7 @@ public class MyPageDAO {
     private Connection conn;
     private ResultSet rs;
     private Savepoint sp;
-    MyPageDAO(){
+    public MyPageDAO(){
         psmt = null;
         conn = null;
         rs = null;
@@ -102,7 +102,7 @@ public class MyPageDAO {
     }
     //  회원 정보(userDTO) 불러오기
     public UserDTO roadUser(String userId){
-        String sql = "SELECT * FROM user WHERE user_id = ?";
+        String sql = "SELECT * FROM user WHERE id = ?";
 
         UserDTO userDTO = null;
         try{
@@ -140,23 +140,21 @@ public class MyPageDAO {
         return userDTO;
     }
     //  회원 정보 수정하기
-    public void reservationUser(String userId, String password, String name, String age, String gender, String Do, String city, String address){
-        String sql = "UPDATE user SET password=(select CONCAT('*', UPPER(SHA1(UNHEX(SHA1((?)))))) as password), name=?, age=?, gender=?, Do=?, city=?, address=?, modify_date=? where id=?";
+    public void reservationUser(String userId, String name, String age, String gender, String Do, String city, String address){
+        String sql = "UPDATE user SET name=?, age=?, gender=?, Do=?, city=?, address=?, modify_date=? WHERE id=?";
         try{
             conn = DBconnection.getConnection();
             conn.setAutoCommit(false);
             sp = conn.setSavepoint("SavePoint1");
-
             psmt = conn.prepareStatement(sql);
-            psmt.setString(1, password);
-            psmt.setString(2, name);
-            psmt.setString(3, age);
-            psmt.setString(4, gender);
-            psmt.setString(5, Do);
-            psmt.setString(6, city);
-            psmt.setString(7, address);
-            psmt.setTimestamp(8, Timestamp.valueOf(LocalDateTime.now()));
-            psmt.setString(9, userId);
+            psmt.setString(1, name);
+            psmt.setString(2, age);
+            psmt.setString(3, gender);
+            psmt.setString(4, Do);
+            psmt.setString(5, city);
+            psmt.setString(6, address);
+            psmt.setTimestamp(7, Timestamp.valueOf(LocalDateTime.now()));
+            psmt.setString(8, userId);
 
             psmt.executeUpdate();
             conn.commit();
