@@ -121,6 +121,15 @@ public class DestinationController implements Initializable{
                     Parent root = (Parent)loader.load();
                     Stage stage = new Stage();
                     stage.setScene(new Scene(root));
+                    if(myTableView.getSelectionModel().getSelectedItem().getSortation().equals("해수욕장")){
+                        String beachCode = myTableView.getSelectionModel().getSelectedItem().getBeach_code();
+                        BeachDetailController beachDetailController = loader.<BeachDetailController>getController();
+                        beachDetailController.setBeachCode(beachCode);
+                    }
+                    if(myTableView.getSelectionModel().getSelectedItem().getSortation().equals("휴양림")){
+                    }
+                    if(myTableView.getSelectionModel().getSelectedItem().getSortation().equals("관광지")){
+                    }
                    // ModifyController modifyController = loader.<ModifyController>getController();
                    // modifyController.setData(dataList, list, temp, expenseList, incomeList);
                     stage.showAndWait();
