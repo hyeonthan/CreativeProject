@@ -10,29 +10,25 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
-import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.Savepoint;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Timer;
+
+import DAO.UserDAO;
 
 public class Server extends Thread{
     Socket socket;
-    private static int curUser=0;
-    BufferedReader bufferedReader= null;
-    BufferedWriter bufferedWriter= null;
+    private static int curUser = 0;
+    BufferedReader bufferedReader = null;
+    BufferedWriter bufferedWriter = null;
     ObjectInputStream objectInputStream = null;
     ObjectOutputStream objectOutputStream = null;
 
-    public Server(Socket socket) throws ClassNotFoundException, SQLException{
+    public Server(Socket socket) throws ClassNotFoundException, SQLException {
         this.socket = socket;
         DBconnection.getConnection();
     }
 
     @Override
-    public void run(){
+    public void run() {
         try {
             bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
@@ -42,21 +38,31 @@ public class Server extends Thread{
             writePacket(Protocol.PT_REQ_LOGIN_INFO);
             boolean program_stop = false;
 
-            while(true)
-            {
+            while(true) {
                 String packet = bufferedReader.readLine();
                 String packetArr[] = packet.split("|");
                 String packetType = packetArr[0]; // 프로토콜 타입 구분
 
-                switch (packetType)
-                {
+                switch (packetType) {
                     case Protocol.PT_EXIT:{
                         writePacket(Protocol.PT_EXIT);
                         program_stop = true;
                         break;
                     }
                     case Protocol.PT_REQ_LOGIN:{
+                    	String loginId = packetArr[1];
+                    	String loginPassword = packetArr[2];
                     	
+                    	try {
+                    		UserDAO userDao = new UserDAO();
+                    		boolean isCorrectUser = userDao.checkUser(loginId,  loginPassword);
+                    		if (isCorrectUser) 
+                    			writePacket(Protocol.PT_RES_LOGIN + "|" + "1");
+                    		else
+                    			writePacket(Protocol.PT_RES_LOGIN + "|" + "2");
+                    	} catch (Exception e) {
+                    		e.printStackTrace();
+                    	}
                     	break;
                     }
                     case Protocol.PT_REQ_FILE:{
@@ -67,7 +73,7 @@ public class Server extends Thread{
                     	String packetCode = packetArr[1];
                     	switch (packetCode) {
                     		case Protocol.REQ_DESTINATION_REGION:{
-
+                    			
                     			break;
                     		}
                     		case Protocol.REQ_TOURIST_DETAIL:{
