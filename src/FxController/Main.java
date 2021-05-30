@@ -32,8 +32,8 @@ public class Main extends Application {
 		String id = tf_id.getText();
 		String pw = pf_password.getText();
 		
-		//clientMain.writePacket(Protocol.PT_REQ_LOGIN + "|" + id + "|" + pw);
-
+//		clientMain.writePacket(Protocol.PT_REQ_LOGIN + "|" + id + "|" + pw);
+//
 //		while (true) {
 //			String packet = clientMain.readPacket();
 //			String packetArr[] = packet.split("|");
@@ -44,7 +44,7 @@ public class Main extends Application {
 //					String loginResult = packetArr[1];
 //					
 //					switch (loginResult) {
-//						case "1": {
+//						case Protocol.RES_LOGIN_Y: {
 //							try {
 //								FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/MainDisplay.fxml"));
 //								Parent root = (Parent)loader.load();
@@ -61,7 +61,7 @@ public class Main extends Application {
 //								e.printStackTrace();
 //							}
 //						}
-//						case "2": {
+//						case Protocol.RES_LOGIN_N: {
 //							ShowAlert.showAlert("WARNING", "로그인 알림창", "로그인 실패 : 아이디 또는 비밀번호가 일치하지 않습니다.");
 //							return;
 //						}
