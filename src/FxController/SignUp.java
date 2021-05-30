@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 
 import DAO.UserDAO;
 import DTO.UserDTO;
+import Network.Protocol;
+import Network.clientMain;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -368,6 +370,37 @@ public class SignUp {
 		//	DB insert
 		userDAO.insertUser(userDTO);
 		ShowAlert.showAlert("INFORMATION", "알림창", "회원가입 성공!");
+		
+//		clientMain.writePacket(Protocol.PT_REQ_RENEWAL + "|" + Protocol.REQ_SINGUP);
+//		clientMain.writeObject(userDTO);
+		
+//		while (true) {
+//			String packet = clientMain.readPacket();
+//			String packetArr[] = packet.split("|");
+//			String packetType = packetArr[0];
+//			String packetCode = packetArr[1];
+//			
+//			if (packetType.equals(Protocol.PT_RES_RENEWAL)) {
+//				switch (packetCode) {
+//					case Protocol.RES_SIGNUP_Y: {
+//						try {
+//							Parent root = FXMLLoader.load(Main.class.getResource("../FXML/login.fxml"));
+//							Scene scene = new Scene(root);
+//							Stage primaryStage = (Stage) btn_cancle.getScene().getWindow();
+//							primaryStage.setScene(scene);
+//							primaryStage.show();
+//						} catch (Exception e) {
+//							e.printStackTrace();
+//						}
+//						return;
+//					}
+//					case Protocol.RES_SIGNUP_N: {
+//						ShowAlert.showAlert("WARNING", "경고", "아이디가 중복됩니다.");
+//						return;
+//					}
+//				}
+//			}
+//		}
 		try {
 			Parent root = FXMLLoader.load(Main.class.getResource("../FXML/login.fxml"));
 			Scene scene = new Scene(root);
