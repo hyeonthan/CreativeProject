@@ -18,7 +18,6 @@
             <Font size="39.0" />
          </font>
       </Text>
-      <Text fx:id="t_result" layoutX="263.0" layoutY="334.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="87.0" />
       <Text layoutX="246.0" layoutY="129.0" strokeType="OUTSIDE" strokeWidth="0.0" text="여행 정보 제공 시스템">
          <font>
             <Font size="11.0" />
