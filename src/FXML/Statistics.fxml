@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FxController.StatisticsController">
+    <children>
+        <ComboBox fx:id="comboBoxDestination" layoutX="30.0" layoutY="118.0" prefWidth="150.0" promptText="구분"/>
+        <ComboBox fx:id="comboBoxStatistics" layoutX="194.0" layoutY="118.0" prefWidth="150.0" promptText="기준"/>
+        <Button layoutX="370.0" layoutY="118.0" mnemonicParsing="false" text="검색" />
+        <TableView layoutX="509.0" layoutY="118.0" prefHeight="329.0" prefWidth="463.0">
+            <columns>
+                <TableColumn fx:id="rankingColumn" prefWidth="75.0" text="No." />
+                <TableColumn fx:id="nameColumn" prefWidth="75.0" text="이름" />
+                <TableColumn fx:id="valueColumn" prefWidth="75.0" text="값" />
+            </columns>
+        </TableView>
+        <Text layoutX="30.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="통계">
+            <font>
+                <Font size="30.0" />
+            </font>
+        </Text>
+    </children>
+</AnchorPane>
