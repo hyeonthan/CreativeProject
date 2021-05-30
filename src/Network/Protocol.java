@@ -64,7 +64,7 @@ public class Protocol {
 
 
     // 갱신 요청
-    public static final String REQ_SINGUP = "8-0";                  //회원가입 요청
+    public static final String REQ_SIGNUP = "8-0";                  //회원가입 요청
     public static final String REQ_CREATE_REVIEW = "8-1";           //리뷰 등록 요청
     public static final String REQ_UPDATE_REVIEW = "8-2";           //리뷰 수정 요청
     public static final String REQ_DELETE_REVIEW = "8-3";           //리뷰 삭제 요청
@@ -73,8 +73,8 @@ public class Protocol {
     public static final String REQ_DELETE_BOOKMARK ="8-6";          //즐겨찾기 삭제 요청
 
     //갱신 요청에 대한 응답답
-    public static final String RES_SINGUP_Y = "8-0";                  //회원가입 요청 성공  
-    public static final String RES_SINGUP_N = "8-0";                  //회원가입 요청 실패
+    public static final String RES_SIGNUP_Y = "8-0";                  //회원가입 요청 성공  
+    public static final String RES_SIGNUP_N = "8-0";                  //회원가입 요청 실패
     public static final String RES_CREATE_REVIEW_Y = "8-1";           //리뷰 등록 요청 성공
     public static final String RES_CREATE_REVIEW_N = "8-1";           //리뷰 등록 요청 실패
     public static final String RES_UPDATE_REVIEW_Y = "8-2";           //리뷰 수정 요청 성공
