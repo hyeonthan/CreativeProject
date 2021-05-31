@@ -1,6 +1,8 @@
 package DTO;
 
-public class ParkingLotsDTO {
+import java.io.Serializable;
+
+public class ParkingLotsDTO implements Serializable {
     private String code;
     private String name;
     private String Do;

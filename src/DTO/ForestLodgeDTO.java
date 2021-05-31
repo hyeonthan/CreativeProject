@@ -1,6 +1,8 @@
 package DTO;
 
-public class ForestLodgeDTO {
+import java.io.Serializable;
+
+public class ForestLodgeDTO  implements Serializable {
     private String code;
     private String name;
     private String Do;

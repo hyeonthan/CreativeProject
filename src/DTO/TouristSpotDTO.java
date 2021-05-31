@@ -1,6 +1,8 @@
 package DTO;
 
-public class TouristSpotDTO {
+import java.io.Serializable;
+
+public class TouristSpotDTO implements Serializable {
     private String code;
     private String name;
     private String introduction;
