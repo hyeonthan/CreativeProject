@@ -1,12 +1,5 @@
 package DBcontrol;
-import java.util.ArrayList;
 
-import DTO.BeachDTO;
-import DTO.DestinationDTO;
-import DTO.ForestLodgeDTO;
-import DTO.TouristSpotDTO;
-import DataSetControl.ExcelToDB;
-import DataSetControl.LoadFromExcel;
 public class Controller {
     public static void main(String[] args) throws Exception {
         //해수욕장 데이터 가공 후 DB에 넣기
@@ -32,6 +25,5 @@ public class Controller {
         //여행지 DB에 넣기
         //ArrayList<DestinationDTO> dList = LoadFromExcel.runDestination(bList, fList, tList);
         //ExcelToDB.insertDestination(dList);
-        ExcelToDB.test();
     }
 }
