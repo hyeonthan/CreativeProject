@@ -40,10 +40,12 @@ public class ReviewDetailController implements Initializable {
 		}
 		tModifyDate.setText(modifyDate);
 		taContent.setText(saveReviewDTO.getContent());
-		byte[] image = saveReviewDTO.getImage();
-		ByteArrayInputStream bis = new ByteArrayInputStream(image);
-		Image img = new Image(bis);	
-		iv_reviewImage.setImage(img);
+		if(saveReviewDTO.getImage() != null){
+			byte[] image = saveReviewDTO.getImage();
+			ByteArrayInputStream bis = new ByteArrayInputStream(image);
+			Image img = new Image(bis);	
+			iv_reviewImage.setImage(img);
+		}
 	}
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
