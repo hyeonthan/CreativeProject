@@ -1,8 +1,10 @@
 package DTO;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class ReviewDTO {
+public class ReviewDTO implements Serializable {
+    int no;
     private String user_id;
     private String content;
     private int scope;
@@ -12,9 +14,8 @@ public class ReviewDTO {
     private Timestamp reporting_date;
     private byte[] image;
 
-
-    public ReviewDTO(String user_id, String content, int scope, String destination_code,
-            String destination_name, Timestamp modify_date, Timestamp reporting_date, byte[] image) {
+    public ReviewDTO(int no, String user_id, String content, int scope, String destination_code, String destination_name, Timestamp modify_date, Timestamp reporting_date, byte[] image) {
+        this.no = no;
         this.user_id = user_id;
         this.content = content;
         this.scope = scope;
@@ -24,6 +25,15 @@ public class ReviewDTO {
         this.reporting_date = reporting_date;
         this.image = image;
     }
+
+    public int getNo() {
+        return no;
+    }
+
+    public void setNo(int no) {
+        this.no = no;
+    }
+
     public String getUser_id() {
         return user_id;
     }
