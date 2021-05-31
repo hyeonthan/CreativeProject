@@ -23,6 +23,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
@@ -32,6 +34,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.stage.Stage;
 
 public class BeachDetailController extends Object implements Initializable {
 	
@@ -154,6 +157,7 @@ public class BeachDetailController extends Object implements Initializable {
 			ShowAlert.showAlert("WARNING", "경고", "내용 미입력");
 			return;
 		}
+		
 		String content = ta_reviewContent.getText();
 		int scope = cb_star.getValue();
 		Timestamp reportingDate = Timestamp.valueOf(LocalDateTime.now());
@@ -163,16 +167,23 @@ public class BeachDetailController extends Object implements Initializable {
 		ShowAlert.showAlert("INFORMATION", "알림창", "리뷰 등록 완료");
 		setDestinationCode(destinationCode);
 	}
-	
+	//	리뷰 테이블 더블 클릭시 리뷰 상세정보	
 	@FXML
     public void doubleClickMouse(MouseEvent event){
         if(tv_review.getSelectionModel().getSelectedItem()!=null){
             if(event.getClickCount() > 1){
-                FXMLLoader loader = null;
-                String destinationCode="", destinationName="";
-                loader = new FXMLLoader(getClass().getResource("../FXML/review_detail.fxml"));
-				ReviewDTO reviewDTO = tv_review.getSelectionModel().getSelectedItem();
-				
+				try{
+					FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/review_detail.fxml"));
+					Parent root = (Parent)loader.load();
+					Stage stage = new Stage();
+					stage.setScene(new Scene(root));
+					ReviewDTO reviewDTO = tv_review.getSelectionModel().getSelectedItem();
+					ReviewDetailController reviewDetailController = loader.<ReviewDetailController>getController();
+					reviewDetailController.setReviewDTO(reviewDTO);
+					stage.showAndWait();
+				}catch(Exception e) {
+                    System.out.println(e);
+                }
             }
         }
 	
