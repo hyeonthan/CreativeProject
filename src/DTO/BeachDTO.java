@@ -1,6 +1,8 @@
 package DTO;
 
-public class BeachDTO {
+import java.io.Serializable;
+
+public class BeachDTO  implements Serializable {
     private String code;
     private String name;
     private String introduction;

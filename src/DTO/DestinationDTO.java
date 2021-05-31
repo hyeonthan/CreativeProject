@@ -1,7 +1,9 @@
 package DTO;
 
 
-public class DestinationDTO {
+import java.io.Serializable;
+
+public class DestinationDTO implements Serializable {
     private String code;
     private String sortation;
     private String forestLodge_code;

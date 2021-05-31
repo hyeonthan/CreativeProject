@@ -6,8 +6,6 @@ public class Protocol {
     public static final String PT_REQ_LOGIN_INFO = "1"; // 로그인 정보 요청
     public static final String PT_REQ_LOGIN = "2"; // 로그인 요청
     public static final String PT_RES_LOGIN = "3"; // 로그인 요청 응답
-    public static final String PT_REQ_FILE = "4";  //파일 전송 요청
-    public static final String PT_RES_FILE = "5";  //파일 전송 요청에 대한 응답
     public static final String PT_REQ_VIEW = "6"; // 조회 요청
     public static final String PT_RES_VIEW = "7"; // 조회 요청 으답
     public static final String PT_REQ_RENEWAL = "8"; // 갱신 요청
@@ -17,13 +15,6 @@ public class Protocol {
     // 로그인 요청에 의한 응답
     public static final String RES_LOGIN_Y ="3-0";  //로그인 성공
     public static final String RES_LOGIN_N = "3-1"; //로그인 실패
-
-    // 파일 전송에 대한 응답
-    public static final String REQ_FILE = "4-0";    //리뷰 사진 파일 요청
-
-    //파일 전송 요청에 대한 응답답
-    public static final String RES_FILE_Y = "5-0";  //리뷰 사진 파일 요청에 대한 승인
-    public static final String RES_FILE_N = "5-1";  //리뷰 사진 파일 요청에 대한 거절
 
     //조회 요청
     public static final String REQ_DESTINATION_REGION = "6-0";      //여행지 조회 요청
@@ -41,8 +32,8 @@ public class Protocol {
     //조회 요청에 대한 응답
     public static final String RES_DESTINATION_REGION_Y = "7-0";      //여행지 조회 요청 승인
     public static final String RES_DESTINATION_REGION_N = "7-1";      //여행지 조회 요청 거절
-    public static final String REQ_TOURIST_DETAIL_Y = "7-2";          //관광지 상세정보 조회 요청 승인
-    public static final String REQ_TOURIST_DETAIL_N = "7-3";          //관광지 상세정보 조회 요청 거절
+    public static final String RES_TOURIST_DETAIL_Y = "7-2";          //관광지 상세정보 조회 요청 승인
+    public static final String RES_TOURIST_DETAIL_N = "7-3";          //관광지 상세정보 조회 요청 거절
     public static final String RES_FOREST_DETAIL_Y = "7-4";           //휴양림 상세정보 조회 요청 승인
     public static final String RES_FOREST_DETAIL_N = "7-5";           //휴양림 상세정보 조회 요청 거절
     public static final String RES_BEACH_DETAIL_Y = "7-6";            //해수욕장 상세정보 조회 요청 승인

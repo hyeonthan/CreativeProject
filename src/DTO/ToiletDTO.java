@@ -1,6 +1,8 @@
 package DTO;
 
-public class ToiletDTO {
+import java.io.Serializable;
+
+public class ToiletDTO implements Serializable {
     private String code;
     private String name;
     private String Do;

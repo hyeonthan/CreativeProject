@@ -1,5 +1,7 @@
 package Network;
 
+import DAO.DetailDAO;
+import DAO.InquireToiletParkingDAO;
 import DBcontrol.DBconnection;
 
 import java.io.BufferedReader;
@@ -11,9 +13,15 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.sql.SQLException;
-import DTO.UserDTO;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.function.ToLongBiFunction;
+
+import DTO.*;
 
 import DAO.UserDAO;
+
+import javax.xml.soap.Detail;
 
 public class Server extends Thread{
     Socket socket;
@@ -66,10 +74,6 @@ public class Server extends Thread{
                     	}
                     	break;
                     }
-                    case Protocol.PT_REQ_FILE:{
-
-                    	break;
-                    }
                     case Protocol.PT_REQ_VIEW: {
                     	String packetCode = packetArr[1];
                     	switch (packetCode) {
@@ -78,23 +82,67 @@ public class Server extends Thread{
                     			break;
                     		}
                     		case Protocol.REQ_TOURIST_DETAIL:{
+								DetailDAO detailDAO = new DetailDAO();
 
+								TouristSpotDTO touristSpotDTO = detailDAO.detailTouristSpot(packetArr[1]);
+								ArrayList<ReviewDTO> arrayList = detailDAO.inquireReview(packetArr[1]);
+								Iterator<ReviewDTO> iter = arrayList.iterator();
+
+								if (touristSpotDTO!=null) {
+									bufferedWriter.write(Protocol.PT_RES_VIEW + "|" + Protocol.RES_TOURIST_DETAIL_Y + "|" + touristSpotDTO);
+									while(iter.hasNext()){
+										ReviewDTO reviewDTO = iter.next();
+										bufferedWriter.write(Protocol.PT_RES_VIEW + "|" + Protocol.RES_TOURIST_DETAIL_Y + "|" + reviewDTO);
+									}
+								}
+								else
+									bufferedWriter.write(Protocol.PT_RES_VIEW + "|" + Protocol.RES_TOURIST_DETAIL_N);
                     			break;
                     		}
                     		case Protocol.REQ_FOREST_DETAIL:{
+								DetailDAO detailDAO = new DetailDAO();
 
+								ForestLodgeDTO forestLodgeDTO = detailDAO.detailForestLodge(packetArr[1]);
+								if (forestLodgeDTO!=null)
+									bufferedWriter.write(Protocol.PT_RES_VIEW + "|" + Protocol.RES_FOREST_DETAIL_Y+"|"+forestLodgeDTO);
+								else
+									bufferedWriter.write(Protocol.PT_RES_VIEW + "|" + Protocol.RES_FOREST_DETAIL_N);
                     			break;
                     		}
                     		case Protocol.REQ_BEACH_DETAIL:{
+								DetailDAO detailDAO = new DetailDAO();
 
+								BeachDTO beachDTO = detailDAO.detailBeach(packetArr[1]);
+								if (beachDTO!=null)
+									bufferedWriter.write(Protocol.PT_RES_VIEW + "|" + Protocol.RES_BEACH_DETAIL_Y+"|"+beachDTO);
+								else
+									bufferedWriter.write(Protocol.PT_RES_VIEW + "|" + Protocol.RES_BEACH_DETAIL_N);
                     			break;
                     		}
                     		case Protocol.REQ_REVIEW_DETAIL:{
+								 detailDAO = new DetailDAO();
 
+								BeachDTO beachDTO = detailDAO.detailBeach(packetArr[1]);
+								if (beachDTO!=null)
+									bufferedWriter.write(Protocol.PT_RES_VIEW + "|" + Protocol.RES_BEACH_DETAIL_Y+"|"+beachDTO);
+								else
+									bufferedWriter.write(Protocol.PT_RES_VIEW + "|" + Protocol.RES_BEACH_DETAIL_N);
                     			break;
                     		}
                     		case Protocol.REQ_TOILET:{
+								InquireToiletParkingDAO inquireToiletParkingDAO = new InquireToiletParkingDAO();
 
+                    			ArrayList<ToiletDTO> toiletDTOS = inquireToiletParkingDAO.inquireToiletByLocation(packetArr[1],packetArr[2],packetArr[3]);
+								Iterator<ToiletDTO> iter = toiletDTOS.iterator();
+
+								if(iter!=null) {
+									while (iter.hasNext()) {
+										bufferedWriter.write(Protocol.PT_RES_VIEW + "|" + Protocol.RES_TOILET_Y + "|" + iter.next());
+									}
+								}
+								else{
+									bufferedWriter.write(Protocol.PT_RES_VIEW + "|" + Protocol.RES_TOILET_N);
+								}
                     			break;
                     		}
                     		case Protocol.REQ_PARKING:{
