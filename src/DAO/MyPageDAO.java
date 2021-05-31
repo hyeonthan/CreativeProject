@@ -195,7 +195,6 @@ public class MyPageDAO {
             rs = psmt.executeQuery();
 
             while(rs.next()){
-                int no = rs.getInt("no");
                 String user_id= rs.getString("user_id");
                 String content= rs.getString("content");
                 int scope= rs.getInt("scope");
@@ -205,7 +204,7 @@ public class MyPageDAO {
                 Timestamp modify_date = rs.getTimestamp("modify_date)");
                 byte[] image =rs.getBytes("image");
 
-                ReviewDTO dto =new ReviewDTO(no, user_id, content,scope, destination_code, destination_name,modify_date, reporting_date, image);
+                ReviewDTO dto =new ReviewDTO(user_id, content,scope, destination_code, destination_name,modify_date, reporting_date, image);
                 dtos.add(dto);
             }
         }
