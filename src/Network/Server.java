@@ -36,7 +36,7 @@ public class Server extends Thread{
             objectInputStream = new ObjectInputStream(socket.getInputStream());
             objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
 
-            writePacket(Protocol.PT_REQ_LOGIN_INFO);
+//            writePacket(Protocol.PT_REQ_LOGIN_INFO);
             boolean program_stop = false;
 
             while(true) {
