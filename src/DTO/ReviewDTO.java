@@ -25,7 +25,16 @@ public class ReviewDTO implements Serializable {
         this.reporting_date = reporting_date;
         this.image = image;
     }
-
+    public ReviewDTO(String user_id, String content, int scope, String destination_code, String destination_name, Timestamp modify_date, Timestamp reporting_date, byte[] image) {
+        this.user_id = user_id;
+        this.content = content;
+        this.scope = scope;
+        this.destination_code = destination_code;
+        this.destination_name = destination_name;
+        this.modify_date = modify_date;
+        this.reporting_date = reporting_date;
+        this.image = image;
+    }
     public int getNo() {
         return no;
     }
