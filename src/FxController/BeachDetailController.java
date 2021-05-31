@@ -100,6 +100,13 @@ public class BeachDetailController extends Object implements Initializable {
 		tc_writer.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getUser_id()));
 
 	}
+	// 	즐겨찾기 등록
+	@FXML
+	public void handleBtnFavorite(ActionEvent event){
+		DetailDAO detailDAO = new DetailDAO();
+		detailDAO.addFavorite(userId, destinationCode, destinationName, "해수욕장");
+		ShowAlert.showAlert("INFORMATION", "알림창", "즐겨찾기 등록 완료!");
+	}
 	//	이미지 선택
 	@FXML
 	public void registerImg (ActionEvent event){
