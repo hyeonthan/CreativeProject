@@ -1,9 +1,8 @@
 package DTO;
 
-import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class ReviewDTO  implements Serializable {
+public class ReviewDTO {
     private int no;
     private String user_id;
     private String content;

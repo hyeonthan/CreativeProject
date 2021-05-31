@@ -270,39 +270,7 @@ public class ExcelToDB {
            }
        }
     }
-    public static void test(){
-        String SQL = "select (?) from destination";
-        try{
-            conn = DBconnection.getConnection();
-            psmt = conn.prepareStatement(SQL);
-            psmt.setString(1, "sortation");
-            ResultSet rs = psmt.executeQuery();
-            //rs.next();
-            rs.next();
-            System.out.println(rs.getString("sortation"));
-            
-        }
-        catch(SQLException sqle){
-            sqle.printStackTrace();
-            
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }
-        finally {
-            try {
-                conn.setAutoCommit(true); 
-                if (psmt != null) {
-                 psmt.close();
-                }				
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (Exception e) {
-                throw new RuntimeException(e.getMessage());
-            }
-        }
-    }
+    
     public static void testImage2(){
         String SQL = "INSERT INTO review(user_id, content, scope, reporting_date, destination_code, destination_name, modify_date, image) VALUES(?,?,?,?,?,?,?,?)";
         try{

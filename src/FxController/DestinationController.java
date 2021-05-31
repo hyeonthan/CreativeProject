@@ -32,6 +32,10 @@ public class DestinationController implements Initializable{
 	@FXML private TableColumn<DestinationDTO, String> addressColumn;
 	@FXML private TableColumn<DestinationDTO, String> gradeColumn;
 
+    private String userId;
+    public void setSaveUserId(String userId){
+		this.userId = userId;
+	}
     @Override
 	public void initialize(URL location, ResourceBundle bundle) {
         //  RegionList class에서 Do 호출
@@ -122,9 +126,15 @@ public class DestinationController implements Initializable{
                     Stage stage = new Stage();
                     stage.setScene(new Scene(root));
                     if(myTableView.getSelectionModel().getSelectedItem().getSortation().equals("해수욕장")){
+                        //  해수욕장 상세정보로 code, userId 넘기기
                         String beachCode = myTableView.getSelectionModel().getSelectedItem().getBeach_code();
                         BeachDetailController beachDetailController = loader.<BeachDetailController>getController();
                         beachDetailController.setBeachCode(beachCode);
+                        beachDetailController.setSaveUserId(userId);
+                        String destinationCode = myTableView.getSelectionModel().getSelectedItem().getCode();
+                        String destinationName = myTableView.getSelectionModel().getSelectedItem().getName();
+                        beachDetailController.setDestinationCode(destinationCode);
+                        beachDetailController.setDestinationName(destinationName);
                     }
                     if(myTableView.getSelectionModel().getSelectedItem().getSortation().equals("휴양림")){
                     }

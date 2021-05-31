@@ -37,6 +37,9 @@ public class MainDisplayController implements Initializable{
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/Destination.fxml"));
 			Parent inquiry = (Parent)loader.load();
+			//	여행지 화면으로 userId 넘기기
+			DestinationController destinationController = loader.<DestinationController>getController();
+			destinationController.setSaveUserId(userId);
 			borderpaneId.setCenter(inquiry);
 		} catch (IOException e1) {
 			e1.printStackTrace();
