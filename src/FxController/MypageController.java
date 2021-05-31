@@ -1,6 +1,8 @@
 package FxController;
 
 import java.net.URL;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
@@ -144,7 +146,7 @@ public class MypageController implements Initializable {
 		String city = cbBoxCity.getValue();
 		String address = tfAddress.getText();
 		MyPageDAO myPageDAO = new MyPageDAO();
-		myPageDAO.reservationUser(id, name, age, gender, Do, city, address);
+		myPageDAO.reservationUser(new UserDTO(id, name, Integer.parseInt(age), gender, Do, city, address, Timestamp.valueOf(LocalDateTime.now())));
 		ShowAlert.showAlert("INFORMATION", "알림창", "개인정보 수정 완료");
 		setSaveUserId(id);
 	}

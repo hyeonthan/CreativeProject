@@ -28,6 +28,18 @@ public class UserDTO implements Serializable {
         this.creation_date = creation_date;
         this.modify_date = modify_date;
     }
+
+    public UserDTO(String id, String name, int age, String gender, String aDo, String city, String address, Timestamp modify_date) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+        Do = aDo;
+        this.city = city;
+        this.address = address;
+        this.modify_date = modify_date;
+    }
+
     public String getId() {
         return id;
     }
