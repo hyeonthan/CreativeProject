@@ -11,6 +11,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
+import java.sql.Array;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -40,6 +41,7 @@ public class Server extends Thread{
 
 //            writePacket(Protocol.PT_REQ_LOGIN_INFO);
             boolean program_stop = false;
+            String id =null;
 
             while(true) {
                 String packet = bufferedReader.readLine();
@@ -59,8 +61,10 @@ public class Server extends Thread{
                     	try {
                     		UserDAO userDao = new UserDAO();
                     		boolean isCorrectUser = userDao.checkUser(loginId,  loginPassword);
-                    		if (isCorrectUser) 
-                    			writePacket(Protocol.PT_RES_LOGIN + "`" + Protocol.RES_LOGIN_Y);
+                    		if (isCorrectUser) {
+								writePacket(Protocol.PT_RES_LOGIN + "`" + Protocol.RES_LOGIN_Y);
+								id = loginId;
+                    		}
                     		else
                     			writePacket(Protocol.PT_RES_LOGIN + "`" + Protocol.RES_LOGIN_N);
                     	} catch (Exception e) {
@@ -73,7 +77,9 @@ public class Server extends Thread{
                     	switch (packetCode) {
                     		case Protocol.REQ_DESTINATION_REGION:{	//지역으로 전체 검색
 								InquireByRegionDAO inquireByRegionDAO = new InquireByRegionDAO();
-								ArrayList<DestinationDTO> destinationDTOS = inquireByRegionDAO.inquireDestinationByRegion(packetArr[1],packetArr[2],packetArr[3]);
+								ArrayList<DestinationDTO> destinationDTOS = inquireByRegionDAO.inquireDestinationByRegion(packetArr[2],packetArr[3],packetArr[4],);
+
+								if(packetArr[2])
 
 								if(destinationDTOS != null){
 									bufferedWriter.write(Protocol.PT_RES_VIEW + "`" + Protocol.RES_DESTINATION_REGION_Y);
@@ -134,7 +140,7 @@ public class Server extends Thread{
                     		}
                     		case Protocol.REQ_TOILET:{
 								InquireToiletParkingDAO inquireToiletParkingDAO = new InquireToiletParkingDAO();
-                    			ArrayList<ToiletDTO> toiletDTOS = inquireToiletParkingDAO.inquireToiletByLocation(packetArr[1],packetArr[2],packetArr[3]);
+                    			ArrayList<ToiletDTO> toiletDTOS = inquireToiletParkingDAO.inquireToiletByLocation(packetArr[2],packetArr[3],packetArr[4]);
 
 								if(toiletDTOS!=null) {
 									bufferedWriter.write(Protocol.PT_RES_VIEW + "`" + Protocol.RES_TOILET_Y);
@@ -160,6 +166,8 @@ public class Server extends Thread{
                     		}
                     		case Protocol.REQ_DESTINATION_LOCATION:{
                     			InquireByLocationDAO inquireByLocationDAO = new InquireByLocationDAO();
+                    			ArrayList<DestinationDTO>
+
                     			break;
                     		}
                     		case Protocol.REQ_STATISTICS:{
@@ -168,12 +176,26 @@ public class Server extends Thread{
                     			break;
                     		}
                     		case Protocol.REQ_MYPAGE:{
+                    			MyPageDAO myPageDAO = new MyPageDAO();
+                    			UserDTO userDTO = myPageDAO.roadUser(id);
+								ArrayList<ReviewDTO> arrayList = myPageDAO.inquireMyReview(id);
+								ArrayList<FavoriteDTO> arrayList1 = myPageDAO.inquiryFavorite(id);
+
+								if(userDTO != null){
+									bufferedWriter.write(Protocol.PT_RES_VIEW + "`" + Protocol.RES_MYPAGE_Y);
+									writeObject(userDTO);
+									writeObject(arrayList);
+									writeObject(arrayList1);
+								}
+								else{
+									bufferedWriter.write(Protocol.PT_RES_VIEW + "`" + Protocol.RES_MYPAGE_N);
+								}
 
                     			break;
                     		}
 							case Protocol.REQ_ID_DUPLICATION:{
 								UserDAO userDAO = new UserDAO();
-								boolean check = userDAO.duplicationId(packetArr[1]);
+								boolean check = userDAO.duplicationId(packetArr[2]);
 
 								if(!check){
 									bufferedWriter.write(Protocol.PT_RES_VIEW + "`" + Protocol.RES_ID_DUPLICATION_Y);
@@ -193,10 +215,6 @@ public class Server extends Thread{
                     			UserDAO userDAO = new UserDAO();
                     			UserDTO userDTO = (UserDTO)objectInputStream.readObject();
                     			
-                    			boolean isDuplicationId = userDAO.duplicationId(userDTO.getId());
-                    			if (!isDuplicationId)
-                    				bufferedWriter.write(Protocol.PT_RES_RENEWAL + "`" + Protocol.RES_SIGNUP_N);
-                    			
                     			boolean isInsertUser = userDAO.insertUser(userDTO);
                     			if (isInsertUser) 
                     				bufferedWriter.write(Protocol.PT_RES_RENEWAL + "`" + Protocol.RES_SIGNUP_Y);
@@ -205,27 +223,69 @@ public class Server extends Thread{
                     			break;
                     		}
                     		case Protocol.REQ_CREATE_REVIEW:{
-                    			
-                    			break;
-                    		}
-                    		case Protocol.REQ_UPDATE_REVIEW:{
-                    			
+                    			DetailDAO detailDAO = new DetailDAO();
+                    			ReviewDTO reviewDTO = (ReviewDTO)objectInputStream.readObject();
+
+                    			boolean isInsertReview = detailDAO.insertReview(reviewDTO);
+                    			if(isInsertReview){
+									bufferedWriter.write(Protocol.PT_RES_RENEWAL + "`" + Protocol.RES_CREATE_REVIEW_Y);
+								}
+                    			else{
+									bufferedWriter.write(Protocol.PT_RES_RENEWAL + "`" + Protocol.RES_CREATE_REVIEW_N);
+								}
                     			break;
                     		}
                     		case Protocol.REQ_DELETE_REVIEW:{
-                    			
+                    			MyPageDAO myPageDAO = new MyPageDAO();
+                    			boolean isDeleteReview = myPageDAO.deleteReview( Integer.parseInt(packetArr[2]));
+
+                    			if(isDeleteReview){
+									bufferedWriter.write(Protocol.PT_RES_RENEWAL + "`" + Protocol.RES_CREATE_REVIEW_Y);
+								}
+                    			else{
+									bufferedWriter.write(Protocol.PT_RES_RENEWAL + "`" + Protocol.RES_CREATE_REVIEW_N);
+								}
+
                     			break;
                     		}
                     		case Protocol.REQ_UPDATE_USER:{
-                    			
+                    			MyPageDAO myPageDAO = new MyPageDAO();
+                    			UserDTO userDTO = (UserDTO)objectInputStream.readObject();
+
+                    			boolean check = myPageDAO.reservationUser(userDTO);
+								if(check){
+									bufferedWriter.write(Protocol.PT_RES_RENEWAL + "`" + Protocol.RES_CREATE_REVIEW_Y);
+								}
+								else{
+									bufferedWriter.write(Protocol.PT_RES_RENEWAL + "`" + Protocol.RES_CREATE_REVIEW_N);
+								}
+
                     			break;
                     		}
-                    		case Protocol.REQ_CREATE_BOOKMARK:{
-                    			
+                    		case Protocol.REQ_CREATE_FAVORITES:{
+                    			FavoriteDAO favoriteDAO = new FavoriteDAO();
+								boolean check = favoriteDAO.addFavorite(packetArr[2], packetArr[3]);
+
+								if(check){
+									bufferedWriter.write(Protocol.PT_RES_RENEWAL + "`" + Protocol.RES_CREATE_FAVORITES_Y);
+								}
+								else{
+									bufferedWriter.write(Protocol.PT_RES_RENEWAL + "`" + Protocol.RES_CREATE_FAVORITES_N);
+								}
+
                     			break;
                     		}
-                    		case Protocol.REQ_DELETE_BOOKMARK:{
-                    			
+                    		case Protocol.REQ_DELETE_FAVORITES:{
+                    			MyPageDAO myPageDAO = new MyPageDAO();
+                    			boolean check = myPageDAO.deleteFavorite(Integer.parseInt(packetArr[2]));
+
+                    			if(check){
+									bufferedWriter.write(Protocol.PT_RES_RENEWAL + "`" + Protocol.RES_DELETE_FAVORITES_Y);
+								}
+                    			else{
+									bufferedWriter.write(Protocol.PT_RES_RENEWAL + "`" + Protocol.RES_DELETE_FAVORITES_N);
+								}
+
                     			break;
                     		}
                     	}
