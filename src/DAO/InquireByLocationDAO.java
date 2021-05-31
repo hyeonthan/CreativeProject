@@ -63,7 +63,7 @@ public class InquireByLocationDAO {
     public ArrayList<BeachDTO> inquireBeachByLocation(String selLatitude, String selLongitude, String range) {
         ArrayList<BeachDTO> dtos = new ArrayList<BeachDTO>();
         try {
-            String query = "SELECT *,(6371*acos(cos(radians(" + selLatitude + "))*cos(radians(latitude))*cos(radians(longitude)-radians(" + selLongitude + "))+sin(radians(" + selLatitude + "))*sin(radians(latitude)))) AS distance FROM beach HAVING distance <= " + range;
+            String query = "select * from destination where beach_code in (select code from beach where 6371*acos(cos(radians("+selLatitude+"))*cos(radians(latitude))*cos(radians(longitude)-radians("+selLongitude+"))+sin(radians(37.30157898))*sin(radians(latitude))) <="+range+")";
 
             conn = DBconnection.getConnection();
             pstmt = conn.prepareStatement(query);
