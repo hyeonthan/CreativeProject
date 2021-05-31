@@ -167,17 +167,16 @@ public class DetailDAO {
             rs = pstmt.executeQuery();
 
             while(rs.next()){
-                int no = rs.getInt("no");
                 String user_id= rs.getString("user_id");
                 String content= rs.getString("content");
                 int scope= rs.getInt("scope");
                 Timestamp reporting_date = rs.getTimestamp("reporting_date");
                 String destination_code =rs.getString("destination_code");
                 String destination_name = rs.getString("destination_name");
-                Timestamp modify_date = rs.getTimestamp("modify_date)");
+                Timestamp modify_date = rs.getTimestamp("modify_date");
                 byte[] image = rs.getBytes("image");
 
-                ReviewDTO dto = new ReviewDTO(no, user_id, content,scope, destination_code, destination_name,modify_date, reporting_date, image);
+                ReviewDTO dto = new ReviewDTO(user_id, content,scope, destination_code, destination_name,modify_date, reporting_date, image);
                 dtos.add(dto);
             }
 
@@ -201,11 +200,10 @@ public class DetailDAO {
     }
 
     // 리뷰 추가
-    public boolean inquireReview(ReviewDTO dto){
-        boolean check =false;
+    public void inquireReview(ReviewDTO dto){
         try {
-            String query = "insert into reviews values(?,?,?,?,?,?,?,?,?)";
-            String query2= "select sum(scope)/cnt(*) from review where destination_code =?";
+            String query = "insert into review(user_id, content, scope, reporting_date, destination_code, destination_name, modify_date, image) values(?,?,?,?,?,?,?,?)";
+            String query2= "select sum(scope)/count(*) from review where destination_code =?";
             String query3 = "update destination set scope=? where code= ?";
 
             conn= DBconnection.getConnection();
@@ -216,12 +214,14 @@ public class DetailDAO {
             pstmt.setString(1,dto.getUser_id());
             pstmt.setString(2,dto.getContent());
             pstmt.setInt(3,dto.getScope());
-            pstmt.setString(4,dto.getDestination_code());
-            pstmt.setString(5,dto.getDestination_name());
-            pstmt.setTimestamp(6,dto.getModify_date());
-            pstmt.setTimestamp(7, dto.getReporting_date());
+            pstmt.setTimestamp(4, dto.getReporting_date());
+            pstmt.setString(5,dto.getDestination_code());
+            pstmt.setString(6,dto.getDestination_name());
+            pstmt.setTimestamp(7,dto.getModify_date());
             pstmt.setBytes(8,dto.getImage());
             pstmt.executeUpdate();
+            // pstmt.close();
+            // conn.close();
 
             int scope=0;
             pstmt = conn.prepareStatement(query2);
@@ -230,6 +230,8 @@ public class DetailDAO {
             while(rs.next()){
                 scope= rs.getInt(1);
             }
+            // pstmt.close();
+            // conn.close();
 
             pstmt = conn.prepareStatement(query3);
             pstmt.setInt(1,scope);
@@ -237,7 +239,6 @@ public class DetailDAO {
             pstmt.executeUpdate();
 
             conn.commit();
-            check =true;
 
         }
         catch (SQLException sqlException) {
@@ -261,7 +262,6 @@ public class DetailDAO {
                 throw new RuntimeException(e.getMessage());
             }
         }
-        return check;
     }
 
     // 성별 통계 가져오기
@@ -407,5 +407,39 @@ public class DetailDAO {
         }
         return hsMap;
     }
+    public void viewsCountIncrease(String destinationCode){
+        try{
+            String query = "UPDATE destination SET views = views+1 WHERE code = ?";
 
+            conn = DBconnection.getConnection();
+            conn.setAutoCommit(false);
+            sp = conn.setSavepoint("Savepoint1");
+
+            pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, destinationCode);
+            pstmt.executeUpdate();
+
+            conn.commit();
+        } catch (SQLException sqlException) {
+            try {
+                System.out.println("rollback 실행");
+                conn.rollback(sp);
+                sqlException.printStackTrace();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } finally {
+            try {
+                conn.setAutoCommit(true);
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
