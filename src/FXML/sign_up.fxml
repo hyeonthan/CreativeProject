@@ -16,8 +16,8 @@
             <Font size="39.0" />
          </font>
       </Text>
-      <TextField fx:id="tf_id" layoutX="133.0" layoutY="143.0" prefHeight="28.0" prefWidth="132.0" promptText="아이디" />
-      <PasswordField fx:id="pf_password" layoutX="133.0" layoutY="181.0" prefHeight="23.0" prefWidth="132.0" promptText="비밀번호" />
+      <TextField fx:id="tf_id" layoutX="131.0" layoutY="143.0" prefHeight="28.0" prefWidth="132.0" promptText="아이디" />
+      <PasswordField fx:id="pf_password" layoutX="131.0" layoutY="181.0" prefHeight="23.0" prefWidth="132.0" promptText="비밀번호" />
       <PasswordField fx:id="pf_passwordCheck" layoutX="130.0" layoutY="214.0" prefHeight="23.0" prefWidth="132.0" promptText="비밀번호 확인" />
       <TextField fx:id="tf_name" layoutX="130.0" layoutY="246.0" prefHeight="28.0" prefWidth="132.0" promptText="이름" />
       <TextField fx:id="tf_age" layoutX="347.0" layoutY="143.0" prefHeight="28.0" prefWidth="132.0" promptText="나이" />
@@ -52,5 +52,6 @@
       <MenuButton fx:id="mb_city" layoutX="347.0" layoutY="246.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="132.0" text="시/군" />
       <Button fx:id="btn_signUp" layoutX="234.0" layoutY="319.0" mnemonicParsing="false" onAction="#signUp" text="가입" />
       <Button fx:id="btn_cancle" layoutX="347.0" layoutY="319.0" mnemonicParsing="false" onAction="#cancle" text="취소" />
+      <Button layoutX="265.0" layoutY="143.0" mnemonicParsing="false" onAction="#handleBtnDuplicateCheck" prefHeight="28.0" prefWidth="70.0" text="중복체크" />
    </children>
 </AnchorPane>
