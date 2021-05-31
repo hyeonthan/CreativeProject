@@ -79,7 +79,7 @@ public class MypageController implements Initializable {
 		cbBoxGender.setDisable(true);
 		tfAddress.setDisable(true);
 	}
-	
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		//	즐겨찾기 테이블 초기화
@@ -188,7 +188,7 @@ public class MypageController implements Initializable {
 			e.printStackTrace();
 		}
 	}
-
+	//	*************************리뷰 삭제시 scope도 변화
 	@FXML // 리뷰 삭제 버튼 클릭
 	public void deleteReview(ActionEvent event) {
 		try {
