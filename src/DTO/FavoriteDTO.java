@@ -10,6 +10,7 @@ public class FavoriteDTO implements Serializable {
     private String destination_name;
     private Timestamp add_date;
     private String sortation;
+
     public FavoriteDTO(int no, String user_id, String destination_code, String destination_name, Timestamp add_date, String sortation) {
         this.no = no;
         this.user_id = user_id;

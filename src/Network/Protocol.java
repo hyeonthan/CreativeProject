@@ -60,8 +60,8 @@ public class Protocol {
     public static final String REQ_UPDATE_REVIEW = "8-2";           //리뷰 수정 요청
     public static final String REQ_DELETE_REVIEW = "8-3";           //리뷰 삭제 요청
     public static final String REQ_UPDATE_USER = "8-4";             //회원정보 수정 요청
-    public static final String REQ_CREATE_BOOKMARK = "8-5";         //즐겨찾기 등록 요청
-    public static final String REQ_DELETE_BOOKMARK ="8-6";          //즐겨찾기 삭제 요청
+    public static final String REQ_CREATE_FAVORITES = "8-5";         //즐겨찾기 등록 요청
+    public static final String REQ_DELETE_FAVORITES ="8-6";          //즐겨찾기 삭제 요청
 
     //갱신 요청에 대한 응답답
     public static final String RES_SIGNUP_Y = "9-0";                  //회원가입 요청 성공  
@@ -74,9 +74,9 @@ public class Protocol {
     public static final String RES_DELETE_REVIEW_N = "9-7";           //리뷰 삭제 요청 실채
     public static final String RES_UPDATE_USER_Y = "9-8";             //회원정보 수정 요청 성공
     public static final String RES_UPDATE_USER_N = "9-9";             //회원정보 수정 요청 실패
-    public static final String RES_CREATE_BOOKMARK_Y = "9-A";         //즐겨찾기 등록 요청 성공
-    public static final String RES_CREATE_BOOKMARK_N = "9-B";         //즐겨찾기 등록 요청 실패
-    public static final String RES_DELETE_BOOKMARK_Y ="9-C";          //즐겨찾기 삭제 요청 성공
-    public static final String RES_DELETE_BOOKMARK_N ="9-D";          //즐겨찾기 삭제 요청 실패
+    public static final String RES_CREATE_FAVORITES_Y = "9-A";         //즐겨찾기 등록 요청 성공
+    public static final String RES_CREATE_FAVORITES_N = "9-B";         //즐겨찾기 등록 요청 실패
+    public static final String RES_DELETE_FAVORITES_Y ="9-C";          //즐겨찾기 삭제 요청 성공
+    public static final String RES_DELETE_FAVORITES_N ="9-D";          //즐겨찾기 삭제 요청 실패
 
 }

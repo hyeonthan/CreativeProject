@@ -67,7 +67,8 @@ public class MyPageDAO {
         return list;
     }
     //  즐겨찾기 삭제
-    public void deleteFavorite(int no){
+    public boolean deleteFavorite(int no){
+        boolean check= false;
         String sql = "DELETE FROM favorite WHERE no = ?";
         try{
             conn = DBconnection.getConnection();
@@ -79,6 +80,7 @@ public class MyPageDAO {
 
             psmt.executeUpdate();
             conn.commit();
+            check = true;
         }catch(SQLException sqle1){
             try{
                 System.out.println("rollback 실행");
@@ -99,6 +101,7 @@ public class MyPageDAO {
                 e.printStackTrace();
             }
         }
+        return check;
     }
     //  회원 정보(userDTO) 불러오기
     public UserDTO roadUser(String userId){
@@ -140,24 +143,26 @@ public class MyPageDAO {
         return userDTO;
     }
     //  회원 정보 수정하기
-    public void reservationUser(String userId, String name, String age, String gender, String Do, String city, String address){
+    public boolean reservationUser(UserDTO userDTO){
+        boolean check= false;
         String sql = "UPDATE user SET name=?, age=?, gender=?, Do=?, city=?, address=?, modify_date=? WHERE id=?";
         try{
             conn = DBconnection.getConnection();
             conn.setAutoCommit(false);
             sp = conn.setSavepoint("SavePoint1");
             psmt = conn.prepareStatement(sql);
-            psmt.setString(1, name);
-            psmt.setString(2, age);
-            psmt.setString(3, gender);
-            psmt.setString(4, Do);
-            psmt.setString(5, city);
-            psmt.setString(6, address);
-            psmt.setTimestamp(7, Timestamp.valueOf(LocalDateTime.now()));
-            psmt.setString(8, userId);
+            psmt.setString(1, userDTO.getName());
+            psmt.setInt(2, userDTO.getAge());
+            psmt.setString(3, userDTO.getGender());
+            psmt.setString(4, userDTO.getDo());
+            psmt.setString(5, userDTO.getCity());
+            psmt.setString(6, userDTO.getAddress());
+            psmt.setTimestamp(7, userDTO.getModify_date());
+            psmt.setString(8, userDTO.getId());
 
             psmt.executeUpdate();
             conn.commit();
+            check = true;
         } catch (SQLException sqlException) {
             try {
                 System.out.println("rollback 실행");
@@ -179,6 +184,7 @@ public class MyPageDAO {
                e.printStackTrace();
             }
         }
+        return check;
     }
     //  최근 조회 리스트 불러오기
    

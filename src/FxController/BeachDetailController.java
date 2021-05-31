@@ -163,7 +163,7 @@ public class BeachDetailController extends Object implements Initializable {
 		Timestamp reportingDate = Timestamp.valueOf(LocalDateTime.now());
 		ReviewDTO reviewDTO = new ReviewDTO(userId, content, scope, destinationCode, destinationName, null, reportingDate, imageInByte);
 		DetailDAO detailDAO = new DetailDAO();
-		detailDAO.inquireReview(reviewDTO);
+		detailDAO.insertReview(reviewDTO);
 		ShowAlert.showAlert("INFORMATION", "알림창", "리뷰 등록 완료");
 		setDestinationCode(destinationCode);
 	}

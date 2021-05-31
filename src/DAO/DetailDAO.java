@@ -201,7 +201,8 @@ public class DetailDAO {
     }
 
     // 리뷰 추가
-    public void inquireReview(ReviewDTO dto){
+    public boolean insertReview(ReviewDTO dto){
+        boolean check = false;
         try {
             String query = "insert into review(user_id, content, scope, reporting_date, destination_code, destination_name, modify_date, image) values(?,?,?,?,?,?,?,?)";
             String query2= "select sum(scope)/count(*) from review where destination_code =?";
@@ -240,6 +241,7 @@ public class DetailDAO {
             pstmt.executeUpdate();
 
             conn.commit();
+            check = true;
 
         }
         catch (SQLException sqlException) {
@@ -263,6 +265,7 @@ public class DetailDAO {
                 throw new RuntimeException(e.getMessage());
             }
         }
+        return check;
     }
 
     // 성별 통계 가져오기

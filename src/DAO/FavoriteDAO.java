@@ -10,14 +10,15 @@ public class FavoriteDAO {
     private Connection conn;
     private ResultSet rs;
     
-    FavoriteDAO(){
+    public FavoriteDAO(){
         psmt = null;
         conn = null;
         rs = null;
     }
  
     //  즐겨찾기 추가
-    public void addFavorite(String userId, String destinationCode){
+    public boolean addFavorite(String userId, String destinationCode){
+        boolean check = false;
         String sql1 = "SELECT destination_name FROM destination WHERE destination_code = ?";
         String sql2 = "INSERT INTO favorite(user_id, destination_code, destination_name, add_date, sortation) VALUES(?,?,?,?,?)";
         try{
@@ -43,6 +44,7 @@ public class FavoriteDAO {
             psmt.setString(5, sortation);
 
             psmt.executeUpdate();
+            check =true;
         }catch(SQLException sqle){
             sqle.printStackTrace();
         }finally{
@@ -57,6 +59,7 @@ public class FavoriteDAO {
                 e.printStackTrace();
             }
         }
+        return check;
     }
 
     
