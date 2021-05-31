@@ -1,7 +1,6 @@
 package Network;
 
-import DAO.DetailDAO;
-import DAO.InquireToiletParkingDAO;
+import DAO.*;
 import DBcontrol.DBconnection;
 
 import java.io.BufferedReader;
@@ -14,14 +13,9 @@ import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.function.ToLongBiFunction;
 
 import DTO.*;
 
-import DAO.UserDAO;
-
-import javax.xml.soap.Detail;
 
 public class Server extends Thread{
     Socket socket;
@@ -49,7 +43,7 @@ public class Server extends Thread{
 
             while(true) {
                 String packet = bufferedReader.readLine();
-                String packetArr[] = packet.split("|");
+                String packetArr[] = packet.split("`");
                 String packetType = packetArr[0]; // 프로토콜 타입 구분
 
                 switch (packetType) {
@@ -66,87 +60,102 @@ public class Server extends Thread{
                     		UserDAO userDao = new UserDAO();
                     		boolean isCorrectUser = userDao.checkUser(loginId,  loginPassword);
                     		if (isCorrectUser) 
-                    			writePacket(Protocol.PT_RES_LOGIN + "|" + Protocol.RES_LOGIN_Y);
+                    			writePacket(Protocol.PT_RES_LOGIN + "`" + Protocol.RES_LOGIN_Y);
                     		else
-                    			writePacket(Protocol.PT_RES_LOGIN + "|" + Protocol.RES_LOGIN_N);
+                    			writePacket(Protocol.PT_RES_LOGIN + "`" + Protocol.RES_LOGIN_N);
                     	} catch (Exception e) {
                     		e.printStackTrace();
                     	}
                     	break;
                     }
-                    case Protocol.PT_REQ_VIEW: {
+                    case Protocol.PT_REQ_VIEW: {	//조회 요청
                     	String packetCode = packetArr[1];
                     	switch (packetCode) {
-                    		case Protocol.REQ_DESTINATION_REGION:{
-                    			
+                    		case Protocol.REQ_DESTINATION_REGION:{	//지역으로 전체 검색
+								InquireByRegionDAO inquireByRegionDAO = new InquireByRegionDAO();
+								ArrayList<DestinationDTO> destinationDTOS = inquireByRegionDAO.inquireDestinationByRegion(packetArr[1],packetArr[2],packetArr[3]);
+
+								if(destinationDTOS != null){
+									bufferedWriter.write(Protocol.PT_RES_VIEW + "`" + Protocol.RES_DESTINATION_REGION_Y);
+									writeObject(destinationDTOS);
+								}
+								else{
+									bufferedWriter.write(Protocol.PT_RES_VIEW + "`" + Protocol.RES_DESTINATION_REGION_N);
+								}
                     			break;
                     		}
                     		case Protocol.REQ_TOURIST_DETAIL:{
 								DetailDAO detailDAO = new DetailDAO();
+								DestinationDTO destinationDTO = (DestinationDTO) objectInputStream.readObject();
 
-								TouristSpotDTO touristSpotDTO = detailDAO.detailTouristSpot(packetArr[1]);
-								ArrayList<ReviewDTO> arrayList = detailDAO.inquireReview(packetArr[1]);
-								Iterator<ReviewDTO> iter = arrayList.iterator();
+								TouristSpotDTO touristSpotDTO = detailDAO.detailTouristSpot(destinationDTO.getTouristSpot_code());
+								ArrayList<ReviewDTO> arrayList = detailDAO.inquireReview(destinationDTO.getCode());
 
-								if (touristSpotDTO!=null) {
-									bufferedWriter.write(Protocol.PT_RES_VIEW + "|" + Protocol.RES_TOURIST_DETAIL_Y + "|" + touristSpotDTO);
-									while(iter.hasNext()){
-										ReviewDTO reviewDTO = iter.next();
-										bufferedWriter.write(Protocol.PT_RES_VIEW + "|" + Protocol.RES_TOURIST_DETAIL_Y + "|" + reviewDTO);
-									}
+								if (touristSpotDTO != null) {
+									bufferedWriter.write(Protocol.PT_RES_VIEW + "`" + Protocol.RES_TOURIST_DETAIL_Y);
+									writeObject(touristSpotDTO);
+									writeObject(arrayList);
 								}
 								else
-									bufferedWriter.write(Protocol.PT_RES_VIEW + "|" + Protocol.RES_TOURIST_DETAIL_N);
+									bufferedWriter.write(Protocol.PT_RES_VIEW + "`" + Protocol.RES_TOURIST_DETAIL_N);
                     			break;
                     		}
                     		case Protocol.REQ_FOREST_DETAIL:{
 								DetailDAO detailDAO = new DetailDAO();
+								DestinationDTO destinationDTO = (DestinationDTO) objectInputStream.readObject();
 
-								ForestLodgeDTO forestLodgeDTO = detailDAO.detailForestLodge(packetArr[1]);
-								if (forestLodgeDTO!=null)
-									bufferedWriter.write(Protocol.PT_RES_VIEW + "|" + Protocol.RES_FOREST_DETAIL_Y+"|"+forestLodgeDTO);
+								ForestLodgeDTO forestLodgeDTO = detailDAO.detailForestLodge(destinationDTO.getForestLodge_code());
+								ArrayList<ReviewDTO> arrayList = detailDAO.inquireReview(destinationDTO.getCode());
+
+								if (forestLodgeDTO!=null) {
+									bufferedWriter.write(Protocol.PT_RES_VIEW + "`" + Protocol.RES_FOREST_DETAIL_Y);
+									writeObject(forestLodgeDTO);
+									writeObject(arrayList);
+								}
 								else
-									bufferedWriter.write(Protocol.PT_RES_VIEW + "|" + Protocol.RES_FOREST_DETAIL_N);
+									bufferedWriter.write(Protocol.PT_RES_VIEW + "`" + Protocol.RES_FOREST_DETAIL_N);
                     			break;
                     		}
                     		case Protocol.REQ_BEACH_DETAIL:{
 								DetailDAO detailDAO = new DetailDAO();
+								DestinationDTO destinationDTO = (DestinationDTO) objectInputStream.readObject();
 
-								BeachDTO beachDTO = detailDAO.detailBeach(packetArr[1]);
-								if (beachDTO!=null)
-									bufferedWriter.write(Protocol.PT_RES_VIEW + "|" + Protocol.RES_BEACH_DETAIL_Y+"|"+beachDTO);
-								else
-									bufferedWriter.write(Protocol.PT_RES_VIEW + "|" + Protocol.RES_BEACH_DETAIL_N);
-                    			break;
-                    		}
-                    		case Protocol.REQ_REVIEW_DETAIL:{
-								 detailDAO = new DetailDAO();
+								ForestLodgeDTO beachDTO = detailDAO.detailForestLodge(destinationDTO.getBeach_code());
+								ArrayList<ReviewDTO> arrayList = detailDAO.inquireReview(destinationDTO.getCode());
 
-								BeachDTO beachDTO = detailDAO.detailBeach(packetArr[1]);
-								if (beachDTO!=null)
-									bufferedWriter.write(Protocol.PT_RES_VIEW + "|" + Protocol.RES_BEACH_DETAIL_Y+"|"+beachDTO);
+								if (beachDTO!=null) {
+									bufferedWriter.write(Protocol.PT_RES_VIEW + "`" + Protocol.RES_BEACH_DETAIL_Y);
+									writeObject(beachDTO);
+									writeObject(arrayList);
+								}
 								else
-									bufferedWriter.write(Protocol.PT_RES_VIEW + "|" + Protocol.RES_BEACH_DETAIL_N);
+									bufferedWriter.write(Protocol.PT_RES_VIEW + "`" + Protocol.RES_BEACH_DETAIL_N);
                     			break;
                     		}
                     		case Protocol.REQ_TOILET:{
 								InquireToiletParkingDAO inquireToiletParkingDAO = new InquireToiletParkingDAO();
-
                     			ArrayList<ToiletDTO> toiletDTOS = inquireToiletParkingDAO.inquireToiletByLocation(packetArr[1],packetArr[2],packetArr[3]);
-								Iterator<ToiletDTO> iter = toiletDTOS.iterator();
 
-								if(iter!=null) {
-									while (iter.hasNext()) {
-										bufferedWriter.write(Protocol.PT_RES_VIEW + "|" + Protocol.RES_TOILET_Y + "|" + iter.next());
-									}
+								if(toiletDTOS!=null) {
+									bufferedWriter.write(Protocol.PT_RES_VIEW + "`" + Protocol.RES_TOILET_Y);
+									writeObject(toiletDTOS);
 								}
 								else{
-									bufferedWriter.write(Protocol.PT_RES_VIEW + "|" + Protocol.RES_TOILET_N);
+									bufferedWriter.write(Protocol.PT_RES_VIEW + "`" + Protocol.RES_TOILET_N);
 								}
                     			break;
                     		}
                     		case Protocol.REQ_PARKING:{
+                    			InquireToiletParkingDAO inquireToiletParkingDAO = new InquireToiletParkingDAO();
+                    			ArrayList<ParkingLotsDTO> parkingLotsDTOS = inquireToiletParkingDAO.inquireParkingLotByLocation(packetArr[1],packetArr[2],packetArr[3]);
 
+								if(parkingLotsDTOS!=null) {
+									bufferedWriter.write(Protocol.PT_RES_VIEW + "`" + Protocol.RES_PARKING_Y);
+									writeObject(parkingLotsDTOS);
+								}
+								else{
+									bufferedWriter.write(Protocol.PT_RES_VIEW + "`" + Protocol.RES_PARKING_N);
+								}
                     			break;
                     		}
                     		case Protocol.REQ_DESTINATION_LOCATION:{
@@ -154,6 +163,7 @@ public class Server extends Thread{
                     			break;
                     		}
                     		case Protocol.REQ_STATISTICS:{
+                    			StatisticsDAO statisticsDAO = new StatisticsDAO();
 
                     			break;
                     		}
@@ -173,13 +183,13 @@ public class Server extends Thread{
                     			
                     			boolean isDuplicationId = userDAO.duplicationId(userDTO.getId());
                     			if (!isDuplicationId)
-                    				bufferedWriter.write(Protocol.PT_RES_RENEWAL + "|" + Protocol.RES_SIGNUP_N);
+                    				bufferedWriter.write(Protocol.PT_RES_RENEWAL + "`" + Protocol.RES_SIGNUP_N);
                     			
                     			boolean isInsertUser = userDAO.insertUser(userDTO);
                     			if (isInsertUser) 
-                    				bufferedWriter.write(Protocol.PT_RES_RENEWAL + "|" + Protocol.RES_SIGNUP_Y);
+                    				bufferedWriter.write(Protocol.PT_RES_RENEWAL + "`" + Protocol.RES_SIGNUP_Y);
                     			else
-                    				bufferedWriter.write(Protocol.PT_RES_RENEWAL + "|" + Protocol.RES_SIGNUP_N);
+                    				bufferedWriter.write(Protocol.PT_RES_RENEWAL + "`" + Protocol.RES_SIGNUP_N);
                     			break;
                     		}
                     		case Protocol.REQ_CREATE_REVIEW:{

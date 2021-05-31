@@ -14,7 +14,8 @@ public class StatisticsDAO {
     private Connection conn;
     private PreparedStatement psmt;
     private ResultSet rs;
-    //  조회수 구분 없이 모두 가져오기
+
+    //조회수 구분 없이 모두 가져오기
     public ArrayList<DestinationDTO> loadViewsStat(){
         String sql = "SELECT code, sortation, name, views FROM destination";
         ArrayList<DestinationDTO> list = new ArrayList<DestinationDTO>();
@@ -52,7 +53,7 @@ public class StatisticsDAO {
         }
         return list;
     }
-     //  조회수 모두 가져오기
+     //조회수 모두 가져오기
      public ArrayList<DestinationDTO> loadViewsStat(String sortation){
         String sql = "SELECT code, name, views FROM destination WHERE sortation = ?";
         ArrayList<DestinationDTO> list = new ArrayList<DestinationDTO>();
