@@ -11,6 +11,7 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.sql.SQLException;
+import DTO.UserDTO;
 
 import DAO.UserDAO;
 
@@ -57,9 +58,9 @@ public class Server extends Thread{
                     		UserDAO userDao = new UserDAO();
                     		boolean isCorrectUser = userDao.checkUser(loginId,  loginPassword);
                     		if (isCorrectUser) 
-                    			writePacket(Protocol.PT_RES_LOGIN + "|" + "1");
+                    			writePacket(Protocol.PT_RES_LOGIN + "|" + Protocol.RES_LOGIN_Y);
                     		else
-                    			writePacket(Protocol.PT_RES_LOGIN + "|" + "2");
+                    			writePacket(Protocol.PT_RES_LOGIN + "|" + Protocol.RES_LOGIN_N);
                     	} catch (Exception e) {
                     		e.printStackTrace();
                     	}
@@ -118,8 +119,19 @@ public class Server extends Thread{
                     case Protocol.PT_REQ_RENEWAL:{
                     	String packetCode = packetArr[1];
                     	switch (packetCode) {
-                    		case Protocol.REQ_SINGUP:{
+                    		case Protocol.REQ_SIGNUP:{
+                    			UserDAO userDAO = new UserDAO();
+                    			UserDTO userDTO = (UserDTO)objectInputStream.readObject();
                     			
+                    			boolean isDuplicationId = userDAO.duplicationId(userDTO.getId());
+                    			if (!isDuplicationId)
+                    				bufferedWriter.write(Protocol.PT_RES_RENEWAL + "|" + Protocol.RES_SIGNUP_N);
+                    			
+                    			boolean isInsertUser = userDAO.insertUser(userDTO);
+                    			if (isInsertUser) 
+                    				bufferedWriter.write(Protocol.PT_RES_RENEWAL + "|" + Protocol.RES_SIGNUP_Y);
+                    			else
+                    				bufferedWriter.write(Protocol.PT_RES_RENEWAL + "|" + Protocol.RES_SIGNUP_N);
                     			break;
                     		}
                     		case Protocol.REQ_CREATE_REVIEW:{
