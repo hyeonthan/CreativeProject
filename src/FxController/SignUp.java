@@ -23,38 +23,38 @@ import javafx.stage.Stage;
 public class SignUp {
 
 	@FXML
-	public TextField tf_id;
+	private TextField tf_id;
 	
 	@FXML
-	public PasswordField pf_password;
+	private PasswordField pf_password;
 	
 	@FXML // 비밀번호 확인
-	public PasswordField pf_passwordCheck;
+	private PasswordField pf_passwordCheck;
 	
 	@FXML
-	public TextField tf_name;
+	private TextField tf_name;
 
 	@FXML
-	public TextField tf_age;
+	private TextField tf_age;
 
 	@FXML
-	public MenuButton mb_gender;
+	private MenuButton mb_gender;
 	
 	@FXML // 주소 도, 광역시
-	public MenuButton mb_do;
+	private MenuButton mb_do;
 	
 	@FXML // 주소 시/군
-	public MenuButton mb_city;
+	private MenuButton mb_city;
 	
 	@FXML // 상세주소
-	public TextField tf_detailAddress;
+	private TextField tf_detailAddress;
 	
 	@FXML
-	public Button btn_signUp;
+	private Button btn_signUp;
 	
 	@FXML
-	public Button btn_cancle;
-
+	private Button btn_cancle;
+	private boolean checkId;
 	@FXML
 	public void selectGender(ActionEvent event) {
 		try {
@@ -311,11 +311,29 @@ public class SignUp {
 			e.printStackTrace();
 		}
 	}
-	
+	//	ID 중복 체크
+	@FXML
+	public void handleBtnDuplicateCheck(ActionEvent event){
+		if(tf_id.getText().equals("")){
+			ShowAlert.showAlert("WARNING", "경고", "ID 미입력");
+		}
+		UserDAO userDAO = new UserDAO();
+		checkId = userDAO.duplicationId(tf_id.getText());
+		if(!checkId){
+			ShowAlert.showAlert("INFORMATION", "중복 체크 완료!", "아이디 사용 가능");
+		}			
+		else{
+			ShowAlert.showAlert("WARNING", "중복 체크 완료!", "아이디 이미 사용 중입니다.");
+		}
+	}
 	@FXML // 회원가입버튼 클릭
 	public void signUp(ActionEvent event) {
 		if(tf_id.getText().equals("")){
 			ShowAlert.showAlert("WARNING", "경고", "ID 미입력");
+			return;
+		}
+		else if(checkId){
+			ShowAlert.showAlert("WARNING", "경고", "중복체크 확인");
 			return;
 		}
 		else if(pf_password.getText().equals("")){

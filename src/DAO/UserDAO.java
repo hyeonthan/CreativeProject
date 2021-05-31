@@ -63,10 +63,10 @@ public class UserDAO {
     public boolean duplicationId(String id){
         boolean check = false;
         try{
-            String sql = "SELECT ID FROM USERS WHERE ID = ?";
+            String sql = "SELECT ID FROM USER WHERE ID = ?";
 
             conn = DBconnection.getConnection();
-            pstmt = conn.prepareStatement(sql);
+            pstmt = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
             pstmt.setString(1, id);
 
             rs = pstmt.executeQuery();
@@ -87,7 +87,7 @@ public class UserDAO {
                     conn.close();
                 }
             } catch (Exception e) {
-                throw new RuntimeException(e.getMessage());
+                e.printStackTrace();
             }
         }
         return check;

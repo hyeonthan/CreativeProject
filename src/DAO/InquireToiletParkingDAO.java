@@ -16,16 +16,13 @@ public class InquireToiletParkingDAO {
     private static ResultSet rs;
 
     // 화장실 위치로 검색
-    public static ArrayList<ToiletDTO> inquireToiletByLocation(double selLatitude, double selLongitude, int range){
+    public static ArrayList<ToiletDTO> inquireToiletByLocation(String selLatitude, String selLongitude, String range){
         ArrayList<ToiletDTO> dtos= new ArrayList<ToiletDTO>();
         try {
-            String query = "select * from toilet where power((latitude-?),2)+power((longitude-?),2)<?";
+            String query = "SELECT *,(6371*acos(cos(radians(" + selLatitude + "))*cos(radians(latitude))*cos(radians(longitude)-radians(" + selLongitude + "))+sin(radians("+ selLatitude + "))*sin(radians(latitude)))) AS distance FROM toilet HAVING distance <= " + range;
 
             conn= DBconnection.getConnection();
             pstmt = conn.prepareStatement(query);
-            pstmt.setDouble(1,selLatitude);
-            pstmt.setDouble(2,selLongitude);
-            pstmt.setInt(3,range);
             rs = pstmt.executeQuery();
 
             while(rs.next()){
