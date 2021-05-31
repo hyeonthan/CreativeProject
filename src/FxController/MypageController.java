@@ -79,6 +79,7 @@ public class MypageController implements Initializable {
 		cbBoxGender.setDisable(true);
 		tfAddress.setDisable(true);
 	}
+	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		//	즐겨찾기 테이블 초기화
