@@ -9,6 +9,7 @@ import java.net.URL;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 import javax.imageio.ImageIO;
@@ -25,6 +26,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
@@ -38,26 +40,26 @@ import javafx.stage.Stage;
 
 public class BeachDetailController extends Object implements Initializable {
 	
-	@FXML public Text resultTextName;
-	@FXML public Text resultTextAddress;
-	@FXML public Text resultTextPhoneNum;
-	@FXML public Text resultTextIntroduction;
-	@FXML public Text resultTextConvenient;
-	@FXML public Text reusltTextOpenPeriod;
-	@FXML public Text resultTextAvailableTime;
-	@FXML public Text resultTextHomepage;
-	@FXML public Button btn_favorite;
-	@FXML public Button btn_registerImg;
-	@FXML public ComboBox<Integer> cb_star;
+	@FXML private Text resultTextName;
+	@FXML private Text resultTextAddress;
+	@FXML private Text resultTextPhoneNum;
+	@FXML private Text resultTextIntroduction;
+	@FXML private Text resultTextConvenient;
+	@FXML private Text reusltTextOpenPeriod;
+	@FXML private Text resultTextAvailableTime;
+	@FXML private Text resultTextHomepage;
+	@FXML private Button btn_favorite;
+	@FXML private Button btn_registerImg;
+	@FXML private ComboBox<Integer> cb_star;
 	ObservableList<Integer> starList = FXCollections.observableArrayList(1, 2, 3, 4, 5);
-	@FXML public Button btn_registerReview;
-	@FXML public TextArea ta_reviewContent;
-	@FXML public TableView<ReviewDTO> tv_review;
-	@FXML public TableColumn<ReviewDTO, String> tc_date;
-	@FXML public TableColumn<ReviewDTO, String> tc_content;
-	@FXML public TableColumn<ReviewDTO, String> tc_star;
-	@FXML public TableColumn<ReviewDTO, String> tc_writer;
-
+	@FXML private Button btn_registerReview;
+	@FXML private TextArea ta_reviewContent;
+	@FXML private TableView<ReviewDTO> tv_review;
+	@FXML private TableColumn<ReviewDTO, String> tc_date;
+	@FXML private TableColumn<ReviewDTO, String> tc_content;
+	@FXML private TableColumn<ReviewDTO, String> tc_star;
+	@FXML private TableColumn<ReviewDTO, String> tc_writer;
+	@FXML private PieChart pieChart;
 	private String beachCode;	//	넘어온 beachCode 변수 저장
 	private String userId;		//	넘어온 userId 변수 저장
 	private String destinationCode;	// 	넘어온 destinationCode 변수 저장
@@ -106,6 +108,27 @@ public class BeachDetailController extends Object implements Initializable {
 		DetailDAO detailDAO = new DetailDAO();
 		detailDAO.addFavorite(userId, destinationCode, destinationName, "해수욕장");
 		ShowAlert.showAlert("INFORMATION", "알림창", "즐겨찾기 등록 완료!");
+	}
+	//	나이별 통계
+	@FXML
+	public void handleBtnAgeStat(ActionEvent event){
+		pieChart.getData().clear();
+		PieChart.Data pData;
+		DetailDAO detailDAO = new DetailDAO();
+		HashMap<Integer, Integer> hsMap = detailDAO.ageStatistic(destinationCode);
+		for(int i = 10; i <= 60; i+=10){
+			if(hsMap.get(i) != 0){
+				String age = Integer.toString(i) + "대";
+				System.out.println(age);
+				if(i == 60){
+					age += " 이상";
+				}
+				pData = new PieChart.Data(age, hsMap.get(i));
+				pieChart.getData().add(pData);
+			}
+		}
+		//pData = new PieChart.Data(expenseList.get(i).toString(), cnt);
+		//expensePie.getData().add(pData);
 	}
 	//	이미지 선택
 	@FXML
