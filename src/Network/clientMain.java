@@ -24,19 +24,19 @@ public class clientMain extends Application {
 	public static void main(String[] args) {
 		try {
 			String localHostAddress = InetAddress.getLocalHost().getHostAddress(); // ip 주소
-			Socket socket = new Socket(localHostAddress, 5000);
+			Socket socket = new Socket("192.168.237.50", 5000);
 			
 			bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-			objectInputStream = new ObjectInputStream(socket.getInputStream());
 			objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+			objectInputStream = new ObjectInputStream(socket.getInputStream());
 			
 			launch(args);
-			
-			bufferedReader.close();
-			bufferedWriter.close();
+
 			objectInputStream.close();
 			objectOutputStream.close();
+			bufferedWriter.close();
+			bufferedReader.close();
 			socket.close();
 		} catch (Exception e) {
 			e.printStackTrace();
