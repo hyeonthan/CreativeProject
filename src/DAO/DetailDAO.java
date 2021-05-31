@@ -1,6 +1,12 @@
 package DAO;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Savepoint;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -411,6 +417,7 @@ public class DetailDAO {
         }
         return hsMap;
     }
+    //  조회수 증가
     public void viewsCountIncrease(String destinationCode){
         try{
             String query = "UPDATE destination SET views = views+1 WHERE code = ?";
@@ -425,6 +432,46 @@ public class DetailDAO {
 
             conn.commit();
         } catch (SQLException sqlException) {
+            try {
+                System.out.println("rollback 실행");
+                conn.rollback(sp);
+                sqlException.printStackTrace();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } finally {
+            try {
+                conn.setAutoCommit(true);
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+      //  즐겨찾기 추가
+      public void addFavorite(String userId, String destinationCode, String destinationName, String sortation){
+        String query = "INSERT INTO favorite(user_id, destination_code, destination_name, add_date, sortation) VALUES(?,?,?,?,?)";
+        try{
+            //  ResultSet으로 destination_name get
+            conn = DBconnection.getConnection();
+            conn.setAutoCommit(false);
+            sp = conn.setSavepoint("Savepoint1");
+            
+            pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, userId);
+            pstmt.setString(2, destinationCode);
+            pstmt.setString(3, destinationName);
+            pstmt.setTimestamp(4, Timestamp.valueOf(LocalDateTime.now()));
+            pstmt.setString(5, sortation);
+
+            pstmt.executeUpdate();
+            conn.commit();
+        }catch (SQLException sqlException) {
             try {
                 System.out.println("rollback 실행");
                 conn.rollback(sp);

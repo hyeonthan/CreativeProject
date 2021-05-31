@@ -27,9 +27,7 @@ public class ReviewDetailController implements Initializable {
 	@FXML private Text tModifyDate;
 	@FXML private TextArea taContent;
 
-	private ReviewDTO saveReviewDTO;
 	public void setReviewDTO(ReviewDTO saveReviewDTO){
-		this.saveReviewDTO = saveReviewDTO;
 		tDestinationName.setText(saveReviewDTO.getDestination_name());
 		tUserId.setText(saveReviewDTO.getUser_id());
 		tScope.setText(Integer.toString(saveReviewDTO.getScope()));
@@ -40,10 +38,12 @@ public class ReviewDetailController implements Initializable {
 		}
 		tModifyDate.setText(modifyDate);
 		taContent.setText(saveReviewDTO.getContent());
-		byte[] image = saveReviewDTO.getImage();
-		ByteArrayInputStream bis = new ByteArrayInputStream(image);
-		Image img = new Image(bis);	
-		iv_reviewImage.setImage(img);
+		if(saveReviewDTO.getImage() != null){
+			byte[] image = saveReviewDTO.getImage();
+			ByteArrayInputStream bis = new ByteArrayInputStream(image);
+			Image img = new Image(bis);	
+			iv_reviewImage.setImage(img);
+		}
 	}
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
