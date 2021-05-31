@@ -27,9 +27,7 @@ public class ReviewDetailController implements Initializable {
 	@FXML private Text tModifyDate;
 	@FXML private TextArea taContent;
 
-	private ReviewDTO saveReviewDTO;
 	public void setReviewDTO(ReviewDTO saveReviewDTO){
-		this.saveReviewDTO = saveReviewDTO;
 		tDestinationName.setText(saveReviewDTO.getDestination_name());
 		tUserId.setText(saveReviewDTO.getUser_id());
 		tScope.setText(Integer.toString(saveReviewDTO.getScope()));
