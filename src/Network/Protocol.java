@@ -51,7 +51,7 @@ public class Protocol {
     public static final String RES_MYPAGE_Y = "7-12";                 //마이페이지 조회 요청 승인
     public static final String RES_MYPAGE_N = "7-13";                 //마이페이지 조회 요청 거절
     public static final String RES_ID_DUPLICATION_Y = "6-A";          //아이디 중복 확인 요청 승인
-    public static final String REQ_ID_DUPLICATION_N = "6-A";          //아이디 중복 확인 요청 거절
+    public static final String RES_ID_DUPLICATION_N = "6-A";          //아이디 중복 확인 요청 거절
 
 
     // 갱신 요청
