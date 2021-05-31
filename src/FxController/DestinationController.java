@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
+import DAO.DetailDAO;
 import DAO.InquireByRegionDAO;
 import DTO.DestinationDTO;
 import DataSetControl.RegionList;
@@ -113,6 +114,7 @@ public class DestinationController implements Initializable{
             if(event.getClickCount() > 1){
                 try {
                     FXMLLoader loader = null;
+                    String destinationCode="", destinationName="";
                     if(myTableView.getSelectionModel().getSelectedItem().getSortation().equals("해수욕장")){
                         loader = new FXMLLoader(getClass().getResource("../FXML/beach_detail.fxml"));
                     }
@@ -131,8 +133,8 @@ public class DestinationController implements Initializable{
                         BeachDetailController beachDetailController = loader.<BeachDetailController>getController();
                         beachDetailController.setBeachCode(beachCode);
                         beachDetailController.setSaveUserId(userId);
-                        String destinationCode = myTableView.getSelectionModel().getSelectedItem().getCode();
-                        String destinationName = myTableView.getSelectionModel().getSelectedItem().getName();
+                        destinationCode = myTableView.getSelectionModel().getSelectedItem().getCode();
+                        destinationName = myTableView.getSelectionModel().getSelectedItem().getName();
                         beachDetailController.setDestinationCode(destinationCode);
                         beachDetailController.setDestinationName(destinationName);
                     }
@@ -140,8 +142,8 @@ public class DestinationController implements Initializable{
                     }
                     if(myTableView.getSelectionModel().getSelectedItem().getSortation().equals("관광지")){
                     }
-                   // ModifyController modifyController = loader.<ModifyController>getController();
-                   // modifyController.setData(dataList, list, temp, expenseList, incomeList);
+                    DetailDAO detailDAO = new DetailDAO();
+                    detailDAO.viewsCountIncrease(destinationCode);
                     stage.showAndWait();
                     
                 }
@@ -149,7 +151,6 @@ public class DestinationController implements Initializable{
                     System.out.println(e);
                 }
             }
-
         }
 
     }
