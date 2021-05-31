@@ -60,8 +60,8 @@ public class InquireByLocationDAO {
     }
 
     // 해수욕장 위치으로 검색
-    public ArrayList<BeachDTO> inquireBeachByLocation(String selLatitude, String selLongitude, String range) {
-        ArrayList<BeachDTO> dtos = new ArrayList<BeachDTO>();
+    public ArrayList<DestinationDTO> inquireBeachByLocation(String selLatitude, String selLongitude, String range) {
+        ArrayList<DestinationDTO> dtos = new ArrayList<DestinationDTO>();
         try {
             String query = "select * from destination where beach_code in (select code from beach where 6371*acos(cos(radians("+selLatitude+"))*cos(radians(latitude))*cos(radians(longitude)-radians("+selLongitude+"))+sin(radians(37.30157898))*sin(radians(latitude))) <="+range+")";
 
@@ -71,20 +71,17 @@ public class InquireByLocationDAO {
 
             while (rs.next()) {
                 String code = rs.getString("code");
+                String sortation = rs.getString("sortation");
+                String forest_lodge_code = rs.getString("forest_lodge_code");
+                String beach_code = rs.getString("beach_code");
+                String tourist_spot_code = rs.getString("tourist_spot_code");
                 String name = rs.getString("name");
-                String introduction = rs.getString("introduction");
                 String Do = rs.getString("do");
                 String city = rs.getString("city");
                 String address = rs.getString("address");
-                double latitude = rs.getDouble("latitude");
-                double longitude = rs.getDouble("longitude");
-                String phone_num = rs.getString("phone_num");
-                String home_page = rs.getString("home_page");
-                String opening_period = rs.getString("opening_period");
-                String swim_available_time = rs.getString("swim_available_time");
-                String amenities = rs.getString("amenities");
-
-                BeachDTO dto = new BeachDTO(code, name, introduction, Do, city, address, latitude, longitude, phone_num, home_page, opening_period, swim_available_time, amenities);
+                double scope = rs.getDouble("scope");
+                int views = rs.getInt("views");
+                DestinationDTO dto = new DestinationDTO(code, sortation, forest_lodge_code, beach_code, tourist_spot_code, name, Do, city, address, scope, views);
                 dtos.add(dto);
             }
         } catch (SQLException sqle) {
@@ -106,11 +103,11 @@ public class InquireByLocationDAO {
     }
 
     // 휴양림 위치으로 검색
-    public ArrayList<ForestLodgeDTO> inquireForestLodgeByLocation(String selLatitude, String selLongitude, String range) {
-        ArrayList<ForestLodgeDTO> dtos = new ArrayList<ForestLodgeDTO>();
+    public ArrayList<DestinationDTO> inquireForestLodgeByLocation(String selLatitude, String selLongitude, String range) {
+        ArrayList<DestinationDTO> dtos = new ArrayList<DestinationDTO>();
         try {
 
-            String query = "SELECT *,(6371*acos(cos(radians(" + selLatitude + "))*cos(radians(latitude))*cos(radians(longitude)-radians(" + selLongitude + "))+sin(radians(" + selLatitude + "))*sin(radians(latitude)))) AS distance FROM forest_lodge HAVING distance <= " + range;
+            String query = "select * from destination where forest_lodge_code in (select code from forest_lodge where 6371*acos(cos(radians("+selLatitude+"))*cos(radians(latitude))*cos(radians(longitude)-radians("+selLongitude+"))+sin(radians(37.30157898))*sin(radians(latitude))) <="+range+")";
 
             conn = DBconnection.getConnection();
             pstmt = conn.prepareStatement(query);
@@ -118,20 +115,18 @@ public class InquireByLocationDAO {
 
             while (rs.next()) {
                 String code = rs.getString("code");
+                String sortation = rs.getString("sortation");
+                String forest_lodge_code = rs.getString("forest_lodge_code");
+                String beach_code = rs.getString("beach_code");
+                String tourist_spot_code = rs.getString("tourist_spot_code");
                 String name = rs.getString("name");
                 String Do = rs.getString("do");
                 String city = rs.getString("city");
                 String address = rs.getString("address");
-                String phone_num = rs.getString("phone_num");
-                double latitude = rs.getDouble("latitude");
-                double longitude = rs.getDouble("longitude");
-                String amenities = rs.getString("amenities");
-                String capacity_people = rs.getString("capacity_people");
-                String enter_fee = rs.getString("enter_fee");
-                String accommodation = rs.getString("accommodation");
-                String home_page = rs.getString("home_page");
+                double scope = rs.getDouble("scope");
+                int views = rs.getInt("views");
 
-                ForestLodgeDTO dto = new ForestLodgeDTO(code, name, Do, city, address, phone_num, latitude, longitude, amenities, capacity_people, enter_fee, accommodation, home_page);
+                DestinationDTO dto = new DestinationDTO(code, sortation, forest_lodge_code, beach_code, tourist_spot_code, name, Do, city, address, scope, views);
                 dtos.add(dto);
             }
         } catch (SQLException sqle) {
@@ -153,10 +148,10 @@ public class InquireByLocationDAO {
     }
 
     // 관광지 위치로 검색
-    public ArrayList<TouristSpotDTO> inquireTouristSpotByLocation(String selLatitude, String selLongitude, String range) {
-        ArrayList<TouristSpotDTO> dtos = new ArrayList<TouristSpotDTO>();
+    public ArrayList<DestinationDTO> inquireTouristSpotByLocation(String selLatitude, String selLongitude, String range) {
+        ArrayList<DestinationDTO> dtos = new ArrayList<DestinationDTO>();
         try {
-            String query = "SELECT *,(6371*acos(cos(radians(" + selLatitude + "))*cos(radians(latitude))*cos(radians(longitude)-radians(" + selLongitude + "))+sin(radians(" + selLatitude + "))*sin(radians(latitude)))) AS distance FROM tourist_spot HAVING distance <= " + range;
+            String query = "select * from destination where tourist_spot_code in (select code from tourist_spot where 6371*acos(cos(radians("+selLatitude+"))*cos(radians(latitude))*cos(radians(longitude)-radians("+selLongitude+"))+sin(radians(37.30157898))*sin(radians(latitude))) <="+range+")";
 
             conn = DBconnection.getConnection();
             pstmt = conn.prepareStatement(query);
@@ -164,19 +159,18 @@ public class InquireByLocationDAO {
 
             while (rs.next()) {
                 String code = rs.getString("code");
+                String sortation = rs.getString("sortation");
+                String forest_lodge_code = rs.getString("forest_lodge_code");
+                String beach_code = rs.getString("beach_code");
+                String tourist_spot_code = rs.getString("tourist_spot_code");
                 String name = rs.getString("name");
-                String introduction = rs.getString("introduction");
-                String phone_num = rs.getString("phone_num");
                 String Do = rs.getString("do");
                 String city = rs.getString("city");
                 String address = rs.getString("address");
-                double latitude = rs.getDouble("latitude");
-                double longitude = rs.getDouble("longitude");
-                String amenities = rs.getString("amenities");
-                int possible_parking = rs.getInt("possible_parking");
-                String management_agency = rs.getString("management_agency");
+                double scope = rs.getDouble("scope");
+                int views = rs.getInt("views");
 
-                TouristSpotDTO dto = new TouristSpotDTO(code, name, introduction, phone_num, Do, city, address, latitude, longitude, amenities, possible_parking, management_agency);
+                DestinationDTO dto = new DestinationDTO(code, sortation, forest_lodge_code, beach_code, tourist_spot_code, name, Do, city, address, scope, views);
                 dtos.add(dto);
             }
         } catch (SQLException sqle) {

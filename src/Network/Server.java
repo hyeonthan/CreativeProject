@@ -159,7 +159,7 @@ public class Server extends Thread{
                     			break;
                     		}
                     		case Protocol.REQ_DESTINATION_LOCATION:{
-
+                    			InquireByLocationDAO inquireByLocationDAO = new InquireByLocationDAO();
                     			break;
                     		}
                     		case Protocol.REQ_STATISTICS:{
@@ -171,6 +171,18 @@ public class Server extends Thread{
 
                     			break;
                     		}
+							case Protocol.REQ_ID_DUPLICATION:{
+								UserDAO userDAO = new UserDAO();
+								boolean check = userDAO.duplicationId(packetArr[1]);
+
+								if(!check){
+									bufferedWriter.write(Protocol.PT_RES_VIEW + "`" + Protocol.RES_ID_DUPLICATION_Y);
+								}
+								else{
+									bufferedWriter.write(Protocol.PT_RES_VIEW + "`" + Protocol.RES_ID_DUPLICATION_N);
+								}
+								break;
+							}
                     	}
                     	break;
                     }
