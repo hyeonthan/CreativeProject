@@ -32,6 +32,6 @@ public class Controller {
         //여행지 DB에 넣기
         //ArrayList<DestinationDTO> dList = LoadFromExcel.runDestination(bList, fList, tList);
         //ExcelToDB.insertDestination(dList);
-        ExcelToDB.test();
+        //ExcelToDB.test();
     }
 }
