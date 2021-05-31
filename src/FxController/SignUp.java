@@ -54,7 +54,9 @@ public class SignUp {
 	
 	@FXML
 	private Button btn_cancle;
+	
 	private boolean checkId;
+	
 	@FXML
 	public void selectGender(ActionEvent event) {
 		try {
@@ -316,9 +318,38 @@ public class SignUp {
 	public void handleBtnDuplicateCheck(ActionEvent event){
 		if(tf_id.getText().equals("")){
 			ShowAlert.showAlert("WARNING", "경고", "ID 미입력");
+			return;
 		}
-		UserDAO userDAO = new UserDAO();
-		checkId = userDAO.duplicationId(tf_id.getText());
+		checkId = true;
+//		UserDAO userDAO = new UserDAO();
+//		checkId = userDAO.duplicationId(tf_id.getText());
+		String id = tf_id.getText();
+		clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_ID_DUPLICATION + "`" + id);
+		
+		while (true) {
+			String packet = clientMain.readPacket();
+			String packetArr[] = packet.split("`");
+			String packetType = packetArr[0];
+			String packetCode = packetArr[1];
+			
+			if (packetType.equals(Protocol.PT_RES_VIEW)) {
+				switch (packetCode) {
+					case Protocol.RES_ID_DUPLICATION_Y: {
+						try {
+							checkId = false;
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+						return;
+					}
+					case Protocol.RES_ID_DUPLICATION_N: {
+						ShowAlert.showAlert("WARNING", "경고", "아이디가 중복됩니다.");
+						return;
+					}
+				}
+			}
+			break;
+		}
 		if(!checkId){
 			ShowAlert.showAlert("INFORMATION", "중복 체크 완료!", "아이디 사용 가능");
 		}			
@@ -384,50 +415,51 @@ public class SignUp {
 		Timestamp creation_date = Timestamp.valueOf(LocalDateTime.now());
 		Timestamp modify_date = null;
 		UserDTO userDTO = new UserDTO(id, password, name, age, gender, Do, city, address, creation_date, modify_date);
-		UserDAO userDAO = new UserDAO();
+//		UserDAO userDAO = new UserDAO();
 		//	DB insert
-		userDAO.insertUser(userDTO);
-		ShowAlert.showAlert("INFORMATION", "알림창", "회원가입 성공!");
+//		userDAO.insertUser(userDTO);
+//		ShowAlert.showAlert("INFORMATION", "알림창", "회원가입 성공!");
 		
-//		clientMain.writePacket(Protocol.PT_REQ_RENEWAL + "|" + Protocol.REQ_SINGUP);
-//		clientMain.writeObject(userDTO);
+		clientMain.writePacket(Protocol.PT_REQ_RENEWAL + "`" + Protocol.REQ_SIGNUP);
+		clientMain.writeObject(userDTO);
 		
-//		while (true) {
-//			String packet = clientMain.readPacket();
-//			String packetArr[] = packet.split("|");
-//			String packetType = packetArr[0];
-//			String packetCode = packetArr[1];
-//			
-//			if (packetType.equals(Protocol.PT_RES_RENEWAL)) {
-//				switch (packetCode) {
-//					case Protocol.RES_SIGNUP_Y: {
-//						try {
-//							Parent root = FXMLLoader.load(Main.class.getResource("../FXML/login.fxml"));
-//							Scene scene = new Scene(root);
-//							Stage primaryStage = (Stage) btn_cancle.getScene().getWindow();
-//							primaryStage.setScene(scene);
-//							primaryStage.show();
-//						} catch (Exception e) {
-//							e.printStackTrace();
-//						}
-//						return;
-//					}
-//					case Protocol.RES_SIGNUP_N: {
-//						ShowAlert.showAlert("WARNING", "경고", "아이디가 중복됩니다.");
-//						return;
-//					}
-//				}
-//			}
-//		}
-		try {
-			Parent root = FXMLLoader.load(Main.class.getResource("../FXML/login.fxml"));
-			Scene scene = new Scene(root);
-			Stage primaryStage = (Stage) btn_cancle.getScene().getWindow();
-			primaryStage.setScene(scene);
-			primaryStage.show();
-		} catch (Exception e) {
-			e.printStackTrace();
+		while (true) {
+			String packet = clientMain.readPacket();
+			String packetArr[] = packet.split("`");
+			String packetType = packetArr[0];
+			String packetCode = packetArr[1];
+			
+			if (packetType.equals(Protocol.PT_RES_RENEWAL)) {
+				switch (packetCode) {
+					case Protocol.RES_SIGNUP_Y: {
+						try {
+							ShowAlert.showAlert("INFORMATION", "알림창", "회원가입 성공!");
+							Parent root = FXMLLoader.load(Main.class.getResource("../FXML/login.fxml"));
+							Scene scene = new Scene(root);
+							Stage primaryStage = (Stage) btn_cancle.getScene().getWindow();
+							primaryStage.setScene(scene);
+							primaryStage.show();
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+						return;
+					}
+					case Protocol.RES_SIGNUP_N: {
+						ShowAlert.showAlert("WARNING", "경고", "회원가입에 실패하였습니다.");
+						return;
+					}
+				}
+			}
 		}
+//		try {
+//			Parent root = FXMLLoader.load(Main.class.getResource("../FXML/login.fxml"));
+//			Scene scene = new Scene(root);
+//			Stage primaryStage = (Stage) btn_cancle.getScene().getWindow();
+//			primaryStage.setScene(scene);
+//			primaryStage.show();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
 	}
 	
 	@FXML // 취소버튼 클릭
