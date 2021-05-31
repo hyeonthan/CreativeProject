@@ -1,20 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ReviewDetail">
+<AnchorPane layoutX="-2.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="439.0" prefWidth="798.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FxController.ReviewDetailController">
    <children>
-      <ImageView fx:id="iv_reviewImage" fitHeight="150.0" fitWidth="200.0" layoutX="47.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true" />
-      <Text fx:id="t_content" layoutX="263.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="내용" wrappingWidth="128.0">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="430.0" layoutX="5.0" layoutY="5.0" stroke="BLACK" strokeType="INSIDE" width="789.0" />
+      <ImageView fx:id="iv_reviewImage" fitHeight="353.0" fitWidth="364.0" layoutX="14.0" layoutY="56.0" pickOnBounds="true" preserveRatio="true" />
+      <Text fx:id="t_content" layoutX="329.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="리뷰 상세내용" wrappingWidth="155.0">
          <font>
-            <Font size="22.0" />
+            <Font size="24.0" />
          </font></Text>
-      <Text layoutX="326.0" layoutY="196.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" / 5" />
-      <Text fx:id="t_star" layoutX="307.0" layoutY="195.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="21.474605798721313" />
-      <Text layoutX="270.0" layoutY="195.0" strokeType="OUTSIDE" strokeWidth="0.0" text="별점" />
-      <Text fx:id="t_writer" layoutX="269.0" layoutY="129.0" strokeType="OUTSIDE" strokeWidth="0.0" text="작성자 : " />
+      <Text layoutX="443.0" layoutY="171.0" strokeType="OUTSIDE" strokeWidth="0.0" text="별점 :">
+         <font>
+            <Font size="18.0" />
+         </font></Text>
+      <Text fx:id="t_writer" layoutX="425.0" layoutY="146.0" strokeType="OUTSIDE" strokeWidth="0.0" text="작성자 : ">
+         <font>
+            <Font size="18.0" />
+         </font></Text>
+      <Text layoutX="383.0" layoutY="119.0" strokeType="OUTSIDE" strokeWidth="0.0" text="여행지 이름 :">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Text layoutX="402.0" layoutY="199.0" strokeType="OUTSIDE" strokeWidth="0.0" text="작성 날짜 :">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Text layoutX="402.0" layoutY="228.0" strokeType="OUTSIDE" strokeWidth="0.0" text="수정 날짜 :">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Text layoutX="399.0" layoutY="274.0" strokeType="OUTSIDE" strokeWidth="0.0" text="리뷰 내용">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <TextArea fx:id="taContent" layoutX="402.0" layoutY="285.0" prefHeight="128.0" prefWidth="364.0" />
+      <Text fx:id="tDestinationName" layoutX="497.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+      <Text fx:id="tUserId" layoutX="497.0" layoutY="147.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+      <Text fx:id="tScope" layoutX="497.0" layoutY="172.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+      <Text fx:id="tReportingDate" layoutX="497.0" layoutY="200.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+      <Text fx:id="tModifyDate" layoutX="497.0" layoutY="229.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>
