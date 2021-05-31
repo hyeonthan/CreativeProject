@@ -21,18 +21,24 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.Tooltip;
+import javafx.scene.effect.Glow;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
@@ -60,6 +66,8 @@ public class BeachDetailController extends Object implements Initializable {
 	@FXML private TableColumn<ReviewDTO, String> tc_star;
 	@FXML private TableColumn<ReviewDTO, String> tc_writer;
 	@FXML private PieChart pieChart;
+	private Tooltip tooltip;
+	private PieChart.Data pData;
 	private String beachCode;	//	넘어온 beachCode 변수 저장
 	private String userId;		//	넘어온 userId 변수 저장
 	private String destinationCode;	// 	넘어온 destinationCode 변수 저장
@@ -113,7 +121,7 @@ public class BeachDetailController extends Object implements Initializable {
 	@FXML
 	public void handleBtnAgeStat(ActionEvent event){
 		pieChart.getData().clear();
-		PieChart.Data pData;
+		
 		DetailDAO detailDAO = new DetailDAO();
 		HashMap<Integer, Integer> hsMap = detailDAO.ageStatistic(destinationCode);
 		for(int i = 10; i <= 60; i+=10){
@@ -126,10 +134,57 @@ public class BeachDetailController extends Object implements Initializable {
 				pData = new PieChart.Data(age, hsMap.get(i));
 				pieChart.getData().add(pData);
 			}
-		}
-		//pData = new PieChart.Data(expenseList.get(i).toString(), cnt);
-		//expensePie.getData().add(pData);
+		} 
+		//	글씨 띄우기
+		final Label caption = new Label("");
+        caption.setTextFill(Color.DARKORANGE);
+        caption.setStyle("-fx-font: 24 arial;");
+
+        tooltip = new Tooltip("");
+
+        tooltip.setStyle("-fx-font: 14 arial;  -fx-font-smoothing-type: lcd;");
+
+
+        for (final PieChart.Data data : pieChart.getData()) {
+            Tooltip.install(data.getNode(),tooltip);
+            applyMouseEvents(data);
+        }
+	
 	}
+	//	차트에 마우스 대면 글씨 띄우기
+	private void applyMouseEvents(final PieChart.Data data) {
+
+        final Node node = data.getNode();
+
+        node.setOnMouseEntered(new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent arg0) {
+                node.setEffect(new Glow());
+                String styleString = "-fx-border-color: white; -fx-border-width: 3; -fx-border-style: dashed;";
+                node.setStyle(styleString);
+                tooltip.setText(String.valueOf(data.getName() + "\n" + (int)data.getPieValue()) ); 
+            }
+        });
+
+        node.setOnMouseExited(new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent arg0) {
+                node.setEffect(null);
+                node.setStyle("");
+            }
+        });
+
+        node.setOnMouseReleased(new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                    pData = data;
+                    System.out.println("Selected data " + pData.toString());
+            }
+        });
+    }
 	//	이미지 선택
 	@FXML
 	public void registerImg (ActionEvent event){
