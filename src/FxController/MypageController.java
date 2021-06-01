@@ -226,8 +226,6 @@ public class MypageController implements Initializable {
 		alert.showAndWait();
 	}
 	
-
-	
 	// 즐겨찾기 테이블 행 클래스
 	private class Favorite {
 		private String type;

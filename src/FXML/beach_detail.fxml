@@ -67,7 +67,7 @@
          <font>
             <Font size="18.0" />
          </font></Button>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="247.0" layoutX="13.0" layoutY="297.0" stroke="BLACK" strokeType="INSIDE" width="736.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="247.0" layoutX="12.0" layoutY="297.0" stroke="BLACK" strokeType="INSIDE" width="736.0" />
       <Text layoutX="26.0" layoutY="339.0" strokeType="OUTSIDE" strokeWidth="0.0" text="통계">
          <font>
             <Font size="36.0" />
@@ -83,7 +83,7 @@
             <Font size="24.0" />
          </font>
       </Button>
-      <Button layoutX="24.0" layoutY="411.0" mnemonicParsing="false" prefHeight="56.0" prefWidth="129.0" text="성별">
+      <Button layoutX="24.0" layoutY="411.0" mnemonicParsing="false" onAction="#handleBtnGenderStat" prefHeight="56.0" prefWidth="129.0" text="성별">
          <font>
             <Font size="24.0" />
          </font>
@@ -133,6 +133,6 @@
             <Font size="13.0" />
          </font>
       </Text>
-      <PieChart fx:id="pieChart" layoutX="229.0" layoutY="315.0" prefHeight="210.0" prefWidth="502.0" />
+      <PieChart fx:id="pieChart" layoutX="178.0" layoutY="316.0" prefHeight="210.0" prefWidth="502.0" />
    </children>
 </AnchorPane>
