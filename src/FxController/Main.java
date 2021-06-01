@@ -1,8 +1,6 @@
 package FxController;
 
 import DAO.UserDAO;
-import Network.Protocol;
-import Network.clientMain;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 public class Main extends Application {
 	
@@ -32,64 +31,67 @@ public class Main extends Application {
 		String id = tf_id.getText();
 		String pw = pf_password.getText();
 		
-		clientMain.writePacket(Protocol.PT_REQ_LOGIN + "`" + id + "`" + pw);
-		while (true) {
-			String packet = clientMain.readPacket();
-			String packetArr[] = packet.split("`");
-			String packetType = packetArr[0];
-			switch (packetType) {
-				case Protocol.PT_RES_LOGIN: {
-					String loginResult = packetArr[1];
-					switch (loginResult) {
-						case Protocol.RES_LOGIN_Y: {
-							try {
-								FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/MainDisplay.fxml"));
-								Parent root = (Parent)loader.load();
-
-								//	로그인한 유저 정보 mainDisplay로 넘기기
-								MainDisplayController mainDisplayController = loader.<MainDisplayController>getController();
-								mainDisplayController.setSaveUserId(id);
-
-								Stage primaryStage = (Stage) btn_login.getScene().getWindow();
-								primaryStage.setScene(new Scene(root));
-								primaryStage.show();
-								return;
-							} catch (Exception e) {
-								e.printStackTrace();
-							}
-						}
-						case Protocol.RES_LOGIN_N: {
-							ShowAlert.showAlert("WARNING", "로그인 알림창", "로그인 실패 : 아이디 또는 비밀번호가 일치하지 않습니다.");
-							return;
-						}
-					}
-				}
-			}
-		}
+//		clientMain.writePacket(Protocol.PT_REQ_LOGIN + "`" + id + "`" + pw);
+//		while (true) {
+//			String packet = clientMain.readPacket();
+//			String packetArr[] = packet.split("`");
+//			String packetType = packetArr[0];
+//			switch (packetType) {
+//				case Protocol.PT_RES_LOGIN: {
+//					String loginResult = packetArr[1];
+//					switch (loginResult) {
+//						case Protocol.RES_LOGIN_Y: {
+//							try {
+//								FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/MainDisplay.fxml"));
+//								Parent root = (Parent)loader.load();
+//
+//								//	로그인한 유저 정보 mainDisplay로 넘기기
+//								MainDisplayController mainDisplayController = loader.<MainDisplayController>getController();
+//								mainDisplayController.setSaveUserId(id);
+//
+//								Stage primaryStage = (Stage) btn_login.getScene().getWindow();
+//								primaryStage.setScene(new Scene(root));
+//								primaryStage.show();
+//								return;
+//							} catch (Exception e) {
+//								e.printStackTrace();
+//							}
+//						}
+//						case Protocol.RES_LOGIN_N: {
+//							ShowAlert.showAlert("WARNING", "로그인 알림창", "로그인 실패 : 아이디 또는 비밀번호가 일치하지 않습니다.");
+//							return;
+//						}
+//					}
+//				}
+//			}
+//		}
 		
 		//	id, pw 입력 정보 체크
-//		UserDAO userDAO = new UserDAO();
-//		boolean checkUser = userDAO.checkUser(id, pw);
-//		if(!checkUser){
-//			ShowAlert.showAlert("WARNING", "로그인 알림창", "로그인 실패 : 아이디 또는 비밀번호가 일치하지 않습니다.");
-//		}
-//		else {
-//			ShowAlert.showAlert("INFORMATION", "로그인 알림창", "로그인 성공");
-//			try {
-//				FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/MainDisplay.fxml"));
-//				Parent root = (Parent)loader.load();
-//
-//				//	로그인한 유저 정보 mainDisplay로 넘기기
-//				MainDisplayController mainDisplayController = loader.<MainDisplayController>getController();
-//				mainDisplayController.setSaveUserId(id);
-//
-//				Stage primaryStage = (Stage) btn_login.getScene().getWindow();
-//				primaryStage.setScene(new Scene(root));
-//				primaryStage.show();
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
-//		} 
+		UserDAO userDAO = new UserDAO();
+		boolean checkUser = userDAO.checkUser(id, pw);
+		if(!checkUser){
+			ShowAlert.showAlert("WARNING", "로그인 알림창", "로그인 실패 : 아이디 또는 비밀번호가 일치하지 않습니다.");
+		}
+		else {
+			ShowAlert.showAlert("INFORMATION", "로그인 알림창", "로그인 성공");
+			try {
+				System.setProperty("prism.lcdtext", "false"); // 폰트파일 로드전에 실행
+				FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/MainDisplay.fxml"));
+				Font.loadFont(getClass().getResourceAsStream("/FXML/CSS/Cafe24.ttf"), 30);
+				Parent root = (Parent)loader.load();
+
+				//	로그인한 유저 정보 mainDisplay로 넘기기
+				MainDisplayController mainDisplayController = loader.<MainDisplayController>getController();
+				mainDisplayController.setSaveUserId(id);
+
+				Stage primaryStage = (Stage) btn_login.getScene().getWindow();
+				primaryStage.setScene(new Scene(root));
+				primaryStage.centerOnScreen();
+				primaryStage.show();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	@FXML // 회원가입 버튼 클릭
@@ -104,7 +106,7 @@ public class Main extends Application {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Override // 로그인 화면 출력
 	public void start(Stage primaryStage) {
 		try {

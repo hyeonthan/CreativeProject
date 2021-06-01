@@ -50,7 +50,7 @@ public class MainDisplayController implements Initializable{
     @FXML
 	public void handleBtnAroundSearch(ActionEvent e) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/Destination.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/Nearby.fxml"));
 			Parent inquiry = (Parent)loader.load();
 			borderpaneId.setCenter(inquiry);
 		} catch (IOException e1) {
@@ -69,6 +69,18 @@ public class MainDisplayController implements Initializable{
 			e1.printStackTrace();
 		}
 		
+	}
+	//	통계
+	@FXML
+	public void handleBtnStatistics(ActionEvent e) {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/Statistics.fxml"));
+			Parent inquiry = (Parent)loader.load();
+			borderpaneId.setCenter(inquiry);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+
 	}
 	//	마이페이지 이동
 	@FXML
@@ -95,6 +107,7 @@ public class MainDisplayController implements Initializable{
 			Scene scene = new Scene(root);
 			Stage primaryStage = (Stage) btnLogout.getScene().getWindow();
 			primaryStage.setScene(scene);
+			primaryStage.centerOnScreen();
 			primaryStage.show();
 		} catch (IOException e1) {
 			e1.printStackTrace();
