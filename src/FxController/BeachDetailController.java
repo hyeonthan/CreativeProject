@@ -75,6 +75,8 @@ public class BeachDetailController extends Object implements Initializable {
 	private String destinationCode;	// 	넘어온 destinationCode 변수 저장
 	private String destinationName;	//	넘어온 destinationName 변수 저장
 	private byte[] imageInByte;
+	private double latitude;
+    private double longitude;
 	public void setBeachCode(String beachCode){
 		this.beachCode = beachCode;
 
@@ -88,6 +90,8 @@ public class BeachDetailController extends Object implements Initializable {
 		reusltTextOpenPeriod.setText(beachDTO.getOpening_period());
 		resultTextAvailableTime.setText(beachDTO.getAvailable_time());
 		resultTextHomepage.setText(beachDTO.getHome_page());
+		latitude = beachDTO.getLatitude();
+		longitude = beachDTO.getLongitude();
 	}
 	public void setSaveUserId(String userId){
 		this.userId = userId;
