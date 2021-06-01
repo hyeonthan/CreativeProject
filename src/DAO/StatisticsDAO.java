@@ -130,7 +130,7 @@ public class StatisticsDAO {
     }
     //  여행지 평점 모두 가져오기
     public ArrayList<DestinationDTO> loadScopeStat(String sortation){
-        String sql = "SELECT code, name, scope FROM destination WHERE sortation=?";
+        String sql = "SELECT code, name, scope FROM destination WHERE sortation=? ";
         ArrayList<DestinationDTO> list = new ArrayList<DestinationDTO>();
         try{
             conn = DBconnection.getConnection();
