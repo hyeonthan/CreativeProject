@@ -91,10 +91,9 @@ public class Server extends Thread{
                     		}
                     		case Protocol.REQ_TOURIST_DETAIL:{	//관광지 상세정보
 								DetailDAO detailDAO = new DetailDAO();
-								DestinationDTO destinationDTO = (DestinationDTO) objectInputStream.readObject();
 
-								TouristSpotDTO touristSpotDTO = detailDAO.detailTouristSpot(destinationDTO.getTouristSpot_code());
-								ArrayList<ReviewDTO> arrayList = detailDAO.inquireReview(destinationDTO.getCode());
+								TouristSpotDTO touristSpotDTO = detailDAO.detailTouristSpot(packetArr[2]);
+								ArrayList<ReviewDTO> arrayList = detailDAO.inquireReview(packetArr[3]);
 
 								if (touristSpotDTO != null) {
 									writePacket(Protocol.PT_RES_VIEW + "`" + Protocol.RES_TOURIST_DETAIL_Y);
@@ -107,10 +106,9 @@ public class Server extends Thread{
                     		}
                     		case Protocol.REQ_FOREST_DETAIL:{		// 휴양림 상세정보
 								DetailDAO detailDAO = new DetailDAO();
-								DestinationDTO destinationDTO = (DestinationDTO) objectInputStream.readObject();
 
-								ForestLodgeDTO forestLodgeDTO = detailDAO.detailForestLodge(destinationDTO.getForestLodge_code());
-								ArrayList<ReviewDTO> arrayList = detailDAO.inquireReview(destinationDTO.getCode());
+								ForestLodgeDTO forestLodgeDTO = detailDAO.detailForestLodge(packetArr[2]);
+								ArrayList<ReviewDTO> arrayList = detailDAO.inquireReview(packetArr[3]);
 
 								if (forestLodgeDTO!=null) {
 									writePacket(Protocol.PT_RES_VIEW + "`" + Protocol.RES_FOREST_DETAIL_Y);
@@ -123,10 +121,9 @@ public class Server extends Thread{
                     		}
                     		case Protocol.REQ_BEACH_DETAIL:{		//해수욕장 상세정보
 								DetailDAO detailDAO = new DetailDAO();
-								DestinationDTO destinationDTO = (DestinationDTO) objectInputStream.readObject();
 
-								ForestLodgeDTO beachDTO = detailDAO.detailForestLodge(destinationDTO.getBeach_code());
-								ArrayList<ReviewDTO> arrayList = detailDAO.inquireReview(destinationDTO.getCode());
+								ForestLodgeDTO beachDTO = detailDAO.detailForestLodge(packetArr[2]);
+								ArrayList<ReviewDTO> arrayList = detailDAO.inquireReview(packetArr[3]);
 
 								if (beachDTO!=null) {
 									writePacket(Protocol.PT_RES_VIEW + "`" + Protocol.RES_BEACH_DETAIL_Y);
@@ -357,7 +354,7 @@ public class Server extends Thread{
 								}
                     			break;
                     		}
-                    		case Protocol.REQ_CREATE_FAVORITES:{
+                    		case Protocol.REQ_CREATE_FAVORITES:{		//즐겨찾기 추가
                     			DetailDAO favoriteDAO = new DetailDAO();
                     			FavoriteDTO favoriteDTO = (FavoriteDTO)objectInputStream.readObject();
 								boolean check = favoriteDAO.addFavorite(favoriteDTO);

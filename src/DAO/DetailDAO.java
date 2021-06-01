@@ -12,6 +12,7 @@ import java.util.HashMap;
 
 import DBcontrol.DBconnection;
 import DTO.*;
+import DataSetControl.RegionList;
 
 public class DetailDAO {
     private PreparedStatement pstmt;
@@ -316,7 +317,7 @@ public class DetailDAO {
     public HashMap<String,Integer> regionStatistic(String desCode){
         HashMap<String, Integer> hsMap = new HashMap<String, Integer>();
         try {
-            final String[] region = {"충청북도", "충청남도", "제주특별자치도", "전라북도", "전라남도", "인천광역시", "울산광역시", "경상북도","경상남도", "경기도", "강원도", "서울특별시", "부산광역시", "대전광역시", "대구광역시"};
+            final String[] region = RegionList.Do;
             for(int i = 0; i < region.length; i++){
                 hsMap.put(region[i], 0);
             }
