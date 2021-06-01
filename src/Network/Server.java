@@ -89,7 +89,7 @@ public class Server extends Thread{
 								}
                     			break;
                     		}
-                    		case Protocol.REQ_TOURIST_DETAIL:{
+                    		case Protocol.REQ_TOURIST_DETAIL:{	//관광지 상세정보
 								DetailDAO detailDAO = new DetailDAO();
 								DestinationDTO destinationDTO = (DestinationDTO) objectInputStream.readObject();
 
@@ -105,7 +105,7 @@ public class Server extends Thread{
 									bufferedWriter.write(Protocol.PT_RES_VIEW + "`" + Protocol.RES_TOURIST_DETAIL_N);
                     			break;
                     		}
-                    		case Protocol.REQ_FOREST_DETAIL:{
+                    		case Protocol.REQ_FOREST_DETAIL:{		// 휴양림 상세정보
 								DetailDAO detailDAO = new DetailDAO();
 								DestinationDTO destinationDTO = (DestinationDTO) objectInputStream.readObject();
 
@@ -121,7 +121,7 @@ public class Server extends Thread{
 									bufferedWriter.write(Protocol.PT_RES_VIEW + "`" + Protocol.RES_FOREST_DETAIL_N);
                     			break;
                     		}
-                    		case Protocol.REQ_BEACH_DETAIL:{
+                    		case Protocol.REQ_BEACH_DETAIL:{		//해수욕장 상세정보
 								DetailDAO detailDAO = new DetailDAO();
 								DestinationDTO destinationDTO = (DestinationDTO) objectInputStream.readObject();
 
@@ -137,7 +137,7 @@ public class Server extends Thread{
 									bufferedWriter.write(Protocol.PT_RES_VIEW + "`" + Protocol.RES_BEACH_DETAIL_N);
                     			break;
                     		}
-                    		case Protocol.REQ_TOILET:{
+                    		case Protocol.REQ_TOILET:{		//화장실 정보 요청
 								InquireToiletParkingDAO inquireToiletParkingDAO = new InquireToiletParkingDAO();
                     			ArrayList<ToiletDTO> toiletDTOS = inquireToiletParkingDAO.inquireToiletByLocation(packetArr[2],packetArr[3],packetArr[4]);
 
@@ -150,7 +150,7 @@ public class Server extends Thread{
 								}
                     			break;
                     		}
-                    		case Protocol.REQ_PARKING:{
+                    		case Protocol.REQ_PARKING:{		//주차장 정보 요청
                     			InquireToiletParkingDAO inquireToiletParkingDAO = new InquireToiletParkingDAO();
                     			ArrayList<ParkingLotsDTO> parkingLotsDTOS = inquireToiletParkingDAO.inquireParkingLotByLocation(packetArr[1],packetArr[2],packetArr[3]);
 
@@ -165,8 +165,30 @@ public class Server extends Thread{
                     		}
                     		case Protocol.REQ_DESTINATION_LOCATION:{
                     			InquireByLocationDAO inquireByLocationDAO = new InquireByLocationDAO();
-                    			ArrayList<DestinationDTO>
+                    			ArrayList<DestinationDTO> arrayList = null;
 
+                    			switch(packetArr[2]) {
+									case "0":
+										arrayList = inquireByLocationDAO.inquireDestinationByLocation(packetArr[3], packetArr[4], packetArr[5]);
+										break;
+									case"해수욕장":
+										arrayList = inquireByLocationDAO.inquireBeachByLocation(packetArr[3], packetArr[4], packetArr[5]);
+										break;
+									case"휴양림":
+										arrayList = inquireByLocationDAO.inquireForestLodgeByLocation(packetArr[3], packetArr[4], packetArr[5]);
+										break;
+									case"관광지":
+										arrayList = inquireByLocationDAO.inquireTouristSpotByLocation(packetArr[3], packetArr[4], packetArr[5]);
+										break;
+								}
+								
+								if(arrayList != null){
+									bufferedWriter.write(Protocol.PT_RES_VIEW + "`" + Protocol.RES_DESTINATION_LOCATION_Y);
+									writeObject(arrayList);
+								}
+								else{
+									bufferedWriter.write(Protocol.PT_RES_VIEW + "`" + Protocol.RES_DESTINATION_LOCATION_N);
+								}
                     			break;
                     		}
                     		case Protocol.REQ_STATISTICS:{
@@ -203,6 +225,9 @@ public class Server extends Thread{
 									bufferedWriter.write(Protocol.PT_RES_VIEW + "`" + Protocol.RES_ID_DUPLICATION_N);
 								}
 								break;
+							}
+							case Protocol.REQ_STATISTICS_DETAIL:{
+
 							}
                     	}
                     	break;
