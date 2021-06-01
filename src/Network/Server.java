@@ -386,7 +386,14 @@ public class Server extends Thread{
                     		}
 							case Protocol.REQ_UPDATE_VIEWSCOUNT:{
 								DetailDAO detailDAO = new DetailDAO();
+								boolean check = detailDAO.viewsCountIncrease(packetArr[2]);
 
+								if(check){
+									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.RES_UPDATE_VIEWSCOUNT_Y);
+								}
+								else{
+									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.RES_UPDATE_VIEWSCOUNT_N);
+								}
 							}
                     	}
                     	break;
