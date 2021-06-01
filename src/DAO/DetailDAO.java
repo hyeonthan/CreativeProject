@@ -457,7 +457,6 @@ public class DetailDAO {
       public void addFavorite(String userId, String destinationCode, String destinationName, String sortation){
         String query = "INSERT INTO favorite(user_id, destination_code, destination_name, add_date, sortation) VALUES(?,?,?,?,?)";
         try{
-            //  ResultSet으로 destination_name get
             conn = DBconnection.getConnection();
             conn.setAutoCommit(false);
             sp = conn.setSavepoint("Savepoint1");
