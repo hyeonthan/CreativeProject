@@ -1,26 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.chart.PieChart?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.shape.Rectangle?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="849.0" prefWidth="1104.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FxController.BeachDetailController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="849.0" prefWidth="1104.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FxController.BeachDetailController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1fb8ff00" height="843.0" layoutX="3.0" layoutY="2.0" stroke="BLACK" strokeType="INSIDE" width="1096.0" />
       <TableView fx:id="tv_review" layoutX="12.0" layoutY="550.0" onMouseClicked="#doubleClickMouse" prefHeight="260.0" prefWidth="744.0">
-        <columns>
-          <TableColumn fx:id="tc_date" prefWidth="91.99996948242188" text="날짜" />
-          <TableColumn fx:id="tc_content" prefWidth="512.0000305175781" text="리뷰내용" />
+         <columns>
+            <TableColumn fx:id="tc_date" prefWidth="91.99996948242188" text="날짜" />
+            <TableColumn fx:id="tc_content" prefWidth="512.0000305175781" text="리뷰내용" />
             <TableColumn fx:id="tc_star" minWidth="0.0" prefWidth="48.0" text="별점" />
             <TableColumn fx:id="tc_writer" prefWidth="91.0" text="작성자" />
-        </columns>
+         </columns>
       </TableView>
       <Button fx:id="btn_registerReview" layoutX="1015.0" layoutY="548.0" mnemonicParsing="false" onAction="#registerReview" text="리뷰 등록" />
       <TextArea fx:id="ta_reviewContent" layoutX="769.0" layoutY="574.0" prefHeight="236.0" prefWidth="314.0" />
