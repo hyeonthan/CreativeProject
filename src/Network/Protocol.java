@@ -54,7 +54,7 @@ public class Protocol {
     public static final String RES_ID_DUPLICATION_Y = "6-A";          //아이디 중복 확인 요청 승인
     public static final String RES_ID_DUPLICATION_N = "6-B";          //아이디 중복 확인 요청 거절
     public static final String RES_STATISTICS_DETAIL_Y = "6-C";       //상세정보 조회 시 통계 요청 승인
-    public static final String RES_STATISTICS_DETAI_N = "6-D";       //상세정보 조회 시 통계 요청 거절
+    public static final String RES_STATISTICS_DETAIL_N = "6-D";       //상세정보 조회 시 통계 요청 거절
 
     // 갱신 요청
     public static final String REQ_SIGNUP = "8-0";                  //회원가입 요청
@@ -82,6 +82,6 @@ public class Protocol {
     public static final String RES_DELETE_FAVORITES_Y ="9-C";          //즐겨찾기 삭제 요청 성공
     public static final String RES_DELETE_FAVORITES_N ="9-D";          //즐겨찾기 삭제 요청 실패
     public static final String RES_UPDATE_VIEWSCOUNT_Y = "9-E";        //조회수 업데이트 요청 성공  
-    public static final String RES_UPDATE_VIEWSCOUNT_N = "9-F";        //조회수 업데이트 요청 실패    
+    public static final String RES_UPDATE_VIEWSCOUNT_N = "9-F";        //조회수 업데이트 요청 실패
 
 }
