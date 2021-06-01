@@ -1,0 +1,5 @@
+.background {
+    -fx-background-image: url(Ficture/background.jpg);
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+}
