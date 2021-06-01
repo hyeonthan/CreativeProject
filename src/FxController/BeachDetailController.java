@@ -38,6 +38,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.Tooltip;
 import javafx.scene.effect.Glow;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
@@ -121,7 +122,6 @@ public class BeachDetailController extends Object implements Initializable {
 	@FXML
 	public void handleBtnAgeStat(ActionEvent event){
 		pieChart.getData().clear();
-		
 		DetailDAO detailDAO = new DetailDAO();
 		HashMap<Integer, Integer> hsMap = detailDAO.ageStatistic(destinationCode);
 		for(int i = 10; i <= 60; i+=10){
@@ -135,6 +135,28 @@ public class BeachDetailController extends Object implements Initializable {
 				pieChart.getData().add(pData);
 			}
 		} 
+		pieChartCaption(pieChart);
+	
+	}
+	//	성별 통계
+	@FXML
+	public void handleBtnGenderStat(ActionEvent event){
+		pieChart.getData().clear();
+		DetailDAO detailDAO = new DetailDAO();
+		String genderResult = detailDAO.genderStatistic(destinationCode);
+		//	"/"로 구분 -> 남성 인원수/여성 인원수
+		int menCount = Integer.parseInt(genderResult.split("/")[0]);
+		int womenCount = Integer.parseInt(genderResult.split("/")[1]);
+		pData = new PieChart.Data("남성", menCount);
+		pieChart.getData().add(pData);
+		pData = new PieChart.Data("여성", womenCount);
+		pieChart.getData().add(pData);
+		
+		pieChartCaption(pieChart);
+
+	}
+	//	글씨 띄우기
+	private void pieChartCaption(PieChart pieChart){
 		//	글씨 띄우기
 		final Label caption = new Label("");
         caption.setTextFill(Color.DARKORANGE);
@@ -149,7 +171,6 @@ public class BeachDetailController extends Object implements Initializable {
             Tooltip.install(data.getNode(),tooltip);
             applyMouseEvents(data);
         }
-	
 	}
 	//	차트에 마우스 대면 글씨 띄우기
 	private void applyMouseEvents(final PieChart.Data data) {
