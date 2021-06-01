@@ -354,7 +354,7 @@ public class Server extends Thread{
 								}
                     			break;
                     		}
-                    		case Protocol.REQ_CREATE_FAVORITES:{
+                    		case Protocol.REQ_CREATE_FAVORITES:{		//즐겨찾기 추가
                     			DetailDAO favoriteDAO = new DetailDAO();
                     			FavoriteDTO favoriteDTO = (FavoriteDTO)objectInputStream.readObject();
 								boolean check = favoriteDAO.addFavorite(favoriteDTO);
