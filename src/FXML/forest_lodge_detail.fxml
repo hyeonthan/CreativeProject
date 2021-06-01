@@ -1,34 +1,133 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="849.0" prefWidth="1104.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FxController.ForestLodgeDetail">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="849.0" prefWidth="1104.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FxController.ForestLodgeDetail">
    <children>
-      <Text fx:id="t_name" layoutX="75.0" layoutY="76.0" strokeType="OUTSIDE" strokeWidth="0.0" text="휴양림명 : " />
-      <Text fx:id="t_address" layoutX="75.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="주소 : " />
-      <Text fx:id="t_phoneNumber" layoutX="75.0" layoutY="124.0" strokeType="OUTSIDE" strokeWidth="0.0" text="전화번호 : " />
-      <Text fx:id="t_convenient" layoutX="75.0" layoutY="147.0" strokeType="OUTSIDE" strokeWidth="0.0" text="편의시설 : " />
-      <Button fx:id="btn_favorite" layoutX="410.0" layoutY="60.0" mnemonicParsing="false" text="즐겨찾기 등록" />
-      <Text fx:id="t_enterFee" layoutX="75.0" layoutY="169.0" strokeType="OUTSIDE" strokeWidth="0.0" text="입장료 : " />
-      <Text fx:id="t_homePage" layoutX="75.0" layoutY="191.0" strokeType="OUTSIDE" strokeWidth="0.0" text="홈페이지 : " />
-      <TableView fx:id="tv_review" layoutX="44.0" layoutY="497.0" prefHeight="313.0" prefWidth="712.0">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1fb8ff00" height="843.0" layoutX="3.0" layoutY="2.0" stroke="BLACK" strokeType="INSIDE" width="1096.0" />
+      <TableView fx:id="tv_review" layoutX="12.0" layoutY="550.0" onMouseClicked="#doubleClickMouse" prefHeight="260.0" prefWidth="744.0">
          <columns>
-            <TableColumn fx:id="tc_date1" prefWidth="55.0" text="순서" />
-            <TableColumn fx:id="tc_content1" prefWidth="549.0" text="리뷰내용" />
-            <TableColumn fx:id="tc_star1" minWidth="0.0" prefWidth="31.0" text="별점" />
-            <TableColumn fx:id="tc_writer1" prefWidth="76.0" text="작성자" />
+            <TableColumn fx:id="tc_date" prefWidth="91.99996948242188" text="날짜" />
+            <TableColumn fx:id="tc_content" prefWidth="512.0000305175781" text="리뷰내용" />
+            <TableColumn fx:id="tc_star" minWidth="0.0" prefWidth="48.0" text="별점" />
+            <TableColumn fx:id="tc_writer" prefWidth="91.0" text="작성자" />
          </columns>
       </TableView>
-      <Button fx:id="btn_registerReview" layoutX="1015.0" layoutY="497.0" mnemonicParsing="false" onAction="#registerReview" text="리뷰 등록" />
-      <TextArea fx:id="ta_reviewContent" layoutX="769.0" layoutY="535.0" prefHeight="275.0" prefWidth="314.0" />
-      <ComboBox fx:id="cb_star" layoutX="935.0" layoutY="497.0" prefHeight="23.0" prefWidth="68.0" promptText="별점" />
-      <Text layoutX="778.0" layoutY="513.0" strokeType="OUTSIDE" strokeWidth="0.0" text="리뷰 작성" />
-      <Button fx:id="btn_registerImg" layoutX="874.0" layoutY="497.0" mnemonicParsing="false" onAction="#registerImg" text="이미지" />
+      <Button fx:id="btn_registerReview" layoutX="1015.0" layoutY="548.0" mnemonicParsing="false" onAction="#registerReview" text="리뷰 등록" />
+      <TextArea fx:id="ta_reviewContent" layoutX="769.0" layoutY="574.0" prefHeight="236.0" prefWidth="314.0" />
+      <ComboBox fx:id="cb_star" layoutX="935.0" layoutY="548.0" prefHeight="23.0" prefWidth="68.0" promptText="별점" />
+      <Text layoutX="769.0" layoutY="566.0" strokeType="OUTSIDE" strokeWidth="0.0" text="리뷰 작성" wrappingWidth="91.99999862909317">
+         <font>
+            <Font size="18.0" />
+         </font></Text>
+      <Button fx:id="btn_registerImg" layoutX="874.0" layoutY="548.0" mnemonicParsing="false" onAction="#registerImg" text="이미지" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="285.0" layoutX="16.0" layoutY="8.0" stroke="BLACK" strokeType="INSIDE" width="736.0" />
+      <Text fx:id="t_name" layoutX="59.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="휴양림명 : ">
+         <font>
+            <Font size="20.0" />
+         </font></Text>
+      <Text fx:id="t_address" layoutX="99.0" layoutY="123.0" strokeType="OUTSIDE" strokeWidth="0.0" text="주소 : ">
+         <font>
+            <Font size="20.0" />
+         </font></Text>
+      <Text fx:id="t_phoneNumber" layoutX="59.0" layoutY="146.0" strokeType="OUTSIDE" strokeWidth="0.0" text="전화번호 : ">
+         <font>
+            <Font size="20.0" />
+         </font></Text>
+      <Text fx:id="t_convenient" layoutX="59.0" layoutY="192.0" strokeType="OUTSIDE" strokeWidth="0.0" text="편의시설 : ">
+         <font>
+            <Font size="20.0" />
+         </font></Text>
+      <Text fx:id="t_openingPeriod" layoutX="59.0" layoutY="215.0" strokeType="OUTSIDE" strokeWidth="0.0" text="수용인원 : ">
+         <font>
+            <Font size="20.0" />
+         </font></Text>
+      <Text fx:id="t_capacityPeople" layoutX="59.0" layoutY="261.0" strokeType="OUTSIDE" strokeWidth="0.0" text="홈페이지 : ">
+         <font>
+            <Font size="20.0" />
+         </font></Text>
+      <Text fx:id="t_enterFee" layoutX="99.0" layoutY="169.0" strokeType="OUTSIDE" strokeWidth="0.0" text="요금 : ">
+         <font>
+            <Font size="20.0" />
+         </font></Text>
+      <Text fx:id="t_accommodation" layoutX="54.0" layoutY="239.0" strokeType="OUTSIDE" strokeWidth="0.0" text="숙박 여부 : ">
+         <font>
+            <Font size="20.0" />
+         </font></Text>
+      <Button fx:id="btn_favorite" layoutX="590.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleBtnFavorite" prefHeight="56.0" prefWidth="151.0" text="즐겨찾기 등록">
+         <font>
+            <Font size="18.0" />
+         </font></Button>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="247.0" layoutX="12.0" layoutY="297.0" stroke="BLACK" strokeType="INSIDE" width="736.0" />
+      <Text layoutX="26.0" layoutY="339.0" strokeType="OUTSIDE" strokeWidth="0.0" text="통계">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Text>
+      <Text layoutX="26.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="상세정보">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Text>
+      <Button layoutX="25.0" layoutY="347.0" mnemonicParsing="false" onAction="#handleBtnAgeStat" prefHeight="56.0" prefWidth="129.0" text="나이별">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <Button layoutX="24.0" layoutY="411.0" mnemonicParsing="false" onAction="#handleBtnGenderStat" prefHeight="56.0" prefWidth="129.0" text="성별">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <Button layoutX="24.0" layoutY="476.0" mnemonicParsing="false" prefHeight="56.0" prefWidth="129.0" text="출신지별">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <Text fx:id="resultTextName" layoutX="156.0" layoutY="98.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Text>
+      <Text fx:id="resultTextAddress" layoutX="156.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Text>
+      <Text fx:id="resultTextPhoneNum" layoutX="156.0" layoutY="146.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Text>
+      <Text fx:id="resultTextIntroduction" layoutX="156.0" layoutY="168.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Text>
+      <Text fx:id="resultTextConvenient" layoutX="156.0" layoutY="192.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Text>
+      <Text fx:id="reusltTextOpenPeriod" layoutX="156.0" layoutY="215.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Text>
+      <Text fx:id="resultTextAvailableTime" layoutX="156.0" layoutY="238.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Text>
+      <Text fx:id="resultTextHomepage" layoutX="156.0" layoutY="260.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Text>
+      <PieChart fx:id="pieChart" layoutX="178.0" layoutY="316.0" prefHeight="210.0" prefWidth="502.0" />
    </children>
 </AnchorPane>
