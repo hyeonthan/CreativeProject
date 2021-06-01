@@ -18,6 +18,7 @@ import DAO.DetailDAO;
 import DTO.BeachDTO;
 import DTO.FavoriteDTO;
 import DTO.ReviewDTO;
+import DataSetControl.RegionList;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -39,7 +40,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.Tooltip;
 import javafx.scene.effect.Glow;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
@@ -152,13 +152,27 @@ public class BeachDetailController extends Object implements Initializable {
 		pieChart.getData().add(pData);
 		pData = new PieChart.Data("여성", womenCount);
 		pieChart.getData().add(pData);
-		
+
 		pieChartCaption(pieChart);
 
 	}
+	//	출신지별 통계
+	@FXML
+	public void handleBtnRegionStat(ActionEvent event){
+		pieChart.getData().clear();
+		DetailDAO detailDAO = new DetailDAO();
+		HashMap<String, Integer> hsMap = detailDAO.regionStatistic(destinationCode);
+		final String[] region = RegionList.Do;
+		for(int i = 0; i < region.length; i++){
+			if(hsMap.get(region[i]) != 0){
+				pData = new PieChart.Data(region[i], hsMap.get(region[i]));
+				pieChart.getData().add(pData);
+			}
+		}
+		pieChartCaption(pieChart);
+	}
 	//	글씨 띄우기
 	private void pieChartCaption(PieChart pieChart){
-		//	글씨 띄우기
 		final Label caption = new Label("");
         caption.setTextFill(Color.DARKORANGE);
         caption.setStyle("-fx-font: 24 arial;");
