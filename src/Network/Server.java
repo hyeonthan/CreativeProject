@@ -79,7 +79,6 @@ public class Server extends Thread{
 								InquireByRegionDAO inquireByRegionDAO = new InquireByRegionDAO();
 								ArrayList<DestinationDTO> destinationDTOS = inquireByRegionDAO.inquireDestinationByRegion(packetArr[2],packetArr[3],packetArr[4],);
 
-								if(packetArr[2])
 
 								if(destinationDTOS != null){
 									bufferedWriter.write(Protocol.PT_RES_VIEW + "`" + Protocol.RES_DESTINATION_REGION_Y);
