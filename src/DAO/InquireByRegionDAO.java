@@ -22,13 +22,13 @@ public class InquireByRegionDAO {
             conn= DBconnection.getConnection();
             
             //  구분 없이 특별시, 광역시 선택
-            if(sortation.equals("0")  && city.equals("0")){
+            if(sortation.equals("")  && city.equals("")){
                 query = "select * from destination where do = ?"; 
                 pstmt = conn.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
                 pstmt.setString(1,Do);
             }
             //  구분 없이 도, 시/군 선택
-            else if(sortation.equals("0")){
+            else if(sortation.equals("")){
                 query = "select * from destination where do = ? and city = ?"; 
                 pstmt = conn.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
                 pstmt.setString(1,Do);
@@ -36,7 +36,7 @@ public class InquireByRegionDAO {
 
             }
             //  구분 선택 and 특별시, 광역시 선택
-            else if(city.equals("0")){
+            else if(city.equals("")){
                 query = "select * from destination where sortation = ? AND do = ?"; 
                 pstmt = conn.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
                 pstmt.setString(1,sortation);
