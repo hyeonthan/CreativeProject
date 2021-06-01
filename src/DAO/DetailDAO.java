@@ -279,26 +279,22 @@ public class DetailDAO {
         int manCnt=0;
         int womanCnt=0;
         try {
-            String query = "select cnt(*) from review where destination_code = ? and user_id = (select id from user where gender = 'M')";
-            String query2 = "select cnt(*) from review where destination_code = ? and user_id = (select id from user where gender = 'F')";
+            String query = "select count(*) from review where destination_code = ? and user_id in (select id from user where gender = 'M')";
+            String query2 = "select count(*) from review where destination_code = ? and user_id in (select id from user where gender = 'F')";
 
             conn= DBconnection.getConnection();
 
-            pstmt = conn.prepareStatement(query);
+            pstmt = conn.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
             pstmt.setString(1,desCode);
             rs = pstmt.executeQuery();
+            rs.next();
+            manCnt = rs.getInt(1);
 
-            while(rs.next()){
-              manCnt = rs.getInt(1);
-            }
-
-            pstmt = conn.prepareStatement(query2);
+            pstmt = conn.prepareStatement(query2, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
             pstmt.setString(1,desCode);
             rs = pstmt.executeQuery();
-
-            while(rs.next()){
-                womanCnt = rs.getInt(1);
-            }
+            rs.next();
+            womanCnt = rs.getInt(1);
 
         }
         catch (SQLException sqle) {
