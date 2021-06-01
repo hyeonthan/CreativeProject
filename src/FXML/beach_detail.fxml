@@ -88,7 +88,7 @@
             <Font size="24.0" />
          </font>
       </Button>
-      <Button layoutX="24.0" layoutY="476.0" mnemonicParsing="false" prefHeight="56.0" prefWidth="129.0" text="출신지별">
+      <Button layoutX="24.0" layoutY="476.0" mnemonicParsing="false" onAction="#handleBtnRegionStat" prefHeight="56.0" prefWidth="129.0" text="출신지별">
          <font>
             <Font size="24.0" />
          </font>
