@@ -22,7 +22,7 @@ public class InquireByRegionDAO {
             conn= DBconnection.getConnection();
             
             //  구분 없이 특별시, 광역시 선택
-            if(sortation.equals("")  && city.equals("")){
+            if(sortation.equals(" ")  && city.equals(" ")){
                 query = "select * from destination where do = ?"; 
                 pstmt = conn.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
                 pstmt.setString(1,Do);
