@@ -78,8 +78,7 @@ public class Server extends Thread{
                     		case Protocol.REQ_DESTINATION_REGION:{	//지역으로 전체 검색
 								InquireByRegionDAO inquireByRegionDAO = new InquireByRegionDAO();
 								ArrayList<DestinationDTO> destinationDTOS = inquireByRegionDAO.inquireDestinationByRegion(packetArr[2],packetArr[3],packetArr[4],);
-
-
+								
 								if(destinationDTOS != null){
 									bufferedWriter.write(Protocol.PT_RES_VIEW + "`" + Protocol.RES_DESTINATION_REGION_Y);
 									writeObject(destinationDTOS);
@@ -163,7 +162,7 @@ public class Server extends Thread{
 								}
                     			break;
                     		}
-                    		case Protocol.REQ_DESTINATION_LOCATION:{
+                    		case Protocol.REQ_DESTINATION_LOCATION:{	//위치로 검색
                     			InquireByLocationDAO inquireByLocationDAO = new InquireByLocationDAO();
                     			ArrayList<DestinationDTO> arrayList = null;
 
@@ -191,12 +190,12 @@ public class Server extends Thread{
 								}
                     			break;
                     		}
-                    		case Protocol.REQ_STATISTICS:{
+                    		case Protocol.REQ_STATISTICS:{	//통계페이지 요청
                     			StatisticsDAO statisticsDAO = new StatisticsDAO();
 
                     			break;
                     		}
-                    		case Protocol.REQ_MYPAGE:{
+                    		case Protocol.REQ_MYPAGE:{ //마이페이지 요청
                     			MyPageDAO myPageDAO = new MyPageDAO();
                     			UserDTO userDTO = myPageDAO.roadUser(id);
 								ArrayList<ReviewDTO> arrayList = myPageDAO.inquireMyReview(id);
