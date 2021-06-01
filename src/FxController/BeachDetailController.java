@@ -16,6 +16,7 @@ import javax.imageio.ImageIO;
 
 import DAO.DetailDAO;
 import DTO.BeachDTO;
+import DTO.FavoriteDTO;
 import DTO.ReviewDTO;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -115,7 +116,7 @@ public class BeachDetailController extends Object implements Initializable {
 	@FXML
 	public void handleBtnFavorite(ActionEvent event){
 		DetailDAO detailDAO = new DetailDAO();
-		detailDAO.addFavorite(userId, destinationCode, destinationName, "해수욕장");
+		detailDAO.addFavorite(new FavoriteDTO(userId, destinationCode, destinationName, Timestamp.valueOf(LocalDateTime.now()),"해수욕장"));
 		ShowAlert.showAlert("INFORMATION", "알림창", "즐겨찾기 등록 완료!");
 	}
 	//	나이별 통계

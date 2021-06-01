@@ -11,10 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import DBcontrol.DBconnection;
-import DTO.BeachDTO;
-import DTO.ForestLodgeDTO;
-import DTO.ReviewDTO;
-import DTO.TouristSpotDTO;
+import DTO.*;
 
 public class DetailDAO {
     private PreparedStatement pstmt;
@@ -414,7 +411,8 @@ public class DetailDAO {
         return hsMap;
     }
     //  조회수 증가
-    public void viewsCountIncrease(String destinationCode){
+    public boolean viewsCountIncrease(String destinationCode){
+        boolean check = false;
         try{
             String query = "UPDATE destination SET views = views+1 WHERE code = ?";
 
@@ -427,6 +425,7 @@ public class DetailDAO {
             pstmt.executeUpdate();
 
             conn.commit();
+            check = true;
         } catch (SQLException sqlException) {
             try {
                 System.out.println("rollback 실행");
@@ -448,9 +447,11 @@ public class DetailDAO {
                 e.printStackTrace();
             }
         }
+        return check;
     }
       //  즐겨찾기 추가
-      public void addFavorite(String userId, String destinationCode, String destinationName, String sortation){
+      public boolean addFavorite(FavoriteDTO favoriteDTO){
+        boolean check = false;
         String query = "INSERT INTO favorite(user_id, destination_code, destination_name, add_date, sortation) VALUES(?,?,?,?,?)";
         try{
             conn = DBconnection.getConnection();
@@ -458,14 +459,15 @@ public class DetailDAO {
             sp = conn.setSavepoint("Savepoint1");
             
             pstmt = conn.prepareStatement(query);
-            pstmt.setString(1, userId);
-            pstmt.setString(2, destinationCode);
-            pstmt.setString(3, destinationName);
-            pstmt.setTimestamp(4, Timestamp.valueOf(LocalDateTime.now()));
-            pstmt.setString(5, sortation);
+            pstmt.setString(1, favoriteDTO.getUser_id());
+            pstmt.setString(2, favoriteDTO.getDestination_code());
+            pstmt.setString(3, favoriteDTO.getDestination_name());
+            pstmt.setTimestamp(4,favoriteDTO.getAdd_date());
+            pstmt.setString(5, favoriteDTO.getSortation());
 
             pstmt.executeUpdate();
             conn.commit();
+            check = true;
         }catch (SQLException sqlException) {
             try {
                 System.out.println("rollback 실행");
@@ -487,5 +489,6 @@ public class DetailDAO {
                 e.printStackTrace();
             }
         }
+        return check;
     }
 }
