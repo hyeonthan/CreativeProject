@@ -55,7 +55,7 @@ public class SignUp {
 	@FXML
 	private Button btn_cancle;
 	
-	private boolean checkId;
+	private boolean checkId = true;
 	
 	@FXML
 	public void selectGender(ActionEvent event) {
@@ -337,6 +337,7 @@ public class SignUp {
 					case Protocol.RES_ID_DUPLICATION_Y: {
 						try {
 							checkId = false;
+							ShowAlert.showAlert("INFORMATION", "중복 체크 완료!", "아이디 사용 가능");
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
@@ -349,12 +350,6 @@ public class SignUp {
 				}
 			}
 			break;
-		}
-		if(!checkId){
-			ShowAlert.showAlert("INFORMATION", "중복 체크 완료!", "아이디 사용 가능");
-		}			
-		else{
-			ShowAlert.showAlert("WARNING", "중복 체크 완료!", "아이디 이미 사용 중입니다.");
 		}
 	}
 	@FXML // 회원가입버튼 클릭
