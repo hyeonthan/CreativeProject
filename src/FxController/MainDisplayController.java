@@ -50,7 +50,7 @@ public class MainDisplayController implements Initializable{
     @FXML
 	public void handleBtnAroundSearch(ActionEvent e) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/Destination.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/Nearby.fxml"));
 			Parent inquiry = (Parent)loader.load();
 			borderpaneId.setCenter(inquiry);
 		} catch (IOException e1) {
