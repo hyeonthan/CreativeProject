@@ -142,6 +142,7 @@ public class DestinationController implements Initializable{
                     }
                     if(myTableView.getSelectionModel().getSelectedItem().getSortation().equals("관광지")){
                     }
+                    //  상세정보 클릭시 조회수 증가
                     DetailDAO detailDAO = new DetailDAO();
                     detailDAO.viewsCountIncrease(destinationCode);
                     stage.showAndWait();
