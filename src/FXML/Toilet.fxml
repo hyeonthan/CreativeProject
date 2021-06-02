@@ -16,16 +16,13 @@
     <children>
         <Pane prefHeight="600.0" prefWidth="1100.0">
             <WebView fx:id="webView" layoutX="50.0" layoutY="89.0" prefHeight="280.0" prefWidth="1000.0" />
-            <TableView fx:id="myTableView" layoutX="50.0" layoutY="378.0" prefHeight="208.0" prefWidth="1000.0">
+             <TableView fx:id="myTableView" layoutX="50.0" layoutY="350.0" prefHeight="180.0" prefWidth="1000.0">
                 <columns>
                     <TableColumn fx:id="nameColumn" prefWidth="125.0" text="이름" />
-                    <TableColumn fx:id="addressColumn" prefWidth="231.0" text="위치" />
-                    <TableColumn fx:id="sizeColumn" prefWidth="59.0" text="구획수" />
-                    <TableColumn fx:id="opening_daysColumn" prefWidth="70.0" text="운영요일" />
-                    <TableColumn fx:id="weekdays_opening_timeColumn" prefWidth="120.0" text="평일 운영시간" />
-                    <TableColumn fx:id="sat_opening_timeColumn" prefWidth="145.0" text="토요일 운영시간" />
-                    <TableColumn fx:id="holiday_opening_timeColumn" prefWidth="187.0" text="일요일/공휴일 운영시간" />
-                    <TableColumn fx:id="feeColumn" prefWidth="62.0" text="요금" />
+                    <TableColumn fx:id="addressColumn" prefWidth="294.0" text="위치" />
+                    <TableColumn fx:id="PublicColumn" prefWidth="83.0" text="남녀공용" />
+                    <TableColumn fx:id="opening_timeColumn" prefWidth="226.0" text="개방시간" />
+                    <TableColumn fx:id="managementAgencyColumn" prefWidth="271.0" text="관리기관명" />
                 </columns>
             </TableView>
          <Text layoutX="50.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="거리 입력">
