@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import DTO.ParkingLotsDTO;
+import DTO.ToiletDTO;
+import Network.Protocol;
+import Network.clientMain;
 import DAO.InquireToiletParkingDAO;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
@@ -77,14 +80,34 @@ public class ParkingController implements Initializable {
             String lat = event.getData().split(" ")[0];
             String lng = event.getData().split(" ")[1];
 
-            ArrayList<ParkingLotsDTO> list = InquireToiletParkingDAO.inquireParkingLotByLocation(lat, lng , distance);
-            myTableView.getItems().clear();
-            myTableView.getItems().addAll(list);
-            try {
-                System.out.println(lat);
-                System.out.println(lng);
-            } catch (Exception e) {
-                e.printStackTrace();
+            clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_PARKING + "`" + lat + "`" + lng + "`" + distance);
+  		
+            while (true) {
+            	String packet = clientMain.readPacket();
+            	String packetArr[] = packet.split("`");
+            	String packetType = packetArr[0];
+            	String packetCode = packetArr[1];
+  			
+            	if (packetType.equals(Protocol.PT_RES_VIEW)) {
+            		switch (packetCode) {
+            			case Protocol.RES_PARKING_Y: {
+            				ArrayList<ParkingLotsDTO> list = (ArrayList<ParkingLotsDTO>) clientMain.readObject();
+            	            myTableView.getItems().clear();
+            	            myTableView.getItems().addAll(list);
+            	            try {
+            	                System.out.println(lat);
+            	                System.out.println(lng);
+            	            } catch (Exception e) {
+            	                e.printStackTrace();
+            	            }
+            				return;
+            			}
+            			case Protocol.RES_PARKING_N: {
+            				ShowAlert.showAlert("WARNING", "경고", "주차장 정보를 불러오는데 실패하였습니다.");
+            				return;
+            			}
+            		}
+            	}
             }
         });
     }

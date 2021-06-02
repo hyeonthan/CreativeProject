@@ -5,7 +5,10 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import DAO.InquireToiletParkingDAO;
+import DTO.ParkingLotsDTO;
 import DTO.ToiletDTO;
+import Network.Protocol;
+import Network.clientMain;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -67,14 +70,34 @@ public class ToiletController implements Initializable {
             }
             String lat = event.getData().split(" ")[0];
             String lng = event.getData().split(" ")[1];
-            ArrayList<ToiletDTO> list = InquireToiletParkingDAO.inquireToiletByLocation(lat, lng , distance);
-            myTableView.getItems().clear();
-            myTableView.getItems().addAll(list);
-            try {
-                System.out.println(lat);
-                System.out.println(lng);
-            } catch (Exception e) {
-                e.printStackTrace();
+            clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_TOILET + "`" + lat + "`" + lng + "`" + distance);
+      		
+            while (true) {
+            	String packet = clientMain.readPacket();
+            	String packetArr[] = packet.split("`");
+            	String packetType = packetArr[0];
+            	String packetCode = packetArr[1];
+  			
+            	if (packetType.equals(Protocol.PT_RES_VIEW)) {
+            		switch (packetCode) {
+            			case Protocol.RES_TOILET_Y: {
+            				ArrayList<ToiletDTO> list = (ArrayList<ToiletDTO>) clientMain.readObject();
+            	            myTableView.getItems().clear();
+            	            myTableView.getItems().addAll(list);
+            	            try {
+            	                System.out.println(lat);
+            	                System.out.println(lng);
+            	            } catch (Exception e) {
+            	                e.printStackTrace();
+            	            }
+            				return;
+            			}
+            			case Protocol.RES_TOILET_N: {
+            				ShowAlert.showAlert("WARNING", "경고", "화장실 정보를 불러오는데 실패하였습니다.");
+            				return;
+            			}
+            		}
+            	}
             }
         });
     }
