@@ -43,7 +43,7 @@ public class ParkingController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         engine = webView.getEngine();
         getLatLng();
-        engine.load("http://localhost:8080/map.html");
+        engine.load("http://localhost:8081/map.html");
 
         nameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
         addressColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDo() + " " + cellData.getValue().getCity() + " " + cellData.getValue().getAddress()));
