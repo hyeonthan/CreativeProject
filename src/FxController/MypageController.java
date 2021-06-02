@@ -3,6 +3,7 @@ package FxController;
 import java.net.URL;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
@@ -12,7 +13,6 @@ import DTO.ReviewDTO;
 import DTO.UserDTO;
 import DataSetControl.RegionList;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -40,12 +40,12 @@ public class MypageController implements Initializable {
 	public TableColumn<FavoriteDTO, String> tc_favoriteType;
 	@FXML
 	public TableColumn<FavoriteDTO, String> tc_favoriteName;
-	@FXML // 최근조회 테이블
-	public TableView<Recent> tv_recent;
-	@FXML
-	public TableColumn<Recent, String> tc_recentType;
-	@FXML
-	public TableColumn<Recent, String> tc_recentName;
+	// @FXML // 최근조회 테이블
+	// public TableView<Recent> tv_recent;
+	// @FXML
+	// public TableColumn<Recent, String> tc_recentType;
+	// @FXML
+	// public TableColumn<Recent, String> tc_recentName;
 	@FXML // 리뷰 테이블
 	public TableView<ReviewDTO> tv_review;
 	@FXML
@@ -61,7 +61,7 @@ public class MypageController implements Initializable {
 	private String userId;
 
 	//	로그인 정보 받은 후 초기화
-	public void setSaveUserId(String userId){
+	public void setUserInformation(String userId){
 		MyPageDAO myPageDAO = new MyPageDAO();
 		UserDTO userDTO = myPageDAO.roadUser(userId);
 		this.userId = userId;
@@ -81,7 +81,22 @@ public class MypageController implements Initializable {
 		cbBoxGender.setDisable(true);
 		tfAddress.setDisable(true);
 	}
+	//	즐겨찾기 리스트 불러오기
+	public void setFavoriteList(String userId){
+		tv_favorite.getItems().clear();
+		
+		MyPageDAO myPageDAO = new MyPageDAO();
+		ArrayList<FavoriteDTO> list = myPageDAO.inquiryFavorite(userId);
+		tv_favorite.getItems().addAll(list);
+	}
+	//	내가 쓴 리뷰 리스트 불러오기
+	public void setReviewList(String userId){
+		tv_review.getItems().clear();
 
+		MyPageDAO myPageDAO = new MyPageDAO();
+		ArrayList<ReviewDTO> list = myPageDAO.inquireMyReview(userId);
+		tv_review.getItems().addAll(list);
+	}
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		//	즐겨찾기 테이블 초기화
@@ -131,12 +146,7 @@ public class MypageController implements Initializable {
 			ShowAlert.showAlert("WARNING", "경고", "시/군 미선택");
 			return;
 		}
-		tfName.setDisable(true);
-		tfAge.setDisable(true);
-		cbBoxGender.setDisable(true);
-		tfAddress.setDisable(true);
-		cbBoxDo.setDisable(true);
-		cbBoxCity.setDisable(true);
+	
 
 		String id = userId;
 		String name = tfName.getText();
@@ -148,7 +158,8 @@ public class MypageController implements Initializable {
 		MyPageDAO myPageDAO = new MyPageDAO();
 		myPageDAO.reservationUser(new UserDTO(id, name, Integer.parseInt(age), gender, Do, city, address, Timestamp.valueOf(LocalDateTime.now())));
 		ShowAlert.showAlert("INFORMATION", "알림창", "개인정보 수정 완료");
-		setSaveUserId(id);
+		//	수정 완료 후 개인정보 초기화
+		setUserInformation(id);
 	}
 	//	수정 클릭 후 '도' 선택 시 '시/군' 변경
 	@FXML
@@ -167,24 +178,23 @@ public class MypageController implements Initializable {
 	@FXML // 즐겨찾기 삭제 버튼 클릭
 	public void deleteFavorite(ActionEvent event) {
 		try {
-			
-//			ArrayList<Favorite> arr = new ArrayList<Favorite>();
-//			arr.add(new Favorite("a", "b"));
-//
-//			for (Favorite temp : arr) // 리스트에 추가
-//			{
-//				favoriteList.add(temp);
-//			}
 			if (tv_favorite.getSelectionModel().isEmpty()) {
 				errorAlert("삭제 오류", "삭제할 즐겨찾기를 선택하세요.");
 				return;
 			}
-			
-			ButtonType result = deleteAlert("선택한 즐겨찾기를 삭제하겠습니까?", "확인 버튼 클릭 시 즐겨찾기 삭제");
-			if (result == ButtonType.OK) {
-			}
-			else if (result == ButtonType.CANCEL) {
-				event.consume(); // 이벤트 종료
+			if(tv_favorite.getSelectionModel().getSelectedItem()!=null){
+				ButtonType result = deleteAlert("선택한 즐겨찾기를 삭제하겠습니까?", "확인 버튼 클릭 시 즐겨찾기 삭제");
+				if (result == ButtonType.OK) {
+					MyPageDAO myPageDAO = new MyPageDAO();
+					int no = tv_favorite.getSelectionModel().getSelectedItem().getNo();
+					myPageDAO.deleteFavorite(no);
+					ShowAlert.showAlert("INFORMATION", "알림창", "즐겨찾기 삭제 완료!");
+					//	삭제 완료 후 리스트 초기화
+					setFavoriteList(userId);
+				}
+				else if (result == ButtonType.CANCEL) {
+					event.consume(); // 이벤트 종료
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -198,13 +208,19 @@ public class MypageController implements Initializable {
 				errorAlert("삭제 오류", "삭제할 리뷰를 선택하세요.");
 				return;
 			}
-			
-			ButtonType result = deleteAlert("선택한 리뷰를 삭제하겠습니까?", "확인 버튼 클릭 시 리뷰 삭제");
-			if (result == ButtonType.OK) {
-				
-			}
-			else if (result == ButtonType.CANCEL) {
-				event.consume(); // 이벤트 종료
+			if(tv_review.getSelectionModel().getSelectedItem()!=null){
+				ButtonType result = deleteAlert("선택한 리뷰를 삭제하겠습니까?", "확인 버튼 클릭 시 리뷰 삭제");
+				if (result == ButtonType.OK) {
+					MyPageDAO myPageDAO = new MyPageDAO();
+					ReviewDTO reviewDTO = tv_review.getSelectionModel().getSelectedItem();
+					myPageDAO.deleteReview(reviewDTO);
+					ShowAlert.showAlert("INFORMATION", "알림창", "리뷰 삭제 완료!");
+					//	삭제 완료 후 리스트 초기화
+					setReviewList(userId);
+				}
+				else if (result == ButtonType.CANCEL) {
+					event.consume(); // 이벤트 종료
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -225,49 +241,5 @@ public class MypageController implements Initializable {
 		alert.setContentText(msg);
 		alert.showAndWait();
 	}
-	
-	// 즐겨찾기 테이블 행 클래스
-	private class Favorite {
-		private String type;
-		private String name;
-		
-		public Favorite(String type, String name) {
-			this.type = type;
-			this.name = name;
-		}
-		
-		public String getType() { return type; }
-		public String getName() { return name; }
-	}
 
-	// 최근조회 테이블 행 클래스
-	private class Recent {
-		private StringProperty type;
-		private StringProperty name;
-		
-		public Recent(StringProperty type, StringProperty name) {
-			this.type = type;
-			this.name = name;
-		}
-		
-		public StringProperty getType() { return type; }
-		public StringProperty getName() { return name; }
-	}
-	
-	// 리뷰 테이블 행 클래스
-	private class Review {
-		private StringProperty date;
-		private StringProperty name;
-		private StringProperty content;
-		
-		public Review(StringProperty date, StringProperty name, StringProperty content) {
-			this.date = date;
-			this.name = name;
-			this.content = content;
-		}
-		
-		public StringProperty getDate() { return date; }
-		public StringProperty getName() { return name; }
-		public StringProperty getContent() { return content; }
-	}
 }

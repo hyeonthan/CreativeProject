@@ -67,8 +67,7 @@ public class MyPageDAO {
         return list;
     }
     //  즐겨찾기 삭제
-    public boolean deleteFavorite(int no){
-        boolean check= false;
+    public void deleteFavorite(int no){
         String sql = "DELETE FROM favorite WHERE no = ?";
         try{
             conn = DBconnection.getConnection();
@@ -80,7 +79,6 @@ public class MyPageDAO {
 
             psmt.executeUpdate();
             conn.commit();
-            check = true;
         }catch(SQLException sqle1){
             try{
                 System.out.println("rollback 실행");
@@ -101,7 +99,6 @@ public class MyPageDAO {
                 e.printStackTrace();
             }
         }
-        return check;
     }
     //  회원 정보(userDTO) 불러오기
     public UserDTO roadUser(String userId){
@@ -208,7 +205,7 @@ public class MyPageDAO {
                 Timestamp reporting_date = rs.getTimestamp("reporting_date");
                 String destination_code =rs.getString("destination_code");
                 String destination_name = rs.getString("destination_name");
-                Timestamp modify_date = rs.getTimestamp("modify_date)");
+                Timestamp modify_date = rs.getTimestamp("modify_date");
                 byte[] image =rs.getBytes("image");
 
                 ReviewDTO dto =new ReviewDTO(no,user_id, content,scope, destination_code, destination_name,modify_date, reporting_date, image);
@@ -234,21 +231,34 @@ public class MyPageDAO {
     }
 
     // 내가 쓴 리뷰 삭제하기
-    public boolean deleteReview (int selNo){
-        boolean check =false;
+    public void deleteReview (ReviewDTO reviewDTO){
         try {
             String query = "delete from review where no =?";
+            String query2= "select sum(scope)/count(*) from review where destination_code =?";
+            String query3 = "update destination set scope=? where code= ?";
 
             conn= DBconnection.getConnection();
             conn.setAutoCommit(false);
             sp = conn.setSavepoint("Savepoint1");
 
             psmt = conn.prepareStatement(query);
-            psmt.setInt(1,selNo);
-
+            psmt.setInt(1, reviewDTO.getNo());
             psmt.executeUpdate();
+
+            int scope=0;
+            psmt = conn.prepareStatement(query2);
+            psmt.setString(1,reviewDTO.getDestination_code());
+            rs= psmt.executeQuery();
+            while(rs.next()){
+                scope= rs.getInt(1);
+            }
+
+            psmt = conn.prepareStatement(query3);
+            psmt.setInt(1, scope);
+            psmt.setString(2, reviewDTO.getDestination_code());
+            psmt.executeUpdate();
+
             conn.commit();
-            check = true;
         }
         catch (SQLException sqlException) {
             try {
@@ -271,7 +281,6 @@ public class MyPageDAO {
                 throw new RuntimeException(e.getMessage());
             }
         }
-        return check;
     }
 }
 
