@@ -4,20 +4,20 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="login" stylesheets="@CSS/application.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FxController.Main">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="login" stylesheets="@CSS/Login.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FxController.Main">
    <children>
       <TextField fx:id="tf_id" layoutX="216.0" layoutY="189.0" promptText="아이디" />
       <PasswordField fx:id="pf_password" layoutX="215.0" layoutY="227.0" promptText="비밀번호" />
       <Button fx:id="btn_login" layoutX="229.0" layoutY="279.0" mnemonicParsing="false" onAction="#login" text="로그인" />
       <Button fx:id="btn_signup" layoutX="301.0" layoutY="279.0" mnemonicParsing="false" onAction="#signUp" text="회원가입" />
-      <Text layoutX="229.0" layoutY="109.0" strokeType="OUTSIDE" strokeWidth="0.0" text="여 정 시">
+      <Text layoutX="229.0" layoutY="110.0" strokeType="OUTSIDE" strokeWidth="0.0" text="여 정 시">
          <font>
-            <Font size="39.0" />
+            <Font name="Cafe24 Ssurround air" size="40.0" />
          </font>
       </Text>
-      <Text layoutX="246.0" layoutY="129.0" strokeType="OUTSIDE" strokeWidth="0.0" text="여행 정보 제공 시스템">
+      <Text layoutX="246.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="여행 정보 제공 시스템">
          <font>
-            <Font size="11.0" />
+            <Font name="Cafe24 Ssurround air" size="12.0" />
          </font>
       </Text>
    </children>

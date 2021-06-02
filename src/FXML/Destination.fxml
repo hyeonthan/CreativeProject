@@ -17,7 +17,7 @@
             <ComboBox fx:id="comboBoxClassification" layoutX="39.0" layoutY="68.0" prefWidth="150.0" promptText="구분" />
             <ComboBox fx:id="comboBoxDo" layoutX="209.0" layoutY="68.0" onAction="#handleCbBoxDo" prefWidth="150.0" promptText="도" />
             <ComboBox fx:id="comboBoxCity" layoutX="377.0" layoutY="68.0" prefWidth="150.0" promptText="시/군" />
-            <Button layoutX="575.0" layoutY="68.0" mnemonicParsing="false" onAction="#handleBtnSearch" text="검색" />
+            <Button layoutX="565.0" layoutY="68.0" mnemonicParsing="false" onAction="#handleBtnSearch" prefWidth="50.0" text="검색" />
             <TableView fx:id="myTableView" layoutX="35.0" layoutY="118.0" onMouseClicked="#doubleClickMouse" prefHeight="418.0" prefWidth="1024.0">
                 <columns>
                 <TableColumn fx:id="sortColumn" prefWidth="75.0" text="구분" />
@@ -28,7 +28,7 @@
             </TableView>
             <Text layoutX="39.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="여행지 검색">
                <font>
-                  <Font name="Cafe24" size="30.0" />
+                  <Font name="Cafe24 Ssurround" size="30.0" />
                </font>
             </Text>
          </children>

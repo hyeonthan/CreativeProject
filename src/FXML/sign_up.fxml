@@ -9,11 +9,11 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FxController.SignUp">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="signup" stylesheets="@CSS/Login.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FxController.SignUp">
    <children>
       <Text layoutX="222.0" layoutY="110.0" strokeType="OUTSIDE" strokeWidth="0.0" text="회원가입">
          <font>
-            <Font size="39.0" />
+            <Font name="Cafe24 Ssurround air" size="39.0" />
          </font>
       </Text>
       <TextField fx:id="tf_id" layoutX="131.0" layoutY="143.0" prefHeight="28.0" prefWidth="132.0" promptText="아이디" />

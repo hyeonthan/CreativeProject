@@ -1,17 +1,21 @@
 .root{
-    font-family: 'Cafe24Ssurround';
+    -fx-font-family: 'Cafe24 Ssurround';
     font-weight: normal;
     font-style: normal;
 }
 
-.login {
-    -fx-background-image: url(Ficture/background.jpg);
+.main {
+    -fx-background-image: url(Images/gradation.jpg);
     -fx-background-size: cover;
     -fx-background-position: center center;
 }
 
-.main {
-    -fx-background-image: url(Ficture/gradation.jpg);
-    -fx-background-size: cover;
-    -fx-background-position: center center;
+.button {
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+    -fx-background-color: linear-gradient(#ffffff, #fff8e7);
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6), 5, 0, 0, 1 );
+}
+.button:hover {
+    -fx-background-color: linear-gradient(#ffffff, #eee9de);
 }

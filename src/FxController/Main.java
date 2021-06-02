@@ -1,8 +1,6 @@
 package FxController;
 
 import DAO.UserDAO;
-import Network.Protocol;
-import Network.clientMain;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 public class Main extends Application {
 	
@@ -109,6 +108,9 @@ public class Main extends Application {
 	@Override // 로그인 화면 출력
 	public void start(Stage primaryStage) {
 		try {
+			System.setProperty("prism.lcdtext", "false"); //폰트 깨짐 방지
+			Font.loadFont(getClass().getResourceAsStream("/FXML/CSS/resource/SsurroundAir.ttf"), 10); //폰트 설정
+			Font.loadFont(getClass().getResourceAsStream("/FXML/CSS/resource/Cafe24.ttf"), 10); //폰트 설정
 			Parent root = FXMLLoader.load(Main.class.getResource("../FXML/login.fxml"));
 			Scene scene = new Scene(root);
 			primaryStage.setScene(scene);

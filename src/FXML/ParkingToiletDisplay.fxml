@@ -7,9 +7,9 @@
 <BorderPane fx:id="bp" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.201" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FxController.ParkingToiletDisplayController">
     <top>
         <ToolBar>
-            <Text text="주차장 / 화장실 찾기" wrappingWidth="220">
+            <Text layoutX="39.0" text="주차장 / 화장실 찾기" wrappingWidth="220">
                 <font>
-                    <Font size="15.0" />
+                    <Font name="Cafe24 Ssurround" size="15.0" />
                 </font>
             </Text>
             <Button fx:id="btnP" layoutX="221.0" layoutY="190.0" mnemonicParsing="false" text="주차장" />

@@ -1,0 +1,10 @@
+.login {
+    -fx-font-family: 'Cafe24 Ssurround air';
+    -fx-background-image: url(Images/background.jpg);
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+}
+.signup {
+    -fx-font-family: 'Cafe24 Ssurround air';
+    -fx-background-color: white;
+}
