@@ -14,6 +14,7 @@ import java.net.Socket;
 import java.sql.Array;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import DTO.*;
 
@@ -90,10 +91,9 @@ public class Server extends Thread{
                     		}
                     		case Protocol.REQ_TOURIST_DETAIL:{	//관광지 상세정보
 								DetailDAO detailDAO = new DetailDAO();
-								DestinationDTO destinationDTO = (DestinationDTO) objectInputStream.readObject();
 
-								TouristSpotDTO touristSpotDTO = detailDAO.detailTouristSpot(destinationDTO.getTouristSpot_code());
-								ArrayList<ReviewDTO> arrayList = detailDAO.inquireReview(destinationDTO.getCode());
+								TouristSpotDTO touristSpotDTO = detailDAO.detailTouristSpot(packetArr[2]);
+								ArrayList<ReviewDTO> arrayList = detailDAO.inquireReview(packetArr[3]);
 
 								if (touristSpotDTO != null) {
 									writePacket(Protocol.PT_RES_VIEW + "`" + Protocol.RES_TOURIST_DETAIL_Y);
@@ -106,10 +106,9 @@ public class Server extends Thread{
                     		}
                     		case Protocol.REQ_FOREST_DETAIL:{		// 휴양림 상세정보
 								DetailDAO detailDAO = new DetailDAO();
-								DestinationDTO destinationDTO = (DestinationDTO) objectInputStream.readObject();
 
-								ForestLodgeDTO forestLodgeDTO = detailDAO.detailForestLodge(destinationDTO.getForestLodge_code());
-								ArrayList<ReviewDTO> arrayList = detailDAO.inquireReview(destinationDTO.getCode());
+								ForestLodgeDTO forestLodgeDTO = detailDAO.detailForestLodge(packetArr[2]);
+								ArrayList<ReviewDTO> arrayList = detailDAO.inquireReview(packetArr[3]);
 
 								if (forestLodgeDTO!=null) {
 									writePacket(Protocol.PT_RES_VIEW + "`" + Protocol.RES_FOREST_DETAIL_Y);
@@ -122,10 +121,9 @@ public class Server extends Thread{
                     		}
                     		case Protocol.REQ_BEACH_DETAIL:{		//해수욕장 상세정보
 								DetailDAO detailDAO = new DetailDAO();
-								DestinationDTO destinationDTO = (DestinationDTO) objectInputStream.readObject();
 
-								ForestLodgeDTO beachDTO = detailDAO.detailForestLodge(destinationDTO.getBeach_code());
-								ArrayList<ReviewDTO> arrayList = detailDAO.inquireReview(destinationDTO.getCode());
+								ForestLodgeDTO beachDTO = detailDAO.detailForestLodge(packetArr[2]);
+								ArrayList<ReviewDTO> arrayList = detailDAO.inquireReview(packetArr[3]);
 
 								if (beachDTO!=null) {
 									writePacket(Protocol.PT_RES_VIEW + "`" + Protocol.RES_BEACH_DETAIL_Y);
@@ -225,6 +223,14 @@ public class Server extends Thread{
 											break;
 									}
 								}
+
+								if(arrayList!=null){
+									writePacket(Protocol.PT_RES_VIEW + "`" + Protocol.RES_STATISTICS_Y);
+									writeObject(arrayList);
+								}
+								else{
+									writePacket(Protocol.PT_RES_VIEW + "`" + Protocol.RES_STATISTICS_N);
+								}
                     			break;
                     		}
                     		case Protocol.REQ_MYPAGE:{ //마이페이지 요청
@@ -258,7 +264,39 @@ public class Server extends Thread{
 								break;
 							}
 							case Protocol.REQ_STATISTICS_DETAIL:{
-
+								DetailDAO detailDAO = new DetailDAO();
+								switch(packetArr[2]){
+									case "출신지":
+										HashMap<String,Integer> hashMap = detailDAO.regionStatistic(packetArr[3]);
+										if(hashMap!=null){
+											writePacket(Protocol.PT_RES_VIEW + "`" + Protocol.RES_STATISTICS_DETAIL_Y);
+											writeObject(hashMap);
+										}
+										else{
+											writePacket(Protocol.PT_RES_VIEW + "`" + Protocol.RES_STATISTICS_DETAIL_N);
+										}
+										break;
+									case"성별":
+										String s = detailDAO.genderStatistic(packetArr[3]);
+										if(s!=null){
+											writePacket(Protocol.PT_RES_VIEW + "`" + Protocol.RES_STATISTICS_DETAIL_Y);
+											writePacket(s);
+										}
+										else{
+											writePacket(Protocol.PT_RES_VIEW + "`" + Protocol.RES_STATISTICS_DETAIL_N);
+										}
+										break;
+									case "나이별":
+										HashMap<Integer,Integer> hashMap1 = detailDAO.ageStatistic(packetArr[3]);
+										if(hashMap1!=null){
+											writePacket(Protocol.PT_RES_VIEW + "`" + Protocol.RES_STATISTICS_DETAIL_Y);
+											writeObject(hashMap1);
+										}
+										else{
+											writePacket(Protocol.PT_RES_VIEW + "`" + Protocol.RES_STATISTICS_DETAIL_N);
+										}
+										break;
+								}
 							}
                     	}
                     	break;
@@ -295,10 +333,10 @@ public class Server extends Thread{
                     			boolean isDeleteReview = myPageDAO.deleteReview( Integer.parseInt(packetArr[2]));
 
                     			if(isDeleteReview){
-									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.RES_CREATE_REVIEW_Y);
+									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.RES_DELETE_REVIEW_Y);
 								}
                     			else{
-									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.RES_CREATE_REVIEW_N);
+									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.RES_DELETE_REVIEW_N);
 								}
 
                     			break;
@@ -309,17 +347,17 @@ public class Server extends Thread{
 
                     			boolean check = myPageDAO.reservationUser(userDTO);
 								if(check){
-									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.RES_CREATE_REVIEW_Y);
+									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.RES_UPDATE_REVIEW_Y);
 								}
 								else{
-									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.RES_CREATE_REVIEW_N);
+									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.RES_UPDATE_REVIEW_N);
 								}
-
                     			break;
                     		}
-                    		case Protocol.REQ_CREATE_FAVORITES:{
-                    			FavoriteDAO favoriteDAO = new FavoriteDAO();
-								boolean check = favoriteDAO.addFavorite(packetArr[2], packetArr[3]);
+                    		case Protocol.REQ_CREATE_FAVORITES:{		//즐겨찾기 추가
+                    			DetailDAO favoriteDAO = new DetailDAO();
+                    			FavoriteDTO favoriteDTO = (FavoriteDTO)objectInputStream.readObject();
+								boolean check = favoriteDAO.addFavorite(favoriteDTO);
 
 								if(check){
 									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.RES_CREATE_FAVORITES_Y);
@@ -344,7 +382,15 @@ public class Server extends Thread{
                     			break;
                     		}
 							case Protocol.REQ_UPDATE_VIEWSCOUNT:{
+								DetailDAO detailDAO = new DetailDAO();
+								boolean check = detailDAO.viewsCountIncrease(packetArr[2]);
 
+								if(check){
+									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.RES_UPDATE_VIEWSCOUNT_Y);
+								}
+								else{
+									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.RES_UPDATE_VIEWSCOUNT_N);
+								}
 							}
                     	}
                     	break;

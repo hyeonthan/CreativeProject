@@ -1,4 +1,4 @@
-package Nearby;
+package FxController;
 
 import java.net.URL;
 import java.util.ArrayList;

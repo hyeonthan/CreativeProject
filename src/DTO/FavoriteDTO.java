@@ -19,7 +19,15 @@ public class FavoriteDTO implements Serializable {
         this.add_date = add_date;
         this.sortation = sortation;
     }
-    
+
+    public FavoriteDTO(String user_id, String destination_code, String destination_name, Timestamp add_date, String sortation) {
+        this.user_id = user_id;
+        this.destination_code = destination_code;
+        this.destination_name = destination_name;
+        this.add_date = add_date;
+        this.sortation = sortation;
+    }
+
     public int getNo() {
         return no;
     }

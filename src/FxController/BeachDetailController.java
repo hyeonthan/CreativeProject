@@ -16,7 +16,9 @@ import javax.imageio.ImageIO;
 
 import DAO.DetailDAO;
 import DTO.BeachDTO;
+import DTO.FavoriteDTO;
 import DTO.ReviewDTO;
+import DataSetControl.RegionList;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -73,6 +75,8 @@ public class BeachDetailController extends Object implements Initializable {
 	private String destinationCode;	// 	넘어온 destinationCode 변수 저장
 	private String destinationName;	//	넘어온 destinationName 변수 저장
 	private byte[] imageInByte;
+	private double latitude;
+    private double longitude;
 	public void setBeachCode(String beachCode){
 		this.beachCode = beachCode;
 
@@ -86,6 +90,8 @@ public class BeachDetailController extends Object implements Initializable {
 		reusltTextOpenPeriod.setText(beachDTO.getOpening_period());
 		resultTextAvailableTime.setText(beachDTO.getAvailable_time());
 		resultTextHomepage.setText(beachDTO.getHome_page());
+		latitude = beachDTO.getLatitude();
+		longitude = beachDTO.getLongitude();
 	}
 	public void setSaveUserId(String userId){
 		this.userId = userId;
@@ -114,14 +120,13 @@ public class BeachDetailController extends Object implements Initializable {
 	@FXML
 	public void handleBtnFavorite(ActionEvent event){
 		DetailDAO detailDAO = new DetailDAO();
-		detailDAO.addFavorite(userId, destinationCode, destinationName, "해수욕장");
+		detailDAO.addFavorite(new FavoriteDTO(userId, destinationCode, destinationName, Timestamp.valueOf(LocalDateTime.now()),"해수욕장"));
 		ShowAlert.showAlert("INFORMATION", "알림창", "즐겨찾기 등록 완료!");
 	}
 	//	나이별 통계
 	@FXML
 	public void handleBtnAgeStat(ActionEvent event){
 		pieChart.getData().clear();
-		
 		DetailDAO detailDAO = new DetailDAO();
 		HashMap<Integer, Integer> hsMap = detailDAO.ageStatistic(destinationCode);
 		for(int i = 10; i <= 60; i+=10){
@@ -135,7 +140,43 @@ public class BeachDetailController extends Object implements Initializable {
 				pieChart.getData().add(pData);
 			}
 		} 
-		//	글씨 띄우기
+		pieChartCaption(pieChart);
+	
+	}
+	//	성별 통계
+	@FXML
+	public void handleBtnGenderStat(ActionEvent event){
+		pieChart.getData().clear();
+		DetailDAO detailDAO = new DetailDAO();
+		String genderResult = detailDAO.genderStatistic(destinationCode);
+		//	"/"로 구분 -> 남성 인원수/여성 인원수
+		int menCount = Integer.parseInt(genderResult.split("/")[0]);
+		int womenCount = Integer.parseInt(genderResult.split("/")[1]);
+		pData = new PieChart.Data("남성", menCount);
+		pieChart.getData().add(pData);
+		pData = new PieChart.Data("여성", womenCount);
+		pieChart.getData().add(pData);
+
+		pieChartCaption(pieChart);
+
+	}
+	//	출신지별 통계
+	@FXML
+	public void handleBtnRegionStat(ActionEvent event){
+		pieChart.getData().clear();
+		DetailDAO detailDAO = new DetailDAO();
+		HashMap<String, Integer> hsMap = detailDAO.regionStatistic(destinationCode);
+		final String[] region = RegionList.Do;
+		for(int i = 0; i < region.length; i++){
+			if(hsMap.get(region[i]) != 0){
+				pData = new PieChart.Data(region[i], hsMap.get(region[i]));
+				pieChart.getData().add(pData);
+			}
+		}
+		pieChartCaption(pieChart);
+	}
+	//	글씨 띄우기
+	private void pieChartCaption(PieChart pieChart){
 		final Label caption = new Label("");
         caption.setTextFill(Color.DARKORANGE);
         caption.setStyle("-fx-font: 24 arial;");
@@ -149,7 +190,6 @@ public class BeachDetailController extends Object implements Initializable {
             Tooltip.install(data.getNode(),tooltip);
             applyMouseEvents(data);
         }
-	
 	}
 	//	차트에 마우스 대면 글씨 띄우기
 	private void applyMouseEvents(final PieChart.Data data) {

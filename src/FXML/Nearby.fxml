@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.web.*?>
+
+<<<<<<< HEAD
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.201"
+          xmlns:fx="http://javafx.com/fxml/1" fx:controller="FxController.NearbyController">
+    <columnConstraints>
+        <ColumnConstraints/>
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints/>
+    </rowConstraints>
+    <children>
+        <AnchorPane prefHeight="600.0" prefWidth="1100.0">
+            <ComboBox fx:id="comboBoxClassification" layoutX="39.0" layoutY="68.0" prefWidth="150.0" promptText="구분"/>
+            <WebView fx:id="webView" layoutX="39.0" layoutY="123.0" prefHeight="445.0" prefWidth="400.0"/>
+            <TableView fx:id="myTableView" layoutX="470.0" layoutY="123.0" prefHeight="445.0" prefWidth="600.0">
+                <columns>
+                    <TableColumn fx:id="sortColumn" prefWidth="75.0" text="구분"/>
+                    <TableColumn fx:id="nameColumn" prefWidth="155.0" text="이름"/>
+                    <TableColumn fx:id="addressColumn" prefWidth="245.0" text="주소"/>
+                    <TableColumn fx:id="gradeColumn" prefWidth="45.0" text="별점"/>
+                </columns>
+            </TableView>
+            <Text layoutX="39.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="주변 검색">
+                <font>
+                    <Font size="30.0"/>
+                </font>
+            </Text>
+        </AnchorPane>
+    </children>
+</GridPane>
+=======
+<AnchorPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FxController.NearbyController">
+    <ComboBox fx:id="comboBoxClassification" layoutX="193.0" layoutY="45.0" prefWidth="150.0" promptText="구분" />
+    <WebView fx:id="webView" layoutX="30.0" layoutY="110.0" prefHeight="445.0" prefWidth="400.0" />
+    <TableView fx:id="myTableView" layoutX="453.0" layoutY="110.0" prefHeight="445.0" prefWidth="520.0">
+        <columns>
+            <TableColumn fx:id="sortColumn" prefWidth="75.0" text="구분" />
+            <TableColumn fx:id="nameColumn" prefWidth="155.0" text="이름" />
+            <TableColumn fx:id="addressColumn" prefWidth="245.0" text="주소" />
+            <TableColumn fx:id="gradeColumn" prefWidth="45.0" text="별점" />
+        </columns>
+    </TableView>
+    <Text layoutX="30.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="주변 검색">
+        <font>
+            <Font size="30.0" />
+        </font>
+    </Text>
+</AnchorPane>
+>>>>>>> 창프/main
