@@ -94,6 +94,7 @@ public class MainDisplayController implements Initializable{
 			mypageController.setUserInformation(userId);
 			mypageController.setFavoriteList(userId);
 			mypageController.setReviewList(userId);
+			mypageController.setRecentList(userId);
 			borderpaneId.setCenter(root);
 		} catch (IOException e1) {
 			e1.printStackTrace();

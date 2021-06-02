@@ -8,9 +8,11 @@ import java.util.HashMap;
 import java.util.ResourceBundle;
 
 import DAO.MyPageDAO;
+import DTO.DestinationDTO;
 import DTO.FavoriteDTO;
 import DTO.ReviewDTO;
 import DTO.UserDTO;
+import DataSetControl.RecentInquiryData;
 import DataSetControl.RegionList;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -40,12 +42,12 @@ public class MypageController implements Initializable {
 	public TableColumn<FavoriteDTO, String> tc_favoriteType;
 	@FXML
 	public TableColumn<FavoriteDTO, String> tc_favoriteName;
-	// @FXML // 최근조회 테이블
-	// public TableView<Recent> tv_recent;
-	// @FXML
-	// public TableColumn<Recent, String> tc_recentType;
-	// @FXML
-	// public TableColumn<Recent, String> tc_recentName;
+	@FXML // 최근조회 테이블
+	public TableView<DestinationDTO> tv_recent;
+	@FXML
+	public TableColumn<DestinationDTO, String> tc_recentType;
+	@FXML
+	public TableColumn<DestinationDTO, String> tc_recentName;
 	@FXML // 리뷰 테이블
 	public TableView<ReviewDTO> tv_review;
 	@FXML
@@ -97,6 +99,10 @@ public class MypageController implements Initializable {
 		ArrayList<ReviewDTO> list = myPageDAO.inquireMyReview(userId);
 		tv_review.getItems().addAll(list);
 	}
+	//	최근 조회 리스트 불러오기
+	public void setRecentList(String userId){
+		tv_recent.getItems().addAll(RecentInquiryData.getRecentList(userId));
+	}
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		//	즐겨찾기 테이블 초기화
@@ -106,6 +112,9 @@ public class MypageController implements Initializable {
 		tc_reviewDate.setCellValueFactory(cellData-> new SimpleStringProperty((cellData.getValue().getReporting_date()).toString()));
 		tc_reviewName.setCellValueFactory(cellData-> new SimpleStringProperty(cellData.getValue().getDestination_name()));
 		tc_reviewContent.setCellValueFactory(cellData-> new SimpleStringProperty(cellData.getValue().getContent()));
+		//	최근 조회 테이블 초기화
+		tc_recentName.setCellValueFactory(cellData-> new SimpleStringProperty(cellData.getValue().getName()));
+		tc_recentType.setCellValueFactory(cellData-> new SimpleStringProperty(cellData.getValue().getSortation()));
 
 	}
 	//	수정 버튼 클릭
