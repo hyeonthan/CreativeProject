@@ -70,6 +70,18 @@ public class MainDisplayController implements Initializable{
 		}
 		
 	}
+	//	통계
+	@FXML
+	public void handleBtnStatistics(ActionEvent e) {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/Statistics.fxml"));
+			Parent inquiry = (Parent)loader.load();
+			borderpaneId.setCenter(inquiry);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+
+	}
 	//	마이페이지 이동
 	@FXML
 	public void handleBtnMypage(ActionEvent e) {
@@ -95,6 +107,7 @@ public class MainDisplayController implements Initializable{
 			Scene scene = new Scene(root);
 			Stage primaryStage = (Stage) btnLogout.getScene().getWindow();
 			primaryStage.setScene(scene);
+			primaryStage.centerOnScreen();
 			primaryStage.show();
 		} catch (IOException e1) {
 			e1.printStackTrace();

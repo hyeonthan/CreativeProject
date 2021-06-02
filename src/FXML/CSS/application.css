@@ -1,5 +1,17 @@
-.background {
+.root{
+    font-family: 'Cafe24Ssurround';
+    font-weight: normal;
+    font-style: normal;
+}
+
+.login {
     -fx-background-image: url(Ficture/background.jpg);
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+}
+
+.main {
+    -fx-background-image: url(Ficture/gradation.jpg);
     -fx-background-size: cover;
     -fx-background-position: center center;
 }

@@ -34,7 +34,7 @@ public class NearbyController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         engine = webView.getEngine();
         getLatLng();
-        engine.load("http://localhost:8081/nearby.html");
+        engine.load("http://localhost:8080/nearby.html");
         comboBoxClassification.setItems(FXCollections.observableArrayList(
                 "통합검색", "해수욕장", "휴양림", "관광지"));
         sortColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getSortation()));
