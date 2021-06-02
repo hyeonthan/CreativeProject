@@ -19,6 +19,8 @@ import DTO.BeachDTO;
 import DTO.FavoriteDTO;
 import DTO.ReviewDTO;
 import DataSetControl.RegionList;
+import Network.Protocol;
+import Network.clientMain;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -106,6 +108,45 @@ public class BeachDetailController extends Object implements Initializable {
 	public void setDestinationName(String destinationName){
 		this.destinationName = destinationName;
 	}
+	public void setBeachDetail(String beachCode, String userId, String destinationCode, String destinationName) {
+		this.beachCode = beachCode;
+		this.userId = userId;
+		this.destinationCode = destinationCode;
+		this.destinationName = destinationName;
+		
+		clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_BEACH_DETAIL+ "`" + beachCode);
+		
+		while (true) {
+			String packet = clientMain.readPacket();
+			String packetArr[] = packet.split("`");
+			String packetType = packetArr[0];
+			String packetCode = packetArr[1];
+			
+			if (packetType.equals(Protocol.PT_RES_VIEW)) {
+				switch (packetCode) {
+					case Protocol.RES_BEACH_DETAIL_Y: {
+						BeachDTO beachDTO = (BeachDTO) clientMain.readObject();
+						resultTextName.setText(beachDTO.getName());
+						resultTextAddress.setText(beachDTO.getDo() + " " + beachDTO.getCity() + " " + beachDTO.getAddress());
+						resultTextPhoneNum.setText(beachDTO.getPhone_num());
+						resultTextIntroduction.setText(beachDTO.getIntroduction());
+						resultTextConvenient.setText(beachDTO.getAmenities());
+						reusltTextOpenPeriod.setText(beachDTO.getOpening_period());
+						resultTextAvailableTime.setText(beachDTO.getAvailable_time());
+						resultTextHomepage.setText(beachDTO.getHome_page());
+						
+						ArrayList<ReviewDTO> list = (ArrayList<ReviewDTO>) clientMain.readObject();
+						tv_review.getItems().addAll(list);
+						return;
+					}
+					case Protocol.RES_BEACH_DETAIL_N: {
+						ShowAlert.showAlert("WARNING", "경고", "해수욕장 정보를 불러오는데 실패하였습니다.");
+						return;
+					}
+				}
+			}
+		}
+	}
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -119,6 +160,30 @@ public class BeachDetailController extends Object implements Initializable {
 	// 	즐겨찾기 등록
 	@FXML
 	public void handleBtnFavorite(ActionEvent event){
+//		FavoriteDTO favoriteDTO = new FavoriteDTO(userId, destinationCode, destinationName, Timestamp.valueOf(LocalDateTime.now()),"해수욕장");
+//		clientMain.writePacket(Protocol.PT_REQ_RENEWAL + "`" + Protocol.REQ_CREATE_FAVORITES);
+//		clientMain.writeObject(favoriteDTO);
+//		
+//		while (true) {
+//			String packet = clientMain.readPacket();
+//			String packetArr[] = packet.split("`");
+//			String packetType = packetArr[0];
+//			String packetCode = packetArr[1];
+//			
+//			if (packetType.equals(Protocol.PT_RES_RENEWAL)) {
+//				switch (packetCode) {
+//					case Protocol.RES_CREATE_FAVORITES_Y: {
+//						
+//						ShowAlert.showAlert("INFORMATION", "알림창", "즐겨찾기 등록 완료!");
+//						return;
+//					}
+//					case Protocol.RES_CREATE_FAVORITES_N: {
+//						ShowAlert.showAlert("WARNING", "경고", "즐겨찾기 등록에 실패하였습니다.");
+//						return;
+//					}
+//				}
+//			}
+//		}
 		DetailDAO detailDAO = new DetailDAO();
 		detailDAO.addFavorite(new FavoriteDTO(userId, destinationCode, destinationName, Timestamp.valueOf(LocalDateTime.now()),"해수욕장"));
 		ShowAlert.showAlert("INFORMATION", "알림창", "즐겨찾기 등록 완료!");
