@@ -85,6 +85,7 @@ public class Main extends Application {
 
 				Stage primaryStage = (Stage) btn_login.getScene().getWindow();
 				primaryStage.setScene(new Scene(root));
+				primaryStage.centerOnScreen(); //중앙으로 창 띄우기
 				primaryStage.show();
 			} catch (Exception e) {
 				e.printStackTrace();
