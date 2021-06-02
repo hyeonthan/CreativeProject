@@ -1,6 +1,7 @@
 package FxController;
 
 import DAO.UserDAO;
+import DataSetControl.RecentInquiryData;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -121,6 +122,8 @@ public class Main extends Application {
 	}
 	
 	public static void main(String[] args) {
+		//	최근조회 생성자 초기화
+		RecentInquiryData recentInquiryData = new RecentInquiryData();
 		launch(args);
 	}
 }

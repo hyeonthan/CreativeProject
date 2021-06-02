@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 import DAO.DetailDAO;
 import DAO.InquireByRegionDAO;
 import DTO.DestinationDTO;
+import DataSetControl.RecentInquiryData;
 import DataSetControl.RegionList;
 import Network.Protocol;
 import Network.clientMain;
@@ -194,6 +195,8 @@ public class DestinationController implements Initializable{
 //          		}
                     DetailDAO detailDAO = new DetailDAO();
                     detailDAO.viewsCountIncrease(destinationCode);
+                    //  최근 조회 리스트 추가
+                    RecentInquiryData.setRecentList(userId, myTableView.getSelectionModel().getSelectedItem());
                     stage.showAndWait();
                     
                 }
