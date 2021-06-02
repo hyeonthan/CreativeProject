@@ -38,23 +38,23 @@
          <font>
             <Font size="20.0" />
          </font></Text>
-      <Text fx:id="t_convenient" layoutX="59.0" layoutY="192.0" strokeType="OUTSIDE" strokeWidth="0.0" text="편의시설 : ">
+      <Text fx:id="t_amenities" layoutX="58.0" layoutY="169.0" strokeType="OUTSIDE" strokeWidth="0.0" text="편의시설 : ">
          <font>
             <Font size="20.0" />
          </font></Text>
-      <Text fx:id="t_openingPeriod" layoutX="59.0" layoutY="215.0" strokeType="OUTSIDE" strokeWidth="0.0" text="수용인원 : ">
+      <Text fx:id="t_capacityPeople" layoutX="58.0" layoutY="193.0" strokeType="OUTSIDE" strokeWidth="0.0" text="수용인원 : ">
          <font>
             <Font size="20.0" />
          </font></Text>
-      <Text fx:id="t_capacityPeople" layoutX="59.0" layoutY="261.0" strokeType="OUTSIDE" strokeWidth="0.0" text="홈페이지 : ">
+      <Text fx:id="t_enterFee" layoutX="78.0" layoutY="216.0" strokeType="OUTSIDE" strokeWidth="0.0" text="입장료 : ">
          <font>
             <Font size="20.0" />
          </font></Text>
-      <Text fx:id="t_enterFee" layoutX="99.0" layoutY="169.0" strokeType="OUTSIDE" strokeWidth="0.0" text="요금 : ">
+      <Text fx:id="t_accommodation" layoutX="58.0" layoutY="246.0" strokeType="OUTSIDE" strokeWidth="0.0" text="숙박여부 : ">
          <font>
             <Font size="20.0" />
          </font></Text>
-      <Text fx:id="t_accommodation" layoutX="54.0" layoutY="239.0" strokeType="OUTSIDE" strokeWidth="0.0" text="숙박 여부 : ">
+      <Text fx:id="t_homPage" layoutX="59.0" layoutY="273.0" strokeType="OUTSIDE" strokeWidth="0.0" text="홈페이지 : ">
          <font>
             <Font size="20.0" />
          </font></Text>
@@ -103,27 +103,27 @@
             <Font size="13.0" />
          </font>
       </Text>
-      <Text fx:id="resultTextIntroduction" layoutX="156.0" layoutY="168.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+      <Text fx:id="resultTextAmenities" layoutX="156.0" layoutY="168.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
          <font>
             <Font size="13.0" />
          </font>
       </Text>
-      <Text fx:id="resultTextConvenient" layoutX="156.0" layoutY="192.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+      <Text fx:id="resultTextCapacityPeople" layoutX="156.0" layoutY="192.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
          <font>
             <Font size="13.0" />
          </font>
       </Text>
-      <Text fx:id="reusltTextOpenPeriod" layoutX="156.0" layoutY="215.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+      <Text fx:id="reusltTextEnterFee" layoutX="156.0" layoutY="215.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
          <font>
             <Font size="13.0" />
          </font>
       </Text>
-      <Text fx:id="resultTextAvailableTime" layoutX="156.0" layoutY="238.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+      <Text fx:id="resultTextAcconmodation" layoutX="157.0" layoutY="244.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
          <font>
             <Font size="13.0" />
          </font>
       </Text>
-      <Text fx:id="resultTextHomepage" layoutX="156.0" layoutY="260.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+      <Text fx:id="resultTextHomePage" layoutX="156.0" layoutY="272.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
          <font>
             <Font size="13.0" />
          </font>

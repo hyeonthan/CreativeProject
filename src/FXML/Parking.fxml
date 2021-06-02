@@ -2,28 +2,55 @@
 
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.web.WebView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.web.WebView?>
 
-<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.201"
-          xmlns:fx="http://javafx.com/fxml/1" fx:controller="FxController.ParkingController">
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FxController.ParkingController">
     <children>
         <Pane prefHeight="600.0" prefWidth="1100.0">
-            <WebView fx:id="webView" layoutX="50.0" layoutY="30.0" prefHeight="280.0" prefWidth="1000.0" />
-            <TableView fx:id="myTableView" layoutX="50.0" layoutY="350.0" prefHeight="180.0" prefWidth="1000.0">
+            <WebView fx:id="webView" layoutX="50.0" layoutY="89.0" prefHeight="280.0" prefWidth="1000.0" />
+            <TableView fx:id="myTableView" layoutX="50.0" layoutY="378.0" prefHeight="208.0" prefWidth="1000.0">
                 <columns>
-                    <TableColumn fx:id="nameColumn" prefWidth="125.0" text="이름"/>
-                    <TableColumn fx:id="addressColumn" prefWidth="231.0" text="위치"/>
-                    <TableColumn fx:id="sizeColumn" prefWidth="59.0" text="구획수"/>
-                    <TableColumn fx:id="opening_daysColumn" prefWidth="70.0" text="운영요일"/>
-                    <TableColumn fx:id="weekdays_opening_timeColumn" prefWidth="120.0" text="평일 운영시간"/>
-                    <TableColumn fx:id="sat_opening_timeColumn" prefWidth="145.0" text="토요일 운영시간"/>
-                    <TableColumn fx:id="holiday_opening_timeColumn" prefWidth="145.0" text="일요일/공휴일 운영시간"/>
-                    <TableColumn fx:id="feeColumn" prefWidth="54.0" text="요금"/>
+                    <TableColumn fx:id="nameColumn" prefWidth="125.0" text="이름" />
+                    <TableColumn fx:id="addressColumn" prefWidth="231.0" text="위치" />
+                    <TableColumn fx:id="sizeColumn" prefWidth="59.0" text="구획수" />
+                    <TableColumn fx:id="opening_daysColumn" prefWidth="70.0" text="운영요일" />
+                    <TableColumn fx:id="weekdays_opening_timeColumn" prefWidth="120.0" text="평일 운영시간" />
+                    <TableColumn fx:id="sat_opening_timeColumn" prefWidth="145.0" text="토요일 운영시간" />
+                    <TableColumn fx:id="holiday_opening_timeColumn" prefWidth="187.0" text="일요일/공휴일 운영시간" />
+                    <TableColumn fx:id="feeColumn" prefWidth="62.0" text="요금" />
                 </columns>
             </TableView>
+         <Text layoutX="50.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="거리 입력">
+            <font>
+               <Font size="20.0" />
+            </font>
+         </Text>
+         <TextField fx:id="tfDistance" layoutX="144.0" layoutY="48.0" prefHeight="23.0" prefWidth="46.0" />
+         <Text layoutX="198.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="km">
+            <font>
+               <Font size="20.0" />
+            </font>
+         </Text>
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="25.0" layoutX="50.0" layoutY="14.0" stroke="BLACK" strokeType="INSIDE" width="461.0" />
+         <Text layoutX="50.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*거리 입력 후 지도 마커를 눌러주시길 바랍니다.">
+            <font>
+               <Font size="20.0" />
+            </font>
+         </Text>
         </Pane>
     </children>
+   <columnConstraints>
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+   </rowConstraints>
 </GridPane>
