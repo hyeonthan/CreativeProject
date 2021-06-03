@@ -460,7 +460,7 @@ public class DetailDAO {
             conn.setAutoCommit(false);
             sp = conn.setSavepoint("Savepoint1");
 
-            pstmt=conn.prepareStatement(queryCheck);
+            pstmt=conn.prepareStatement(queryCheck, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
             pstmt.setString(1,favoriteDTO.getUser_id());
             pstmt.setString(2, favoriteDTO.getDestination_code());
             rs = pstmt.executeQuery();
