@@ -10,10 +10,7 @@ import java.util.HashMap;
 import java.util.ResourceBundle;
 
 import DAO.DetailDAO;
-import DTO.BeachDTO;
-import DTO.FavoriteDTO;
-import DTO.ForestLodgeDTO;
-import DTO.ReviewDTO;
+import DTO.*;
 import DataSetControl.RegionList;
 import Network.Protocol;
 import Network.clientMain;
@@ -41,16 +38,15 @@ import javafx.stage.Stage;
 
 import javax.imageio.ImageIO;
 
-public class ForestLodgeDetailController implements Initializable {
+public class TouristSpotDetailController implements Initializable {
 
 	@FXML private Text resultTextName;
 	@FXML private Text resultTextAddress;
 	@FXML private Text resultTextPhoneNum;
 	@FXML private Text resultTextAmenities;
-	@FXML private Text resultTextCapacityPeople;
-	@FXML private Text reusltTextEnterFee;
-	@FXML private Text resultTextAcconmodation;
-	@FXML private Text resultTextHomePage;
+	@FXML private Text resultTextIntroduction;
+	@FXML private Text reusltTextPossibleParking;
+	@FXML private Text resultTextManagement;
 	@FXML private Button btn_favorite;
 	@FXML private Button btn_registerImg;
 	@FXML private ComboBox<Integer> cb_star;
@@ -65,28 +61,27 @@ public class ForestLodgeDetailController implements Initializable {
 	@FXML private PieChart pieChart;
 	private Tooltip tooltip;
 	private PieChart.Data pData;
-	private String forestcode;	//	넘어온 beachCode 변수 저장
+	private String touristCode;	//	넘어온 beachCode 변수 저장
 	private String userId;		//	넘어온 userId 변수 저장
 	private String destinationCode;	// 	넘어온 destinationCode 변수 저장
 	private String destinationName;	//	넘어온 destinationName 변수 저장
 	private byte[] imageInByte;
 	private double latitude;
 	private double longitude;
-	public void setForestLodgeCode(String forestcode){
-		this.forestcode = forestcode;
+	public void setTouristCode(String touristCode){
+		this.touristCode = touristCode;
 
 		DetailDAO detailDAO = new DetailDAO();
-		ForestLodgeDTO forestLodgeDTO = detailDAO.detailForestLodge(forestcode);
-		resultTextName.setText(forestLodgeDTO.getName());
-		resultTextAddress.setText(forestLodgeDTO.getDo() + " " + forestLodgeDTO.getCity() + " " + forestLodgeDTO.getAddress());
-		resultTextPhoneNum.setText(forestLodgeDTO.getPhone_num());
-		resultTextAmenities.setText(forestLodgeDTO.getAmenities());
-		resultTextCapacityPeople.setText(forestLodgeDTO.getCapacity_people());
-		reusltTextEnterFee.setText(forestLodgeDTO.getEnter_fee());
-		resultTextAcconmodation.setText(forestLodgeDTO.getAccommodation());
-		resultTextHomePage.setText(forestLodgeDTO.getHome_page());
-		latitude = forestLodgeDTO.getLatitude();
-		longitude = forestLodgeDTO.getLongitude();
+		TouristSpotDTO touristSpotDTO = detailDAO.detailTouristSpot(touristCode);
+		resultTextName.setText(touristSpotDTO.getName());
+		resultTextAddress.setText(touristSpotDTO.getDo() + " " + touristSpotDTO.getCity() + " " + touristSpotDTO.getAddress());
+		resultTextPhoneNum.setText(touristSpotDTO.getPhone_num());
+		resultTextAmenities.setText(touristSpotDTO.getAmenities());
+		resultTextIntroduction.setText(touristSpotDTO.getIntroduction());
+		reusltTextPossibleParking.setText(Integer.toString(touristSpotDTO.getPossibleParking()));
+		resultTextManagement.setText(touristSpotDTO.getManagementAgency());
+		latitude = touristSpotDTO.getLatitude();
+		longitude = touristSpotDTO.getLongitude();
 	}
 	public void setSaveUserId(String userId){
 		this.userId = userId;
@@ -101,13 +96,13 @@ public class ForestLodgeDetailController implements Initializable {
 	public void setDestinationName(String destinationName){
 		this.destinationName = destinationName;
 	}
-	public void setForestDetail(String forestcode, String userId, String destinationCode, String destinationName) {
-		this.forestcode = forestcode;
+	public void setBeachDetail(String touristCode, String userId, String destinationCode, String destinationName) {
+		this.touristCode = touristCode;
 		this.userId = userId;
 		this.destinationCode = destinationCode;
 		this.destinationName = destinationName;
 
-		clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_FOREST_DETAIL+ "`" + forestcode);
+		clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_TOURIST_DETAIL+ "`" + touristCode);
 
 		while (true) {
 			String packet = clientMain.readPacket();
@@ -117,22 +112,21 @@ public class ForestLodgeDetailController implements Initializable {
 
 			if (packetType.equals(Protocol.PT_RES_VIEW)) {
 				switch (packetCode) {
-					case Protocol.RES_FOREST_DETAIL_Y: {
-						ForestLodgeDTO forestLodgeDTO = (ForestLodgeDTO) clientMain.readObject();
-						resultTextName.setText(forestLodgeDTO.getName());
-						resultTextAddress.setText(forestLodgeDTO.getDo() + " " + forestLodgeDTO.getCity() + " " + forestLodgeDTO.getAddress());
-						resultTextPhoneNum.setText(forestLodgeDTO.getPhone_num());
-						resultTextAmenities.setText(forestLodgeDTO.getAmenities());
-						resultTextCapacityPeople.setText(forestLodgeDTO.getAmenities());
-						reusltTextEnterFee.setText(forestLodgeDTO.getEnter_fee());
-						resultTextAcconmodation.setText(forestLodgeDTO.getAccommodation());
-						resultTextHomePage.setText(forestLodgeDTO.getHome_page());
+					case Protocol.RES_TOURIST_DETAIL_Y: {
+						TouristSpotDTO touristSpotDTO = (TouristSpotDTO) clientMain.readObject();
+						resultTextName.setText(touristSpotDTO.getName());
+						resultTextAddress.setText(touristSpotDTO.getDo() + " " + touristSpotDTO.getCity() + " " + touristSpotDTO.getAddress());
+						resultTextPhoneNum.setText(touristSpotDTO.getPhone_num());
+						resultTextIntroduction.setText(touristSpotDTO.getIntroduction());
+						resultTextAmenities.setText(touristSpotDTO.getAmenities());
+						reusltTextPossibleParking.setText(Integer.toString(touristSpotDTO.getPossibleParking()));
+						resultTextManagement.setText(touristSpotDTO.getManagementAgency());
 
 						ArrayList<ReviewDTO> list = (ArrayList<ReviewDTO>) clientMain.readObject();
 						tv_review.getItems().addAll(list);
 						return;
 					}
-					case Protocol.RES_FOREST_DETAIL_N: {
+					case Protocol.RES_TOURIST_DETAIL_N: {
 						ShowAlert.showAlert("WARNING", "경고", "해수욕장 정보를 불러오는데 실패하였습니다.");
 						return;
 					}
@@ -242,7 +236,6 @@ public class ForestLodgeDetailController implements Initializable {
 		});
 
 		node.setOnMouseExited(new EventHandler<MouseEvent>() {
-
 			@Override
 			public void handle(MouseEvent arg0) {
 				node.setEffect(null);
