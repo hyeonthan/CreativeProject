@@ -192,6 +192,39 @@ public class BeachDetailController extends Object implements Initializable {
 	@FXML
 	public void handleBtnAgeStat(ActionEvent event){
 		pieChart.getData().clear();
+//		clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_STATISTICS_DETAIL + "`" + "나이별" + "`" + destinationCode);
+//		
+//		while (true) {
+//			String packet = clientMain.readPacket();
+//			String packetArr[] = packet.split("`");
+//			String packetType = packetArr[0];
+//			String packetCode = packetArr[1];
+//			
+//			if (packetType.equals(Protocol.PT_RES_VIEW)) {
+//				switch (packetCode) {
+//					case Protocol.RES_STATISTICS_DETAIL_Y: {
+//						HashMap<Integer, Integer> hsMap = (HashMap<Integer, Integer>) clientMain.readObject();
+//						for(int i = 10; i <= 60; i+=10){
+//							if(hsMap.get(i) != 0){
+//								String age = Integer.toString(i) + "대";
+//								System.out.println(age);
+//								if(i == 60){
+//									age += " 이상";
+//								}
+//								pData = new PieChart.Data(age, hsMap.get(i));
+//								pieChart.getData().add(pData);
+//							}
+//						} 
+//						pieChartCaption(pieChart);
+//						return;
+//					}
+//					case Protocol.RES_STATISTICS_DETAIL_N: {
+//						ShowAlert.showAlert("WARNING", "경고", "나이별 통계 조회에 실패하였습니다.");
+//						return;
+//					}
+//				}
+//			}
+//		}
 		DetailDAO detailDAO = new DetailDAO();
 		HashMap<Integer, Integer> hsMap = detailDAO.ageStatistic(destinationCode);
 		for(int i = 10; i <= 60; i+=10){
@@ -212,6 +245,36 @@ public class BeachDetailController extends Object implements Initializable {
 	@FXML
 	public void handleBtnGenderStat(ActionEvent event){
 		pieChart.getData().clear();
+//		clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_STATISTICS_DETAIL + "`" + "성별" + "`" + destinationCode);
+//		
+//		while (true) {
+//			String packet = clientMain.readPacket();
+//			String packetArr[] = packet.split("`");
+//			String packetType = packetArr[0];
+//			String packetCode = packetArr[1];
+//			
+//			if (packetType.equals(Protocol.PT_RES_VIEW)) {
+//				switch (packetCode) {
+//					case Protocol.RES_STATISTICS_DETAIL_Y: {
+//						String genderResult = clientMain.readPacket();
+//						//	"/"로 구분 -> 남성 인원수/여성 인원수
+//						int menCount = Integer.parseInt(genderResult.split("/")[0]);
+//						int womenCount = Integer.parseInt(genderResult.split("/")[1]);
+//						pData = new PieChart.Data("남성", menCount);
+//						pieChart.getData().add(pData);
+//						pData = new PieChart.Data("여성", womenCount);
+//						pieChart.getData().add(pData);
+//
+//						pieChartCaption(pieChart);
+//						return;
+//					}
+//					case Protocol.RES_STATISTICS_DETAIL_N: {
+//						ShowAlert.showAlert("WARNING", "경고", "성별 통계 조회에 실패하였습니다.");
+//						return;
+//					}
+//				}
+//			}
+//		}
 		DetailDAO detailDAO = new DetailDAO();
 		String genderResult = detailDAO.genderStatistic(destinationCode);
 		//	"/"로 구분 -> 남성 인원수/여성 인원수
@@ -229,6 +292,35 @@ public class BeachDetailController extends Object implements Initializable {
 	@FXML
 	public void handleBtnRegionStat(ActionEvent event){
 		pieChart.getData().clear();
+//		clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_STATISTICS_DETAIL + "`" + "출신지" + "`" + destinationCode);
+//		
+//		while (true) {
+//			String packet = clientMain.readPacket();
+//			String packetArr[] = packet.split("`");
+//			String packetType = packetArr[0];
+//			String packetCode = packetArr[1];
+//			
+//			if (packetType.equals(Protocol.PT_RES_VIEW)) {
+//				switch (packetCode) {
+//					case Protocol.RES_STATISTICS_DETAIL_Y: {
+//						HashMap<String, Integer> hsMap = (HashMap<String, Integer>) clientMain.readObject();
+//						final String[] region = RegionList.Do;
+//						for(int i = 0; i < region.length; i++){
+//							if(hsMap.get(region[i]) != 0){
+//								pData = new PieChart.Data(region[i], hsMap.get(region[i]));
+//								pieChart.getData().add(pData);
+//							}
+//						}
+//						pieChartCaption(pieChart);
+//						return;
+//					}
+//					case Protocol.RES_STATISTICS_DETAIL_N: {
+//						ShowAlert.showAlert("WARNING", "경고", "출신지별 통계 조회에 실패하였습니다.");
+//						return;
+//					}
+//				}
+//			}
+//		}
 		DetailDAO detailDAO = new DetailDAO();
 		HashMap<String, Integer> hsMap = detailDAO.regionStatistic(destinationCode);
 		final String[] region = RegionList.Do;
@@ -352,6 +444,28 @@ public class BeachDetailController extends Object implements Initializable {
 		int scope = cb_star.getValue();
 		Timestamp reportingDate = Timestamp.valueOf(LocalDateTime.now());
 		ReviewDTO reviewDTO = new ReviewDTO(userId, content, scope, destinationCode, destinationName, null, reportingDate, imageInByte);
+//		clientMain.writePacket(Protocol.PT_REQ_RENEWAL + "`" + Protocol.REQ_CREATE_REVIEW);
+//		clientMain.writeObject(reviewDTO);
+//		
+//		while (true) {
+//			String packet = clientMain.readPacket();
+//			String packetArr[] = packet.split("`");
+//			String packetType = packetArr[0];
+//			String packetCode = packetArr[1];
+//			
+//			if (packetType.equals(Protocol.PT_RES_RENEWAL)) {
+//				switch (packetCode) {
+//					case Protocol.RES_CREATE_REVIEW_Y: {
+//						ShowAlert.showAlert("WARNING", "경고", "리뷰 등록에 성공하였습니다.");
+//						return;
+//					}
+//					case Protocol.RES_CREATE_REVIEW_N: {
+//						ShowAlert.showAlert("WARNING", "경고", "리뷰 등록에 실패하였습니다.");
+//						return;
+//					}
+//				}
+//			}
+//		}
 		DetailDAO detailDAO = new DetailDAO();
 		detailDAO.insertReview(reviewDTO);
 		ShowAlert.showAlert("INFORMATION", "알림창", "리뷰 등록 완료");
