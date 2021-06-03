@@ -453,22 +453,32 @@ public class DetailDAO {
       //  즐겨찾기 추가
       public boolean addFavorite(FavoriteDTO favoriteDTO){
         boolean check = false;
+        String queryCheck = "select * from favorite where user_id =? and destination_code =?";
         String query = "INSERT INTO favorite(user_id, destination_code, destination_name, add_date, sortation) VALUES(?,?,?,?,?)";
         try{
             conn = DBconnection.getConnection();
             conn.setAutoCommit(false);
             sp = conn.setSavepoint("Savepoint1");
-            
-            pstmt = conn.prepareStatement(query);
-            pstmt.setString(1, favoriteDTO.getUser_id());
-            pstmt.setString(2, favoriteDTO.getDestination_code());
-            pstmt.setString(3, favoriteDTO.getDestination_name());
-            pstmt.setTimestamp(4,favoriteDTO.getAdd_date());
-            pstmt.setString(5, favoriteDTO.getSortation());
 
-            pstmt.executeUpdate();
-            conn.commit();
-            check = true;
+            pstmt=conn.prepareStatement(queryCheck);
+            pstmt.setString(1,favoriteDTO.getUser_id());
+            pstmt.setString(2, favoriteDTO.getDestination_code());
+            rs = pstmt.executeQuery();
+            rs.last();
+            if(rs.getRow() == 0) 	// 중복 ID 없을 시 false
+            {
+                pstmt = conn.prepareStatement(query);
+                pstmt.setString(1, favoriteDTO.getUser_id());
+                pstmt.setString(2, favoriteDTO.getDestination_code());
+                pstmt.setString(3, favoriteDTO.getDestination_name());
+                pstmt.setTimestamp(4,favoriteDTO.getAdd_date());
+                pstmt.setString(5, favoriteDTO.getSortation());
+
+                pstmt.executeUpdate();
+                conn.commit();
+                check = true;
+            }
+
         }catch (SQLException sqlException) {
             try {
                 System.out.println("rollback 실행");
@@ -485,6 +495,9 @@ public class DetailDAO {
                 }
                 if (conn != null) {
                     conn.close();
+                }
+                if(rs!=null){
+                    rs.close();
                 }
             } catch (Exception e) {
                 e.printStackTrace();
