@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import DTO.*;
+import com.sun.org.apache.bcel.internal.generic.FADD;
 
 
 public class Server extends Thread{
@@ -296,6 +297,32 @@ public class Server extends Thread{
 										}
 										break;
 								}
+								break;
+							}
+							case Protocol.REQ_FAVORITES: {        // 즐겨찾기 요청
+								MyPageDAO myPageDAO = new MyPageDAO();
+								ArrayList<FavoriteDTO> arrayList = myPageDAO.inquiryFavorite(packetArr[2]);
+
+								if (arrayList != null) {
+									writePacket(Protocol.PT_RES_VIEW + "`" + Protocol.RES_FAVORITES_Y);
+									writeObject(arrayList);
+								} else {
+									writePacket(Protocol.PT_RES_VIEW + "`" + Protocol.RES_FAVORITES_N);
+								}
+								break;
+							}
+							case Protocol.REQ_REVIEWS: {            //리뷰 요청
+								MyPageDAO myPageDAO = new MyPageDAO();
+								ArrayList<ReviewDTO> arrayList = myPageDAO.inquireMyReview(packetArr[2]);
+
+								if(arrayList!=null){
+									writePacket(Protocol.PT_RES_VIEW +"`"+ Protocol.RES_REVIEWS_Y);
+									writeObject(arrayList);
+								}
+								else{
+									writePacket(Protocol.PT_RES_VIEW +"`"+ Protocol.RES_REVIEWS_N);
+								}
+								break;
 							}
                     	}
                     	break;
