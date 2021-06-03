@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
+import DAO.DetailDAO;
 import DAO.MyPageDAO;
 import DTO.DestinationDTO;
 import DTO.FavoriteDTO;
@@ -18,7 +19,10 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -27,6 +31,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 
 public class MypageController implements Initializable {
 	@FXML TextField tfId;
@@ -101,7 +107,9 @@ public class MypageController implements Initializable {
 	}
 	//	최근 조회 리스트 불러오기
 	public void setRecentList(String userId){
-		tv_recent.getItems().addAll(RecentInquiryData.getRecentList(userId));
+		if (RecentInquiryData.getRecentList(userId) != null){
+			tv_recent.getItems().addAll(RecentInquiryData.getRecentList(userId));
+		}
 	}
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -250,5 +258,142 @@ public class MypageController implements Initializable {
 		alert.setContentText(msg);
 		alert.showAndWait();
 	}
-
+	//	즐겨찾기 더블 클릭시 상세정보
+	@FXML
+    public void doubleClickFavorite(MouseEvent event){
+        if(tv_favorite.getSelectionModel().getSelectedItem()!=null){
+			if(event.getClickCount() > 1){
+                try {
+					String destinationCode = tv_favorite.getSelectionModel().getSelectedItem().getDestination_code();
+					String destinationName = tv_favorite.getSelectionModel().getSelectedItem().getDestination_name();
+					MyPageDAO myPageDAO = new MyPageDAO();
+					DestinationDTO destinationDTO = myPageDAO.loadDestinationDTO(destinationCode);
+					
+                    FXMLLoader loader = null;
+                    if(tv_favorite.getSelectionModel().getSelectedItem().getSortation().equals("해수욕장")){
+                        loader = new FXMLLoader(getClass().getResource("../FXML/beach_detail.fxml"));
+                    }
+                    if(tv_favorite.getSelectionModel().getSelectedItem().getSortation().equals("휴양림")){
+                        loader = new FXMLLoader(getClass().getResource("../FXML/forest_lodge_detail.fxml"));
+                    }
+                    if(tv_favorite.getSelectionModel().getSelectedItem().getSortation().equals("관광지")){
+                        loader = new FXMLLoader(getClass().getResource("../FXML/tourist_spot_detail.fxml"));
+                    }
+                    Parent root = (Parent)loader.load();
+                    Stage stage = new Stage();
+                    stage.setScene(new Scene(root));
+                    if(tv_favorite.getSelectionModel().getSelectedItem().getSortation().equals("해수욕장")){
+                        //  해수욕장 상세정보로 code, userId 넘기기
+                        String beachCode = destinationDTO.getBeach_code();
+                        BeachDetailController beachDetailController = loader.<BeachDetailController>getController();
+                        beachDetailController.setBeachCode(beachCode);
+                        beachDetailController.setSaveUserId(userId);
+                        beachDetailController.setDestinationCode(destinationCode);
+                        beachDetailController.setDestinationName(destinationName);
+//                        beachDetailController.setBeachDetail(beachCode, userId, destinationCode, destinationName);
+                    }
+                    if(tv_favorite.getSelectionModel().getSelectedItem().getSortation().equals("휴양림")){
+                        String forestCode= destinationDTO.getForestLodge_code();
+                        ForestLodgeDetailController forestLodgeDetailController = loader.<ForestLodgeDetailController>getController();
+                        forestLodgeDetailController.setForestLodgeCode(forestCode);
+                        forestLodgeDetailController.setSaveUserId(userId);
+                        forestLodgeDetailController.setDestinationCode(destinationCode);
+                        forestLodgeDetailController.setDestinationName(destinationName);
+                        //forestLodgeDetailController.setF
+                    }
+                    if(tv_favorite.getSelectionModel().getSelectedItem().getSortation().equals("관광지")){
+						String touristSpotCode = destinationDTO.getTouristSpot_code();
+                        TouristSpotDetailController touristSpotDetailController = loader.<TouristSpotDetailController>getController();
+                        //touristSpotDetailController.setCode(touristSpotCode);
+                        touristSpotDetailController.setSaveUserId(userId);
+                        touristSpotDetailController.setDestinationCode(destinationCode);
+                        touristSpotDetailController.setDestinationName(destinationName);
+                    }
+                    stage.showAndWait();
+                }
+                catch(Exception e) {
+                    System.out.println(e);
+                }
+			}
+		}
+    }
+	//	최근 조회 더블클릭 시 상세정보
+	@FXML
+    public void doubleClickRecent(MouseEvent event){
+        if(tv_recent.getSelectionModel().getSelectedItem()!=null){
+			if(event.getClickCount() > 1){
+                try {
+					String destinationCode = tv_recent.getSelectionModel().getSelectedItem().getCode();
+					String destinationName = tv_recent.getSelectionModel().getSelectedItem().getName();
+					MyPageDAO myPageDAO = new MyPageDAO();
+					DestinationDTO destinationDTO = myPageDAO.loadDestinationDTO(destinationCode);
+					
+                    FXMLLoader loader = null;
+                    if(tv_recent.getSelectionModel().getSelectedItem().getSortation().equals("해수욕장")){
+                        loader = new FXMLLoader(getClass().getResource("../FXML/beach_detail.fxml"));
+                    }
+                    if(tv_recent.getSelectionModel().getSelectedItem().getSortation().equals("휴양림")){
+                        loader = new FXMLLoader(getClass().getResource("../FXML/forest_lodge_detail.fxml"));
+                    }
+                    if(tv_recent.getSelectionModel().getSelectedItem().getSortation().equals("관광지")){
+                        loader = new FXMLLoader(getClass().getResource("../FXML/tourist_spot_detail.fxml"));
+                    }
+                    Parent root = (Parent)loader.load();
+                    Stage stage = new Stage();
+                    stage.setScene(new Scene(root));
+                    if(tv_recent.getSelectionModel().getSelectedItem().getSortation().equals("해수욕장")){
+                        //  해수욕장 상세정보로 code, userId 넘기기
+                        String beachCode = destinationDTO.getBeach_code();
+                        BeachDetailController beachDetailController = loader.<BeachDetailController>getController();
+                        beachDetailController.setBeachCode(beachCode);
+                        beachDetailController.setSaveUserId(userId);
+                        beachDetailController.setDestinationCode(destinationCode);
+                        beachDetailController.setDestinationName(destinationName);
+//                        beachDetailController.setBeachDetail(beachCode, userId, destinationCode, destinationName);
+                    }
+                    if(tv_recent.getSelectionModel().getSelectedItem().getSortation().equals("휴양림")){
+                        String forestCode= destinationDTO.getForestLodge_code();
+                        ForestLodgeDetailController forestLodgeDetailController = loader.<ForestLodgeDetailController>getController();
+                        forestLodgeDetailController.setForestLodgeCode(forestCode);
+                        forestLodgeDetailController.setSaveUserId(userId);
+                        forestLodgeDetailController.setDestinationCode(destinationCode);
+                        forestLodgeDetailController.setDestinationName(destinationName);
+                        //forestLodgeDetailController.setF
+                    }
+                    if(tv_recent.getSelectionModel().getSelectedItem().getSortation().equals("관광지")){
+						String touristSpotCode = destinationDTO.getTouristSpot_code();
+                        TouristSpotDetailController touristSpotDetailController = loader.<TouristSpotDetailController>getController();
+                        //touristSpotDetailController.setCode(touristSpotCode);
+                        touristSpotDetailController.setSaveUserId(userId);
+                        touristSpotDetailController.setDestinationCode(destinationCode);
+                        touristSpotDetailController.setDestinationName(destinationName);
+                    }
+                    stage.showAndWait();
+                }
+                catch(Exception e) {
+                    System.out.println(e);
+                }
+			}
+		}
+    }
+	//	내가 쓴 리뷰 더블 클릭 시 상세정보
+	@FXML
+    public void doubleClickReview(MouseEvent event){
+		if(tv_review.getSelectionModel().getSelectedItem()!=null){
+            if(event.getClickCount() > 1){
+				try{
+					FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/review_detail.fxml"));
+					Parent root = (Parent)loader.load();
+					Stage stage = new Stage();
+					stage.setScene(new Scene(root));
+					ReviewDTO reviewDTO = tv_review.getSelectionModel().getSelectedItem();
+					ReviewDetailController reviewDetailController = loader.<ReviewDetailController>getController();
+					reviewDetailController.setReviewDTO(reviewDTO);
+					stage.showAndWait();
+				}catch(Exception e) {
+                    System.out.println(e);
+                }
+            }
+        }
+    }
 }

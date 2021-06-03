@@ -13,19 +13,19 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="559.0" prefWidth="1001.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FxController.MypageController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="553.0" layoutX="5.0" layoutY="2.0" stroke="BLACK" strokeType="INSIDE" width="991.0" />
-      <TableView fx:id="tv_favorite" layoutX="45.0" layoutY="78.0" prefHeight="180.0" prefWidth="348.0">
+      <TableView fx:id="tv_favorite" layoutX="45.0" layoutY="78.0" prefHeight="180.0" prefWidth="348.0" onMouseClicked="#doubleClickFavorite">
         <columns>
           <TableColumn fx:id="tc_favoriteType" prefWidth="83.0" text="구분" />
           <TableColumn fx:id="tc_favoriteName" prefWidth="264.0" text="이름" />
         </columns>
       </TableView>
-      <TableView fx:id="tv_recent" layoutX="45.0" layoutY="339.0" prefHeight="180.0" prefWidth="348.0">
+      <TableView fx:id="tv_recent" layoutX="45.0" layoutY="339.0" prefHeight="180.0" prefWidth="348.0" onMouseClicked="#doubleClickRecent">
          <columns>
             <TableColumn fx:id="tc_recentType" prefWidth="83.0" text="구분" />
             <TableColumn fx:id="tc_recentName" prefWidth="264.0" text="이름" />
          </columns>
       </TableView>
-      <TableView fx:id="tv_review" layoutX="419.0" layoutY="260.0" prefHeight="259.0" prefWidth="553.0">
+      <TableView fx:id="tv_review" layoutX="419.0" layoutY="260.0" prefHeight="259.0" prefWidth="553.0" onMouseClicked="#doubleClickReview">
          <columns>
             <TableColumn fx:id="tc_reviewDate" prefWidth="82.0" text="작성날짜" />
             <TableColumn fx:id="tc_reviewName" prefWidth="118.0" text="여행지 이름" />
