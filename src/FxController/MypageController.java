@@ -222,7 +222,7 @@ public class MypageController implements Initializable {
 				if (result == ButtonType.OK) {
 					MyPageDAO myPageDAO = new MyPageDAO();
 					ReviewDTO reviewDTO = tv_review.getSelectionModel().getSelectedItem();
-					myPageDAO.deleteReview(reviewDTO);
+					myPageDAO.deleteReview(reviewDTO.getNo(),reviewDTO.getDestination_code());
 					ShowAlert.showAlert("INFORMATION", "알림창", "리뷰 삭제 완료!");
 					//	삭제 완료 후 리스트 초기화
 					setReviewList(userId);

@@ -330,7 +330,7 @@ public class Server extends Thread{
                     		}
                     		case Protocol.REQ_DELETE_REVIEW:{
                     			MyPageDAO myPageDAO = new MyPageDAO();
-                    			boolean isDeleteReview = myPageDAO.deleteReview( Integer.parseInt(packetArr[2]));
+                    			boolean isDeleteReview = myPageDAO.deleteReview( Integer.parseInt(packetArr[2]),packetArr[3]);
 
                     			if(isDeleteReview){
 									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.RES_DELETE_REVIEW_Y);

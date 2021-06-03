@@ -67,7 +67,8 @@ public class MyPageDAO {
         return list;
     }
     //  즐겨찾기 삭제
-    public void deleteFavorite(int no){
+    public boolean deleteFavorite(int no){
+        boolean check = false;
         String sql = "DELETE FROM favorite WHERE no = ?";
         try{
             conn = DBconnection.getConnection();
@@ -79,6 +80,7 @@ public class MyPageDAO {
 
             psmt.executeUpdate();
             conn.commit();
+            check = true;
         }catch(SQLException sqle1){
             try{
                 System.out.println("rollback 실행");
@@ -99,6 +101,7 @@ public class MyPageDAO {
                 e.printStackTrace();
             }
         }
+        return check;
     }
     //  회원 정보(userDTO) 불러오기
     public UserDTO roadUser(String userId){
@@ -231,7 +234,8 @@ public class MyPageDAO {
     }
 
     // 내가 쓴 리뷰 삭제하기
-    public void deleteReview (ReviewDTO reviewDTO){
+    public boolean deleteReview (int no,String destination_code){
+        boolean check =false;
         try {
             String query = "delete from review where no =?";
             String query2= "select sum(scope)/count(*) from review where destination_code =?";
@@ -242,12 +246,12 @@ public class MyPageDAO {
             sp = conn.setSavepoint("Savepoint1");
 
             psmt = conn.prepareStatement(query);
-            psmt.setInt(1, reviewDTO.getNo());
+            psmt.setInt(1,no);
             psmt.executeUpdate();
 
             int scope=0;
             psmt = conn.prepareStatement(query2);
-            psmt.setString(1,reviewDTO.getDestination_code());
+            psmt.setString(1,destination_code);
             rs= psmt.executeQuery();
             while(rs.next()){
                 scope= rs.getInt(1);
@@ -255,10 +259,11 @@ public class MyPageDAO {
 
             psmt = conn.prepareStatement(query3);
             psmt.setInt(1, scope);
-            psmt.setString(2, reviewDTO.getDestination_code());
+            psmt.setString(2, destination_code);
             psmt.executeUpdate();
 
             conn.commit();
+            check =true;
         }
         catch (SQLException sqlException) {
             try {
@@ -281,6 +286,7 @@ public class MyPageDAO {
                 throw new RuntimeException(e.getMessage());
             }
         }
+        return check;
     }
 }
 
