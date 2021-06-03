@@ -149,8 +149,7 @@ public class Server extends Thread{
                     		}
                     		case Protocol.REQ_PARKING:{		//주차장 정보 요청
                     			InquireToiletParkingDAO inquireToiletParkingDAO = new InquireToiletParkingDAO();
-                    			ArrayList<ParkingLotsDTO> parkingLotsDTOS = inquireToiletParkingDAO.inquireParkingLotByLocation(packetArr[1],packetArr[2],packetArr[3]);
-
+                    			ArrayList<ParkingLotsDTO> parkingLotsDTOS = inquireToiletParkingDAO.inquireParkingLotByLocation(packetArr[2],packetArr[3],packetArr[4]);
 								if(parkingLotsDTOS!=null) {
 									writePacket(Protocol.PT_RES_VIEW + "`" + Protocol.RES_PARKING_Y);
 									writeObject(parkingLotsDTOS);
