@@ -347,10 +347,10 @@ public class Server extends Thread{
 
                     			boolean check = myPageDAO.reservationUser(userDTO);
 								if(check){
-									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.RES_UPDATE_REVIEW_Y);
+									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.RES_UPDATE_USER_Y);
 								}
 								else{
-									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.RES_UPDATE_REVIEW_N);
+									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.RES_UPDATE_USER_N);
 								}
                     			break;
                     		}
