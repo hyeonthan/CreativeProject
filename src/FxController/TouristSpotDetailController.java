@@ -96,7 +96,7 @@ public class TouristSpotDetailController implements Initializable {
 	public void setDestinationName(String destinationName){
 		this.destinationName = destinationName;
 	}
-	public void setBeachDetail(String touristCode, String userId, String destinationCode, String destinationName) {
+	public void setTouristDetail(String touristCode, String userId, String destinationCode, String destinationName) {
 		this.touristCode = touristCode;
 		this.userId = userId;
 		this.destinationCode = destinationCode;

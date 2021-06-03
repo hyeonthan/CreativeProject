@@ -113,7 +113,7 @@ public class MypageController implements Initializable {
                     return;
                 }
 				case Protocol.RES_MYPAGE_N: {
-                    ShowAlert.showAlert("WARNING", "경고", "개인정보 수정 완료");
+                    ShowAlert.showAlert("WARNING", "경고", "개인정보 접근 실패");
                     return;
                 }
             }
@@ -123,19 +123,49 @@ public class MypageController implements Initializable {
     //	즐겨찾기 리스트 불러오기
     public void setFavoriteList(String userId) {
         tv_favorite.getItems().clear();
+        clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_FAVORITES);
+        String packet = clientMain.readPacket();
+        String packetArr[] = packet.split("`");
+        String packetType = packetArr[0];
+        String packetCode = packetArr[1];
 
-        MyPageDAO myPageDAO = new MyPageDAO();
-        ArrayList<FavoriteDTO> list = myPageDAO.inquiryFavorite(userId);
-        tv_favorite.getItems().addAll(list);
+        if (packetType.equals(Protocol.PT_RES_VIEW)) {
+            switch (packetCode) {
+                case Protocol.RES_FAVORITES_Y:{
+                    ArrayList<FavoriteDTO> arrayList = (ArrayList<FavoriteDTO>) clientMain.readObject();
+                    tv_favorite.getItems().addAll(arrayList);
+                    return;
+                }
+                case Protocol.RES_FAVORITES_N:{
+                    ShowAlert.showAlert("WARNING", "경고", "즐겨찾기 업데이트 실패");
+                    return;
+                }
+            }
+        }
     }
 
     //	내가 쓴 리뷰 리스트 불러오기
     public void setReviewList(String userId) {
         tv_review.getItems().clear();
+        clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_REVIEWS);
+        String packet = clientMain.readPacket();
+        String packetArr[] = packet.split("`");
+        String packetType = packetArr[0];
+        String packetCode = packetArr[1];
 
-        MyPageDAO myPageDAO = new MyPageDAO();
-        ArrayList<ReviewDTO> list = myPageDAO.inquireMyReview(userId);
-        tv_review.getItems().addAll(list);
+        if (packetType.equals(Protocol.PT_RES_VIEW)) {
+            switch (packetCode) {
+                case Protocol.RES_REVIEWS_Y:{
+                    ArrayList<ReviewDTO> arrayList = (ArrayList<ReviewDTO>) clientMain.readObject();
+                    tv_review.getItems().addAll(arrayList);
+                    return;
+                }
+                case Protocol.RES_REVIEWS_N:{
+                    ShowAlert.showAlert("WARNING", "경고", "리뷰 업데이트 실패");
+                    return;
+                }
+            }
+        }
     }
 
     //	최근 조회 리스트 불러오기
@@ -266,6 +296,8 @@ public class MypageController implements Initializable {
 						switch (packetCode) {
 							case Protocol.RES_DELETE_FAVORITES_Y: {
 								ShowAlert.showAlert("INFORMATION", "알림창", "즐겨찾기 삭제 완료");
+                                //	삭제 완료 후 리스트 초기화
+                                setFavoriteList(userId);
 								return;
 							}
 							case Protocol.RES_DELETE_FAVORITES_N: {
@@ -274,8 +306,6 @@ public class MypageController implements Initializable {
 							}
 						}
 					}
-                    //	삭제 완료 후 리스트 초기화
-                    setFavoriteList(userId);
                 } else if (result == ButtonType.CANCEL) {
                     event.consume(); // 이벤트 종료
                 }
@@ -296,14 +326,27 @@ public class MypageController implements Initializable {
             if (tv_review.getSelectionModel().getSelectedItem() != null) {
                 ButtonType result = deleteAlert("선택한 리뷰를 삭제하겠습니까?", "확인 버튼 클릭 시 리뷰 삭제");
                 if (result == ButtonType.OK) {
-
-
-                    MyPageDAO myPageDAO = new MyPageDAO();
                     ReviewDTO reviewDTO = tv_review.getSelectionModel().getSelectedItem();
-                    myPageDAO.deleteReview(reviewDTO.getNo(), reviewDTO.getDestination_code());
-                    ShowAlert.showAlert("INFORMATION", "알림창", "리뷰 삭제 완료!");
-                    //	삭제 완료 후 리스트 초기화
-                    setReviewList(userId);
+                    clientMain.writePacket(Protocol.PT_REQ_RENEWAL + "`" + Protocol.REQ_DELETE_REVIEW +"`"+ reviewDTO.getNo()+"`"+ reviewDTO.getDestination_code());
+                    String packet = clientMain.readPacket();
+                    String packetArr[] = packet.split("`");
+                    String packetType = packetArr[0];
+                    String packetCode = packetArr[1];
+
+                    if (packetType.equals(Protocol.PT_RES_RENEWAL)) {
+                        switch (packetCode) {
+                            case Protocol.RES_DELETE_REVIEW_Y:{
+                                ShowAlert.showAlert("INFORMATION", "알림창", "리뷰 삭제 완료");
+                                //	삭제 완료 후 리스트 초기화
+                                setReviewList(userId);
+                                return;
+                            }
+                            case Protocol.RES_DELETE_REVIEW_N:{
+                                ShowAlert.showAlert("WARNING", "경고", "리뷰 삭제 실패");
+                                return;
+                            }
+                        }
+                    }
                 } else if (result == ButtonType.CANCEL) {
                     event.consume(); // 이벤트 종료
                 }
@@ -361,7 +404,7 @@ public class MypageController implements Initializable {
                         beachDetailController.setSaveUserId(userId);
                         beachDetailController.setDestinationCode(destinationCode);
                         beachDetailController.setDestinationName(destinationName);
-//                        beachDetailController.setBeachDetail(beachCode, userId, destinationCode, destinationName);
+                        beachDetailController.setBeachDetail(beachCode, userId, destinationCode, destinationName);
                     }
                     if (tv_favorite.getSelectionModel().getSelectedItem().getSortation().equals("휴양림")) {
                         String forestCode = destinationDTO.getForestLodge_code();
@@ -370,15 +413,16 @@ public class MypageController implements Initializable {
                         forestLodgeDetailController.setSaveUserId(userId);
                         forestLodgeDetailController.setDestinationCode(destinationCode);
                         forestLodgeDetailController.setDestinationName(destinationName);
-                        //forestLodgeDetailController.setF
+                        forestLodgeDetailController.setForestDetail(forestCode,userId,destinationCode,destinationName);
                     }
                     if (tv_favorite.getSelectionModel().getSelectedItem().getSortation().equals("관광지")) {
                         String touristSpotCode = destinationDTO.getTouristSpot_code();
                         TouristSpotDetailController touristSpotDetailController = loader.<TouristSpotDetailController>getController();
-                        //touristSpotDetailController.setCode(touristSpotCode);
+                        touristSpotDetailController.setTouristCode(touristSpotCode);
                         touristSpotDetailController.setSaveUserId(userId);
                         touristSpotDetailController.setDestinationCode(destinationCode);
                         touristSpotDetailController.setDestinationName(destinationName);
+                        touristSpotDetailController.setTouristDetail(touristSpotCode,userId,destinationCode,destinationName);
                     }
                     stage.showAndWait();
                 } catch (Exception e) {
