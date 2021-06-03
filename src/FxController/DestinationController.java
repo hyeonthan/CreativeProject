@@ -10,8 +10,6 @@ import DAO.InquireByRegionDAO;
 import DTO.DestinationDTO;
 import DataSetControl.RecentInquiryData;
 import DataSetControl.RegionList;
-import Network.Protocol;
-import Network.clientMain;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -168,9 +166,27 @@ public class DestinationController implements Initializable{
                         beachDetailController.setDestinationName(destinationName);
 //                        beachDetailController.setBeachDetail(beachCode, userId, destinationCode, destinationName);
                     }
-                    if(myTableView.getSelectionModel().getSelectedItem().getSortation().equals("휴양림")){
+                    else if(myTableView.getSelectionModel().getSelectedItem().getSortation().equals("휴양림")){
+                        String forestCode= myTableView.getSelectionModel().getSelectedItem().getForestLodge_code();
+                        ForestLodgeDetailController forestLodgeDetailController = loader.<ForestLodgeDetailController>getController();
+                        forestLodgeDetailController.setForestLodgeCode(forestCode);
+                        forestLodgeDetailController.setSaveUserId(userId);
+                        destinationCode = myTableView.getSelectionModel().getSelectedItem().getCode();
+                        destinationName = myTableView.getSelectionModel().getSelectedItem().getName();
+                        forestLodgeDetailController.setDestinationCode(destinationCode);
+                        forestLodgeDetailController.setDestinationName(destinationName);
+                        //forestLodgeDetailController.setForestDetail(forestCode,userId,destinationCode,destinationName);
                     }
-                    if(myTableView.getSelectionModel().getSelectedItem().getSortation().equals("관광지")){
+                    else if(myTableView.getSelectionModel().getSelectedItem().getSortation().equals("관광지")){
+                        String touristCode= myTableView.getSelectionModel().getSelectedItem().getTouristSpot_code();
+                        TouristSpotDetailController touristSpotDetailController = loader.<TouristSpotDetailController>getController();
+                        touristSpotDetailController.setTouristCode(touristCode);
+                        touristSpotDetailController.setSaveUserId(userId);
+                        destinationCode = myTableView.getSelectionModel().getSelectedItem().getCode();
+                        destinationName = myTableView.getSelectionModel().getSelectedItem().getName();
+                        touristSpotDetailController.setDestinationCode(destinationCode);
+                        touristSpotDetailController.setDestinationName(destinationName);
+                        //touristSpotDetailController.setForestDetail(touristCode,userId,destinationCode,destinationName);
                     }
                     //  상세정보 클릭시 조회수 증가0
 //                  clientMain.writePacket(Protocol.PT_REQ_RENEWAL + "`" + Protocol.REQ_UPDATE_VIEWSCOUNT+ "`" + destinationCode);
