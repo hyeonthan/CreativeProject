@@ -15,6 +15,8 @@ import DTO.ReviewDTO;
 import DTO.UserDTO;
 import DataSetControl.RecentInquiryData;
 import DataSetControl.RegionList;
+import Network.Protocol;
+import Network.clientMain;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -172,6 +174,30 @@ public class MypageController implements Initializable {
 		String Do = cbBoxDo.getValue();
 		String city = cbBoxCity.getValue();
 		String address = tfAddress.getText();
+		
+//        clientMain.writePacket(Protocol.PT_REQ_RENEWAL + "`" + Protocol.REQ_UPDATE_USER);
+//        clientMain.writeObject(new UserDTO(id, name, Integer.parseInt(age), gender, Do, city, address, Timestamp.valueOf(LocalDateTime.now())));
+//		
+//		while (true) {
+//			String packet = clientMain.readPacket();
+//			String packetArr[] = packet.split("`");
+//			String packetType = packetArr[0];
+//			String packetCode = packetArr[1];
+//			
+//			if (packetType.equals(Protocol.PT_RES_RENEWAL)) {
+//				switch (packetCode) {
+//					case Protocol.RES_UPDATE_USER_Y: {
+//						ShowAlert.showAlert("INFORMATION", "알림창", "개인정보 수정 완료");
+//						return;
+//					}
+//					case Protocol.RES_UPDATE_USER_N: {
+//						ShowAlert.showAlert("WARNING", "경고", "개인정보 수정 완료");
+//						return;
+//					}
+//				}
+//			}
+//		} // 그 메소드 통합해서 만들고 밑에 setuserinformation 머시기 해야됨
+		
 		MyPageDAO myPageDAO = new MyPageDAO();
 		myPageDAO.reservationUser(new UserDTO(id, name, Integer.parseInt(age), gender, Do, city, address, Timestamp.valueOf(LocalDateTime.now())));
 		ShowAlert.showAlert("INFORMATION", "알림창", "개인정보 수정 완료");
