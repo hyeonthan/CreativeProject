@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.chart.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="849.0" prefWidth="1104.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FxController.ForestLodgeDetailController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="849.0" prefWidth="1104.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FxController.ForestLodgeDetailController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1fb8ff00" height="843.0" layoutX="3.0" layoutY="2.0" stroke="BLACK" strokeType="INSIDE" width="1096.0" />
       <TableView fx:id="tv_review" layoutX="12.0" layoutY="550.0" onMouseClicked="#doubleClickMouse" prefHeight="260.0" prefWidth="744.0">
@@ -83,7 +88,7 @@
             <Font size="24.0" />
          </font>
       </Button>
-      <Button layoutX="24.0" layoutY="476.0" mnemonicParsing="false" prefHeight="56.0" prefWidth="129.0" text="출신지별">
+      <Button layoutX="24.0" layoutY="476.0" mnemonicParsing="false" onAction="#handleBtnRegionStat" prefHeight="56.0" prefWidth="129.0" text="출신지별">
          <font>
             <Font size="24.0" />
          </font>

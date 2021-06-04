@@ -106,10 +106,9 @@ public class ForestLodgeDetailController implements Initializable {
 		this.userId = userId;
 		this.destinationCode = destinationCode;
 		this.destinationName = destinationName;
-		System.out.println(forestCode);
-		System.out.println(destinationCode);
 		clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_FOREST_DETAIL+ "`" + forestCode + "`" + destinationCode);
-		System.out.println("전송완료");
+
+
 		while (true) {
 			String packet = clientMain.readPacket();
 			System.out.println(packet);
@@ -162,6 +161,7 @@ public class ForestLodgeDetailController implements Initializable {
 		clientMain.writeObject(favoriteDTO);
 		while (true) {
 			String packet = clientMain.readPacket();
+			System.out.println(packet);
 			String packetArr[] = packet.split("`");
 			String packetType = packetArr[0];
 			String packetCode = packetArr[1];
@@ -452,6 +452,7 @@ public class ForestLodgeDetailController implements Initializable {
 				switch (packetCode) {
 					case Protocol.RES_CREATE_REVIEW_Y: {
 						ShowAlert.showAlert("WARNING", "경고", "리뷰 등록에 성공하였습니다.");
+						tv_review.getItems().clear();
 						setForestDetail(forestCode, userId, destinationCode, destinationName);
 						return;
 					}

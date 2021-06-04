@@ -131,7 +131,6 @@ public class BeachDetailController extends Object implements Initializable {
 		this.userId = userId;
 		this.destinationCode = destinationCode;
 		this.destinationName = destinationName;
-		System.out.println("beachCode : " + beachCode + ", destinationCode : " + destinationCode);
 		clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_BEACH_DETAIL+ "`" + beachCode + "`" + destinationCode);
 		
 		while (true) {
