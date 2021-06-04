@@ -92,6 +92,7 @@ public class ParkingController implements Initializable {
             		switch (packetCode) {
             			case Protocol.RES_PARKING_Y: {
             				ArrayList<ParkingLotsDTO> list = (ArrayList<ParkingLotsDTO>) clientMain.readObject();
+            				System.out.println(list.get(0).getAddress());
             	            myTableView.getItems().clear();
             	            myTableView.getItems().addAll(list);
             	            try {

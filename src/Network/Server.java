@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import DTO.*;
+import com.sun.org.apache.bcel.internal.generic.FADD;
 
 
 public class Server extends Thread{
@@ -149,8 +150,7 @@ public class Server extends Thread{
                     		}
                     		case Protocol.REQ_PARKING:{		//주차장 정보 요청
                     			InquireToiletParkingDAO inquireToiletParkingDAO = new InquireToiletParkingDAO();
-                    			ArrayList<ParkingLotsDTO> parkingLotsDTOS = inquireToiletParkingDAO.inquireParkingLotByLocation(packetArr[1],packetArr[2],packetArr[3]);
-
+                    			ArrayList<ParkingLotsDTO> parkingLotsDTOS = inquireToiletParkingDAO.inquireParkingLotByLocation(packetArr[2],packetArr[3],packetArr[4]);
 								if(parkingLotsDTOS!=null) {
 									writePacket(Protocol.PT_RES_VIEW + "`" + Protocol.RES_PARKING_Y);
 									writeObject(parkingLotsDTOS);
@@ -297,6 +297,32 @@ public class Server extends Thread{
 										}
 										break;
 								}
+								break;
+							}
+							case Protocol.REQ_FAVORITES: {        // 즐겨찾기 요청
+								MyPageDAO myPageDAO = new MyPageDAO();
+								ArrayList<FavoriteDTO> arrayList = myPageDAO.inquiryFavorite(packetArr[2]);
+
+								if (arrayList != null) {
+									writePacket(Protocol.PT_RES_VIEW + "`" + Protocol.RES_FAVORITES_Y);
+									writeObject(arrayList);
+								} else {
+									writePacket(Protocol.PT_RES_VIEW + "`" + Protocol.RES_FAVORITES_N);
+								}
+								break;
+							}
+							case Protocol.REQ_REVIEWS: {            //리뷰 요청
+								MyPageDAO myPageDAO = new MyPageDAO();
+								ArrayList<ReviewDTO> arrayList = myPageDAO.inquireMyReview(packetArr[2]);
+
+								if(arrayList!=null){
+									writePacket(Protocol.PT_RES_VIEW +"`"+ Protocol.RES_REVIEWS_Y);
+									writeObject(arrayList);
+								}
+								else{
+									writePacket(Protocol.PT_RES_VIEW +"`"+ Protocol.RES_REVIEWS_N);
+								}
+								break;
 							}
                     	}
                     	break;
@@ -330,7 +356,7 @@ public class Server extends Thread{
                     		}
                     		case Protocol.REQ_DELETE_REVIEW:{
                     			MyPageDAO myPageDAO = new MyPageDAO();
-                    			boolean isDeleteReview = myPageDAO.deleteReview( Integer.parseInt(packetArr[2]));
+                    			boolean isDeleteReview = myPageDAO.deleteReview( Integer.parseInt(packetArr[2]),packetArr[3]);
 
                     			if(isDeleteReview){
 									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.RES_DELETE_REVIEW_Y);
@@ -347,10 +373,10 @@ public class Server extends Thread{
 
                     			boolean check = myPageDAO.reservationUser(userDTO);
 								if(check){
-									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.RES_UPDATE_REVIEW_Y);
+									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.RES_UPDATE_USER_Y);
 								}
 								else{
-									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.RES_UPDATE_REVIEW_N);
+									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.RES_UPDATE_USER_N);
 								}
                     			break;
                     		}
