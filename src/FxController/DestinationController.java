@@ -171,6 +171,15 @@ public class DestinationController implements Initializable{
                         forestLodgeDetailController.setForestDetail(forestCode, userId, destinationCode, destinationName);
                     }
                     else if(myTableView.getSelectionModel().getSelectedItem().getSortation().equals("관광지")){
+                        String touristCode = myTableView.getSelectionModel().getSelectedItem().getTouristSpot_code();
+                        TouristSpotDetailController touristSpotDetailController = loader.<TouristSpotDetailController>getController();
+//                        touristSpotDetailController.setTouristSpotCode(touristCode);
+//                        touristSpotDetailController.setSaveUserId(userId);
+                        destinationCode = myTableView.getSelectionModel().getSelectedItem().getCode();
+                        destinationName = myTableView.getSelectionModel().getSelectedItem().getName();
+//                        forestLodgeDetailController.setDestinationCode(destinationCode);
+//                        forestLodgeDetailController.setDestinationName(destinationName);
+                        touristSpotDetailController.setTouristDetail(touristCode, userId, destinationCode, destinationName);
                     }
                     //  상세정보 클릭시 조회수 증가0
                  	clientMain.writePacket(Protocol.PT_REQ_RENEWAL + "`" + Protocol.REQ_UPDATE_VIEWSCOUNT+ "`" + destinationCode);

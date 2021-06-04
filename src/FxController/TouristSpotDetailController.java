@@ -101,6 +101,8 @@ public class TouristSpotDetailController implements Initializable {
 		this.userId = userId;
 		this.destinationCode = destinationCode;
 		this.destinationName = destinationName;
+		System.out.println(touristCode);
+		System.out.println(destinationCode);
 
 		clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_TOURIST_DETAIL+ "`" + touristCode + "`" + destinationCode);
 
