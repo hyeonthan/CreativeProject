@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>주소로 장소 표시하기</title>
+
+</head>
+
+<body>
+    <div class="map_wrap">
+
+        <div id="menu_wrap" class="bg_white">
+            <div class="option">
+                <div>
+                    <form onsubmit="searchPlaces(); return false;">
+                        <input type="text" value="" id="keyword" size="30">
+                        <button type="submit">검색하기</button>
+                    </form>
+                </div>
+            </div>
+            <hr>
+            <ul id="placesList"></ul>
+            <div id="pagination"></div>
+        </div>
+
+        <div id="map"
+            style="width: 100%; height: 80vh; position: relative; overflow: hidden; background: url(&quot;https://t1.daumcdn.net/mapjsapi/images/bg_tile.png&quot;);">
+            <div
+                style="position: absolute; left: 0px; top: 0px; width: 100%; height: 100%; touch-action: none; cursor: url(&quot;https://t1.daumcdn.net/mapjsapi/images/cursor/openhand.cur.ico&quot;) 7 5, url(&quot;https://t1.daumcdn.net/mapjsapi/images/cursor/openhand.cur.ico&quot;), default;">
+                <div style="position: absolute; left: -5536px; top: -8419px;">
+                    <div style="position: absolute; z-index: 0;"></div>
+                    <div style="position: absolute; z-index: 1; left: 0px; top: 0px;"><img
+                            src="https://map1.daumcdn.net/map_2d/2103dor/L8/29/49.png" alt="" draggable="false"
+                            style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: 5439px; top: 8828px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img
+                            src="https://map2.daumcdn.net/map_2d/2103dor/L8/29/50.png" alt="" draggable="false"
+                            style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: 5695px; top: 8828px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img
+                            src="https://map3.daumcdn.net/map_2d/2103dor/L8/29/51.png" alt="" draggable="false"
+                            style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: 5951px; top: 8828px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img
+                            src="https://map0.daumcdn.net/map_2d/2103dor/L8/29/52.png" alt="" draggable="false"
+                            style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: 6207px; top: 8828px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img
+                            src="https://map1.daumcdn.net/map_2d/2103dor/L8/29/53.png" alt="" draggable="false"
+                            style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: 6463px; top: 8828px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img
+                            src="https://map2.daumcdn.net/map_2d/2103dor/L8/29/54.png" alt="" draggable="false"
+                            style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: 6719px; top: 8828px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img
+                            src="https://map3.daumcdn.net/map_2d/2103dor/L8/29/55.png" alt="" draggable="false"
+                            style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: 6975px; top: 8828px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img
+                            src="https://map1.daumcdn.net/map_2d/2103dor/L8/30/49.png" alt="" draggable="false"
+                            style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: 5439px; top: 8572px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img
+                            src="https://map2.daumcdn.net/map_2d/2103dor/L8/30/50.png" alt="" draggable="false"
+                            style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: 5695px; top: 8572px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img
+                            src="https://map3.daumcdn.net/map_2d/2103dor/L8/30/51.png" alt="" draggable="false"
+                            style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: 5951px; top: 8572px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img
+                            src="https://map0.daumcdn.net/map_2d/2103dor/L8/30/52.png" alt="" draggable="false"
+                            style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: 6207px; top: 8572px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img
+                            src="https://map1.daumcdn.net/map_2d/2103dor/L8/30/53.png" alt="" draggable="false"
+                            style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: 6463px; top: 8572px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img
+                            src="https://map2.daumcdn.net/map_2d/2103dor/L8/30/54.png" alt="" draggable="false"
+                            style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: 6719px; top: 8572px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img
+                            src="https://map3.daumcdn.net/map_2d/2103dor/L8/30/55.png" alt="" draggable="false"
+                            style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: 6975px; top: 8572px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img
+                            src="https://map1.daumcdn.net/map_2d/2103dor/L8/31/49.png" alt="" draggable="false"
+                            style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: 5439px; top: 8316px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img
+                            src="https://map2.daumcdn.net/map_2d/2103dor/L8/31/50.png" alt="" draggable="false"
+                            style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: 5695px; top: 8316px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img
+                            src="https://map3.daumcdn.net/map_2d/2103dor/L8/31/51.png" alt="" draggable="false"
+                            style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: 5951px; top: 8316px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img
+                            src="https://map0.daumcdn.net/map_2d/2103dor/L8/31/52.png" alt="" draggable="false"
+                            style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: 6207px; top: 8316px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img
+                            src="https://map1.daumcdn.net/map_2d/2103dor/L8/31/53.png" alt="" draggable="false"
+                            style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: 6463px; top: 8316px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img
+                            src="https://map2.daumcdn.net/map_2d/2103dor/L8/31/54.png" alt="" draggable="false"
+                            style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: 6719px; top: 8316px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img
+                            src="https://map3.daumcdn.net/map_2d/2103dor/L8/31/55.png" alt="" draggable="false"
+                            style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: 6975px; top: 8316px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img
+                            src="https://map1.daumcdn.net/map_2d/2103dor/L8/32/49.png" alt="" draggable="false"
+                            style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: 5439px; top: 8060px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img
+                            src="https://map2.daumcdn.net/map_2d/2103dor/L8/32/50.png" alt="" draggable="false"
+                            style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: 5695px; top: 8060px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img
+                            src="https://map3.daumcdn.net/map_2d/2103dor/L8/32/51.png" alt="" draggable="false"
+                            style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: 5951px; top: 8060px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img
+                            src="https://map0.daumcdn.net/map_2d/2103dor/L8/32/52.png" alt="" draggable="false"
+                            style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: 6207px; top: 8060px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img
+                            src="https://map1.daumcdn.net/map_2d/2103dor/L8/32/53.png" alt="" draggable="false"
+                            style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: 6463px; top: 8060px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img
+                            src="https://map2.daumcdn.net/map_2d/2103dor/L8/32/54.png" alt="" draggable="false"
+                            style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: 6719px; top: 8060px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img
+                            src="https://map3.daumcdn.net/map_2d/2103dor/L8/32/55.png" alt="" draggable="false"
+                            style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: 6975px; top: 8060px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;">
+                    </div>
+                    <div style="position: absolute; z-index: 1;"></div>
+                    <div style="position: absolute; z-index: 1; width: 789px; height: 521px;"></div>
+                    <div style="position: absolute; z-index: 1;"><svg version="1.1"
+                            style="stroke: none; stroke-dashoffset: 0.5; stroke-linejoin: round; fill: none; transform: translateZ(0px); position: absolute; left: 3958px; top: 7377px; width: 3945px; height: 2605px;"
+                            viewBox="0 0 3945 2605">
+                            <defs></defs>
+                        </svg></div>
+                    <div style="position: absolute; z-index: 1; width: 100%; height: 0px; transform: translateZ(0px);">
+                        <div
+                            style="position: absolute; margin: -39px 0px 0px -14px; z-index: 0; left: 6269px; top: 8796px; display: block;">
+                            <img draggable="false" src="https://t1.daumcdn.net/mapjsapi/images/marker.png" alt=""
+                                title=""
+                                style="min-width: 0px; min-height: 0px; max-width: 99999px; max-height: none; border: 0px; display: block; position: absolute; user-select: none; -webkit-user-drag: none; clip: rect(0px, 29px, 42px, 0px); top: 0px; left: 0px; width: 29px; height: 42px;"><img
+                                src="https://t1.daumcdn.net/mapjsapi/images/transparent.gif" alt="" draggable="false"
+                                usemap="#daum.maps.Marker.Area:1"
+                                style="min-width: 0px; min-height: 0px; max-width: 99999px; max-height: none; border: 0px; display: block; position: absolute; user-select: none; -webkit-user-drag: none; width: 29px; height: 42px;"><map
+                                id="daum.maps.Marker.Area:1" name="daum.maps.Marker.Area:1"><area
+                                    href="javascript:void(0)" alt="" shape="poly"
+                                    coords="14,39,9,27,4,21,1,16,1,10,4,4,11,0,18,0,25,4,28,10,28,16,25,21,20,27"
+                                    title="" style="-webkit-tap-highlight-color: transparent;"></map></div>
+                        <div
+                            style="position: absolute; margin: -39px 0px 0px -14px; z-index: 0; left: 6322px; top: 8784px; display: block;">
+                            <img draggable="false" src="https://t1.daumcdn.net/mapjsapi/images/marker.png" alt=""
+                                title=""
+                                style="min-width: 0px; min-height: 0px; max-width: 99999px; max-height: none; border: 0px; display: block; position: absolute; user-select: none; -webkit-user-drag: none; clip: rect(0px, 29px, 42px, 0px); top: 0px; left: 0px; width: 29px; height: 42px;"><img
+                                src="https://t1.daumcdn.net/mapjsapi/images/transparent.gif" alt="" draggable="false"
+                                usemap="#daum.maps.Marker.Area:2"
+                                style="min-width: 0px; min-height: 0px; max-width: 99999px; max-height: none; border: 0px; display: block; position: absolute; user-select: none; -webkit-user-drag: none; width: 29px; height: 42px;"><map
+                                id="daum.maps.Marker.Area:2" name="daum.maps.Marker.Area:2"><area
+                                    href="javascript:void(0)" alt="" shape="poly"
+                                    coords="14,39,9,27,4,21,1,16,1,10,4,4,11,0,18,0,25,4,28,10,28,16,25,21,20,27"
+                                    title="" style="-webkit-tap-highlight-color: transparent;"></map></div>
+                        <div
+                            style="position: absolute; margin: -39px 0px 0px -14px; z-index: 0; left: 6344px; top: 8723px; display: none;">
+                            <img draggable="false" src="https://t1.daumcdn.net/mapjsapi/images/marker.png" alt=""
+                                title=""
+                                style="min-width: 0px; min-height: 0px; max-width: 99999px; max-height: none; border: 0px; display: block; position: absolute; user-select: none; -webkit-user-drag: none; clip: rect(0px, 29px, 42px, 0px); top: 0px; left: 0px; width: 29px; height: 42px;"><img
+                                src="https://t1.daumcdn.net/mapjsapi/images/transparent.gif" alt="" draggable="false"
+                                usemap="#daum.maps.Marker.Area:3"
+                                style="min-width: 0px; min-height: 0px; max-width: 99999px; max-height: none; border: 0px; display: block; position: absolute; user-select: none; -webkit-user-drag: none; width: 29px; height: 42px;"><map
+                                id="daum.maps.Marker.Area:3" name="daum.maps.Marker.Area:3"><area
+                                    href="javascript:void(0)" alt="" shape="poly"
+                                    coords="14,39,9,27,4,21,1,16,1,10,4,4,11,0,18,0,25,4,28,10,28,16,25,21,20,27"
+                                    title="" style="-webkit-tap-highlight-color: transparent;"></map></div>
+                        <div
+                            style="position: absolute; margin: -39px 0px 0px -14px; z-index: 0; left: 6232px; top: 8795px; display: block;">
+                            <img draggable="false" src="https://t1.daumcdn.net/mapjsapi/images/marker.png" alt=""
+                                title=""
+                                style="min-width: 0px; min-height: 0px; max-width: 99999px; max-height: none; border: 0px; display: block; position: absolute; user-select: none; -webkit-user-drag: none; clip: rect(0px, 29px, 42px, 0px); top: 0px; left: 0px; width: 29px; height: 42px;"><img
+                                src="https://t1.daumcdn.net/mapjsapi/images/transparent.gif" alt="" draggable="false"
+                                usemap="#daum.maps.Marker.Area:4"
+                                style="min-width: 0px; min-height: 0px; max-width: 99999px; max-height: none; border: 0px; display: block; position: absolute; user-select: none; -webkit-user-drag: none; width: 29px; height: 42px;"><map
+                                id="daum.maps.Marker.Area:4" name="daum.maps.Marker.Area:4"><area
+                                    href="javascript:void(0)" alt="" shape="poly"
+                                    coords="14,39,9,27,4,21,1,16,1,10,4,4,11,0,18,0,25,4,28,10,28,16,25,21,20,27"
+                                    title="" style="-webkit-tap-highlight-color: transparent;"></map></div>
+                        <div
+                            style="position: absolute; margin: -39px 0px 0px -14px; z-index: 0; left: 6336px; top: 8773px; display: none;">
+                            <img draggable="false" src="https://t1.daumcdn.net/mapjsapi/images/marker.png" alt=""
+                                title=""
+                                style="min-width: 0px; min-height: 0px; max-width: 99999px; max-height: none; border: 0px; display: block; position: absolute; user-select: none; -webkit-user-drag: none; clip: rect(0px, 29px, 42px, 0px); top: 0px; left: 0px; width: 29px; height: 42px;"><img
+                                src="https://t1.daumcdn.net/mapjsapi/images/transparent.gif" alt="" draggable="false"
+                                usemap="#daum.maps.Marker.Area:5"
+                                style="min-width: 0px; min-height: 0px; max-width: 99999px; max-height: none; border: 0px; display: block; position: absolute; user-select: none; -webkit-user-drag: none; width: 29px; height: 42px;"><map
+                                id="daum.maps.Marker.Area:5" name="daum.maps.Marker.Area:5"><area
+                                    href="javascript:void(0)" alt="" shape="poly"
+                                    coords="14,39,9,27,4,21,1,16,1,10,4,4,11,0,18,0,25,4,28,10,28,16,25,21,20,27"
+                                    title="" style="-webkit-tap-highlight-color: transparent;"></map></div>
+                        <div
+                            style="position: absolute; margin: -39px 0px 0px -14px; z-index: 0; left: 6345px; top: 8715px; display: none;">
+                            <img draggable="false" src="https://t1.daumcdn.net/mapjsapi/images/marker.png" alt=""
+                                title=""
+                                style="min-width: 0px; min-height: 0px; max-width: 99999px; max-height: none; border: 0px; display: block; position: absolute; user-select: none; -webkit-user-drag: none; clip: rect(0px, 29px, 42px, 0px); top: 0px; left: 0px; width: 29px; height: 42px;"><img
+                                src="https://t1.daumcdn.net/mapjsapi/images/transparent.gif" alt="" draggable="false"
+                                usemap="#daum.maps.Marker.Area:6"
+                                style="min-width: 0px; min-height: 0px; max-width: 99999px; max-height: none; border: 0px; display: block; position: absolute; user-select: none; -webkit-user-drag: none; width: 29px; height: 42px;"><map
+                                id="daum.maps.Marker.Area:6" name="daum.maps.Marker.Area:6"><area
+                                    href="javascript:void(0)" alt="" shape="poly"
+                                    coords="14,39,9,27,4,21,1,16,1,10,4,4,11,0,18,0,25,4,28,10,28,16,25,21,20,27"
+                                    title="" style="-webkit-tap-highlight-color: transparent;"></map></div>
+                        <div
+                            style="position: absolute; margin: -39px 0px 0px -14px; z-index: 0; left: 6226px; top: 8773px; display: block;">
+                            <img draggable="false" src="https://t1.daumcdn.net/mapjsapi/images/marker.png" alt=""
+                                title=""
+                                style="min-width: 0px; min-height: 0px; max-width: 99999px; max-height: none; border: 0px; display: block; position: absolute; user-select: none; -webkit-user-drag: none; clip: rect(0px, 29px, 42px, 0px); top: 0px; left: 0px; width: 29px; height: 42px;"><img
+                                src="https://t1.daumcdn.net/mapjsapi/images/transparent.gif" alt="" draggable="false"
+                                usemap="#daum.maps.Marker.Area:7"
+                                style="min-width: 0px; min-height: 0px; max-width: 99999px; max-height: none; border: 0px; display: block; position: absolute; user-select: none; -webkit-user-drag: none; width: 29px; height: 42px;"><map
+                                id="daum.maps.Marker.Area:7" name="daum.maps.Marker.Area:7"><area
+                                    href="javascript:void(0)" alt="" shape="poly"
+                                    coords="14,39,9,27,4,21,1,16,1,10,4,4,11,0,18,0,25,4,28,10,28,16,25,21,20,27"
+                                    title="" style="-webkit-tap-highlight-color: transparent;"></map></div>
+                        <div
+                            style="position: absolute; margin: -39px 0px 0px -14px; z-index: 0; left: 6211px; top: 8812px; display: block;">
+                            <img draggable="false" src="https://t1.daumcdn.net/mapjsapi/images/marker.png" alt=""
+                                title=""
+                                style="min-width: 0px; min-height: 0px; max-width: 99999px; max-height: none; border: 0px; display: block; position: absolute; user-select: none; -webkit-user-drag: none; clip: rect(0px, 29px, 42px, 0px); top: 0px; left: 0px; width: 29px; height: 42px;"><img
+                                src="https://t1.daumcdn.net/mapjsapi/images/transparent.gif" alt="" draggable="false"
+                                usemap="#daum.maps.Marker.Area:8"
+                                style="min-width: 0px; min-height: 0px; max-width: 99999px; max-height: none; border: 0px; display: block; position: absolute; user-select: none; -webkit-user-drag: none; width: 29px; height: 42px;"><map
+                                id="daum.maps.Marker.Area:8" name="daum.maps.Marker.Area:8"><area
+                                    href="javascript:void(0)" alt="" shape="poly"
+                                    coords="14,39,9,27,4,21,1,16,1,10,4,4,11,0,18,0,25,4,28,10,28,16,25,21,20,27"
+                                    title="" style="-webkit-tap-highlight-color: transparent;"></map></div>
+                        <div
+                            style="position: absolute; margin: -39px 0px 0px -14px; z-index: 0; left: 6308px; top: 8772px; display: block;">
+                            <img draggable="false" src="https://t1.daumcdn.net/mapjsapi/images/marker.png" alt=""
+                                title=""
+                                style="min-width: 0px; min-height: 0px; max-width: 99999px; max-height: none; border: 0px; display: block; position: absolute; user-select: none; -webkit-user-drag: none; clip: rect(0px, 29px, 42px, 0px); top: 0px; left: 0px; width: 29px; height: 42px;"><img
+                                src="https://t1.daumcdn.net/mapjsapi/images/transparent.gif" alt="" draggable="false"
+                                usemap="#daum.maps.Marker.Area:9"
+                                style="min-width: 0px; min-height: 0px; max-width: 99999px; max-height: none; border: 0px; display: block; position: absolute; user-select: none; -webkit-user-drag: none; width: 29px; height: 42px;"><map
+                                id="daum.maps.Marker.Area:9" name="daum.maps.Marker.Area:9"><area
+                                    href="javascript:void(0)" alt="" shape="poly"
+                                    coords="14,39,9,27,4,21,1,16,1,10,4,4,11,0,18,0,25,4,28,10,28,16,25,21,20,27"
+                                    title="" style="-webkit-tap-highlight-color: transparent;"></map></div>
+                        <div
+                            style="position: absolute; margin: -39px 0px 0px -14px; z-index: 0; left: 6150px; top: 8549px; display: block;">
+                            <img draggable="false" src="https://t1.daumcdn.net/mapjsapi/images/marker.png" alt=""
+                                title=""
+                                style="min-width: 0px; min-height: 0px; max-width: 99999px; max-height: none; border: 0px; display: block; position: absolute; user-select: none; -webkit-user-drag: none; clip: rect(0px, 29px, 42px, 0px); top: 0px; left: 0px; width: 29px; height: 42px;"><img
+                                src="https://t1.daumcdn.net/mapjsapi/images/transparent.gif" alt="" draggable="false"
+                                usemap="#daum.maps.Marker.Area:a"
+                                style="min-width: 0px; min-height: 0px; max-width: 99999px; max-height: none; border: 0px; display: block; position: absolute; user-select: none; -webkit-user-drag: none; width: 29px; height: 42px;"><map
+                                id="daum.maps.Marker.Area:a" name="daum.maps.Marker.Area:a"><area
+                                    href="javascript:void(0)" alt="" shape="poly"
+                                    coords="14,39,9,27,4,21,1,16,1,10,4,4,11,0,18,0,25,4,28,10,28,16,25,21,20,27"
+                                    title="" style="-webkit-tap-highlight-color: transparent;"></map></div>
+                        <div
+                            style="position: absolute; margin: -39px 0px 0px -14px; z-index: 0; left: 6260px; top: 8790px; display: block;">
+                            <img draggable="false" src="https://t1.daumcdn.net/mapjsapi/images/marker.png" alt=""
+                                title=""
+                                style="min-width: 0px; min-height: 0px; max-width: 99999px; max-height: none; border: 0px; display: block; position: absolute; user-select: none; -webkit-user-drag: none; clip: rect(0px, 29px, 42px, 0px); top: 0px; left: 0px; width: 29px; height: 42px;"><img
+                                src="https://t1.daumcdn.net/mapjsapi/images/transparent.gif" alt="" draggable="false"
+                                usemap="#daum.maps.Marker.Area:b"
+                                style="min-width: 0px; min-height: 0px; max-width: 99999px; max-height: none; border: 0px; display: block; position: absolute; user-select: none; -webkit-user-drag: none; width: 29px; height: 42px;"><map
+                                id="daum.maps.Marker.Area:b" name="daum.maps.Marker.Area:b"><area
+                                    href="javascript:void(0)" alt="" shape="poly"
+                                    coords="14,39,9,27,4,21,1,16,1,10,4,4,11,0,18,0,25,4,28,10,28,16,25,21,20,27"
+                                    title="" style="-webkit-tap-highlight-color: transparent;"></map></div>
+                        <div
+                            style="position: absolute; margin: -39px 0px 0px -14px; z-index: 0; left: 6279px; top: 8799px; display: block;">
+                            <img draggable="false" src="https://t1.daumcdn.net/mapjsapi/images/marker.png" alt=""
+                                title=""
+                                style="min-width: 0px; min-height: 0px; max-width: 99999px; max-height: none; border: 0px; display: block; position: absolute; user-select: none; -webkit-user-drag: none; clip: rect(0px, 29px, 42px, 0px); top: 0px; left: 0px; width: 29px; height: 42px;"><img
+                                src="https://t1.daumcdn.net/mapjsapi/images/transparent.gif" alt="" draggable="false"
+                                usemap="#daum.maps.Marker.Area:c"
+                                style="min-width: 0px; min-height: 0px; max-width: 99999px; max-height: none; border: 0px; display: block; position: absolute; user-select: none; -webkit-user-drag: none; width: 29px; height: 42px;"><map
+                                id="daum.maps.Marker.Area:c" name="daum.maps.Marker.Area:c"><area
+                                    href="javascript:void(0)" alt="" shape="poly"
+                                    coords="14,39,9,27,4,21,1,16,1,10,4,4,11,0,18,0,25,4,28,10,28,16,25,21,20,27"
+                                    title="" style="-webkit-tap-highlight-color: transparent;"></map></div>
+                        <div
+                            style="position: absolute; margin: -39px 0px 0px -14px; z-index: 0; left: 6225px; top: 8796px; display: block;">
+                            <img draggable="false" src="https://t1.daumcdn.net/mapjsapi/images/marker.png" alt=""
+                                title=""
+                                style="min-width: 0px; min-height: 0px; max-width: 99999px; max-height: none; border: 0px; display: block; position: absolute; user-select: none; -webkit-user-drag: none; clip: rect(0px, 29px, 42px, 0px); top: 0px; left: 0px; width: 29px; height: 42px;"><img
+                                src="https://t1.daumcdn.net/mapjsapi/images/transparent.gif" alt="" draggable="false"
+                                usemap="#daum.maps.Marker.Area:d"
+                                style="min-width: 0px; min-height: 0px; max-width: 99999px; max-height: none; border: 0px; display: block; position: absolute; user-select: none; -webkit-user-drag: none; width: 29px; height: 42px;"><map
+                                id="daum.maps.Marker.Area:d" name="daum.maps.Marker.Area:d"><area
+                                    href="javascript:void(0)" alt="" shape="poly"
+                                    coords="14,39,9,27,4,21,1,16,1,10,4,4,11,0,18,0,25,4,28,10,28,16,25,21,20,27"
+                                    title="" style="-webkit-tap-highlight-color: transparent;"></map></div>
+                        <div
+                            style="position: absolute; margin: -39px 0px 0px -14px; z-index: 0; left: 6276px; top: 8795px; display: block;">
+                            <img draggable="false" src="https://t1.daumcdn.net/mapjsapi/images/marker.png" alt=""
+                                title=""
+                                style="min-width: 0px; min-height: 0px; max-width: 99999px; max-height: none; border: 0px; display: block; position: absolute; user-select: none; -webkit-user-drag: none; clip: rect(0px, 29px, 42px, 0px); top: 0px; left: 0px; width: 29px; height: 42px;"><img
+                                src="https://t1.daumcdn.net/mapjsapi/images/transparent.gif" alt="" draggable="false"
+                                usemap="#daum.maps.Marker.Area:e"
+                                style="min-width: 0px; min-height: 0px; max-width: 99999px; max-height: none; border: 0px; display: block; position: absolute; user-select: none; -webkit-user-drag: none; width: 29px; height: 42px;"><map
+                                id="daum.maps.Marker.Area:e" name="daum.maps.Marker.Area:e"><area
+                                    href="javascript:void(0)" alt="" shape="poly"
+                                    coords="14,39,9,27,4,21,1,16,1,10,4,4,11,0,18,0,25,4,28,10,28,16,25,21,20,27"
+                                    title="" style="-webkit-tap-highlight-color: transparent;"></map></div>
+                        <div
+                            style="position: absolute; margin: -39px 0px 0px -14px; z-index: 0; left: 6184px; top: 8810px; display: block;">
+                            <img draggable="false" src="https://t1.daumcdn.net/mapjsapi/images/marker.png" alt=""
+                                title=""
+                                style="min-width: 0px; min-height: 0px; max-width: 99999px; max-height: none; border: 0px; display: block; position: absolute; user-select: none; -webkit-user-drag: none; clip: rect(0px, 29px, 42px, 0px); top: 0px; left: 0px; width: 29px; height: 42px;"><img
+                                src="https://t1.daumcdn.net/mapjsapi/images/transparent.gif" alt="" draggable="false"
+                                usemap="#daum.maps.Marker.Area:f"
+                                style="min-width: 0px; min-height: 0px; max-width: 99999px; max-height: none; border: 0px; display: block; position: absolute; user-select: none; -webkit-user-drag: none; width: 29px; height: 42px;"><map
+                                id="daum.maps.Marker.Area:f" name="daum.maps.Marker.Area:f"><area
+                                    href="javascript:void(0)" alt="" shape="poly"
+                                    coords="14,39,9,27,4,21,1,16,1,10,4,4,11,0,18,0,25,4,28,10,28,16,25,21,20,27"
+                                    title="" style="-webkit-tap-highlight-color: transparent;"></map></div>
+                    </div>
+                </div>
+            </div>
+            <div
+                style="position: absolute; cursor: default; z-index: 1; margin: 0px 6px; height: 19px; line-height: 14px; left: 0px; bottom: 0px; color: rgb(0, 0, 0);">
+                <div style="color: rgb(0, 0, 0); text-align: center; font-size: 10px; float: left;">
+                    <div
+                        style="float: left; margin: 2px 3px 0px 4px; height: 6px; transition: width 0.1s ease 0s; border-top: none rgb(0, 0, 0); border-right: 2px solid rgb(0, 0, 0); border-bottom: 2px solid rgb(0, 0, 0); border-left: 2px solid rgb(0, 0, 0); border-image: initial; width: 58px;">
+                    </div>
+                    <div
+                        style="float: left; margin: 0px 4px 0px 0px; font-family: AppleSDGothicNeo-Regular, 돋움, dotum, sans-serif; font-weight: bold; color: rgb(0, 0, 0);">
+                        2km</div>
+                </div>
+                <div style="margin: 0px 4px; float: left;"><a target="_blank" href="http://map.kakao.com/"
+                        title="Kakao 지도로 보시려면 클릭하세요." style="float: left; width: 32px; height: 10px;"><img
+                            src="https://t1.daumcdn.net/mapjsapi/images/m_bi_b.png" alt="Kakao 지도로 이동"
+                            style="float: left; width: 32px; height: 10px; border: none;"></a>
+                    <div style="font: 11px / 11px Arial, Tahoma, Dotum, sans-serif; float: left;"></div>
+                </div>
+            </div>
+            <div style="cursor: auto; position: absolute; z-index: 2; left: 0px; top: 0px;">
+                <div
+                    style="width: 106px; height: 32px; box-sizing: content-box; background-color: rgb(255, 255, 255); padding: 2px; border-radius: 3px; box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 2px 0px; position: absolute; left: 676px; top: 3px;">
+                    <button draggable="false" title="지도" type="button"
+                        style="float: left; cursor: default; width: 43px; height: 32px; user-select: none; -webkit-user-drag: none; border: none; background: url(&quot;https://t1.daumcdn.net/mapjsapi/images/control.png&quot;) -5px -183px / 116px 264px no-repeat; color: rgb(255, 255, 255); font-weight: bold;"></button><button
+                        draggable="false" title="스카이뷰" type="button"
+                        style="float: left; cursor: pointer; width: 63px; height: 32px; user-select: none; -webkit-user-drag: none; border: none; background: url(&quot;https://t1.daumcdn.net/mapjsapi/images/control.png&quot;) -48px -183px / 116px 264px no-repeat; color: rgb(0, 0, 0); font-weight: normal;"></button>
+                </div>
+                <div
+                    style="width: 32px; border-radius: 3px; box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 2px 0px; position: absolute; left: 754px; top: 42px;">
+                    <button draggable="false" title="확대" type="button"
+                        style="float: left; cursor: pointer; width: 32px; height: 32px; user-select: none; -webkit-user-drag: none; border-top: none; border-right: none; border-bottom: 1px solid rgb(226, 226, 226); border-left: none; border-image: initial; background: url(&quot;https://t1.daumcdn.net/mapjsapi/images/control.png&quot;) -40px 0px / 116px 264px no-repeat rgb(255, 255, 255); border-radius: 3px 3px 0px 0px;"></button>
+                    <div
+                        style="float: left; background: url(&quot;https://t1.daumcdn.net/mapjsapi/images/bg_zoom_control.png&quot;) repeat; padding: 7px 0px; transition: height 0s ease 0s, margin 0.1s ease 0s;">
+                        <div
+                            style="cursor: pointer; position: relative; background-size: 116px 264px; transition: height 0.1s ease 0s; margin: 2px 0px; display: block; width: 32px; height: 104px;">
+                            <div
+                                style="position: absolute; width: 4px; height: 100%; background-color: rgb(51, 150, 255); left: 50%; margin: 0px 0px 0px -2px;">
+                                <div
+                                    style="width: 4px; height: 2px; margin-bottom: -2px; bottom: 0px; position: absolute; background: url(&quot;https://t1.daumcdn.net/mapjsapi/images/control.png&quot;) -50px -127px / 116px 264px;">
+                                </div>
+                                <div
+                                    style="width: 4px; height: 2px; margin-top: -2px; top: 0px; position: absolute; background: url(&quot;https://t1.daumcdn.net/mapjsapi/images/control.png&quot;) -40px -100px / 116px 264px;">
+                                </div>
+                            </div>
+                            <div
+                                style="position: absolute; background-color: rgb(204, 204, 204); transition: height 0.1s ease 0s; left: 50%; margin: 0px 0px 0px -2px; width: 4px; height: 56px;">
+                            </div>
+                            <div
+                                style="cursor: row-resize; position: absolute; width: 20px; height: 10px; margin: -4px 0px 0px -10px; background: url(&quot;https://t1.daumcdn.net/mapjsapi/images/control.png&quot;) -40px -80px / 116px 264px; left: 50%; transition: top 0.1s ease 0s; top: 56px;">
+                            </div>
+                        </div>
+                    </div><button draggable="false" title="축소" type="button"
+                        style="float: left; cursor: pointer; width: 32px; height: 32px; user-select: none; -webkit-user-drag: none; border-top: 1px solid rgb(226, 226, 226); border-right: none; border-bottom: none; border-left: none; border-image: initial; background: url(&quot;https://t1.daumcdn.net/mapjsapi/images/control.png&quot;) -40px -32px / 116px 264px no-repeat rgb(255, 255, 255); border-radius: 0px 0px 3px 3px; margin: 0px;"></button>
+                    <div
+                        style="position: absolute; margin: 41px 0px 0px -30px; background-size: 116px 264px; width: 30px; height: 104px; display: none;">
+                        <div
+                            style="position: absolute; width: 29px; height: 15px; margin: -6px 0px 0px; background: url(&quot;https://t1.daumcdn.net/mapjsapi/images/control.png&quot;) 0px -80px / 116px 264px; left: 0px; top: 8px;">
+                        </div>
+                        <div
+                            style="position: absolute; width: 29px; height: 15px; margin: -6px 0px 0px; background: url(&quot;https://t1.daumcdn.net/mapjsapi/images/control.png&quot;) 0px -100px / 116px 264px; left: 0px; top: 32px;">
+                        </div>
+                        <div
+                            style="position: absolute; width: 29px; height: 15px; margin: -6px 0px 0px; background: url(&quot;https://t1.daumcdn.net/mapjsapi/images/control.png&quot;) 0px -120px / 116px 264px; left: 0px; top: 64px;">
+                        </div>
+                        <div
+                            style="position: absolute; width: 29px; height: 15px; margin: -6px 0px 0px; background: url(&quot;https://t1.daumcdn.net/mapjsapi/images/control.png&quot;) 0px -140px / 116px 264px; left: 0px; top: 80px;">
+                        </div>
+                        <div
+                            style="position: absolute; width: 29px; height: 15px; margin: -6px 0px 0px; background: url(&quot;https://t1.daumcdn.net/mapjsapi/images/control.png&quot;) 0px -160px / 116px 264px; left: 0px; top: 96px;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <p id="result">클릭한 위치의 좌표 (경도,위도) : 35.256200891207435, 129.17754976956272</p>
+
+
+        <script type="text/javascript"
+            src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=5959c0595158fb07e6061cebb8913648&amp;libraries=services"></script>
+        <script charset="UTF-8" src="https://t1.daumcdn.net/mapjsapi/js/main/4.3.6/kakao.js"></script>
+        <script charset="UTF-8" src="https://t1.daumcdn.net/mapjsapi/js/libs/services/1.0.2/services.js"></script>
+        <script>
+            // 마커를 클릭하면 장소명을 표출할 인포윈도우 입니다
+            var infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
+
+            var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+                mapOption = {
+                    center: new kakao.maps.LatLng(37.5662, 126.9784), // 지도의 중심좌표
+                    level: 15 // 지도의 확대 레벨
+
+                };
+
+
+            // 지도를 생성합니다    
+            var map = new kakao.maps.Map(mapContainer, mapOption);
+
+            // 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성합니다
+            var mapTypeControl = new kakao.maps.MapTypeControl();
+
+            // 지도에 컨트롤을 추가해야 지도위에 표시됩니다
+            // kakao.maps.ControlPosition은 컨트롤이 표시될 위치를 정의하는데 TOPRIGHT는 오른쪽 위를 의미합니다
+            map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
+
+            // 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
+            var zoomControl = new kakao.maps.ZoomControl();
+            map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+
+
+
+            // 주소-좌표 변환 객체를 생성합니다
+            var geocoder = new kakao.maps.services.Geocoder();
+
+            // 지도에 클릭 이벤트를 등록합니다
+            // 지도를 클릭하면 마지막 파라미터로 넘어온 함수를 호출합니다
+            kakao.maps.event.addListener(map, 'click', function (mouseEvent) {
+
+                // 클릭한 위도, 경도 정보를 가져옵니다 
+                var latlng = mouseEvent.latLng;
+
+                var message = '클릭한 위치의 좌표 (경도,위도) : ' + latlng.getLat() + ', ' + latlng.getLng();
+
+                var resultDiv = document.getElementById('result');
+                resultDiv.innerHTML = message;
+
+            });
+
+
+
+            // 지도를 클릭했을 때 클릭 위치 좌표에 대한 주소정보를 표시하도록 이벤트를 등록합니다
+            kakao.maps.event.addListener(map, 'click', function (mouseEvent) {
+                searchDetailAddrFromCoords(mouseEvent.latLng, function (result2, status) {
+                    if (status === kakao.maps.services.Status.OK) {
+                        var detailAddr = !!result2[0].road_address ? '<div>도로명주소 : ' + result2[0].road_address.address_name + '</div>' : '';
+                        detailAddr += '<div>지번 주소 : ' + result2[0].address.address_name + '</div>';
+
+                        var content = '<div class="bAddr">' +
+                            '<span class="title">법정동 주소정보</span>' +
+                            detailAddr +
+                            '</div>';
+
+                        // 마커를 클릭한 위치에 표시합니다 
+                        marker.setPosition(mouseEvent.latLng);
+                        marker.setMap(map);
+
+                        // 인포윈도우에 클릭한 위치에 대한 법정동 상세 주소정보를 표시합니다
+                        infowindow.setContent(content);
+                        infowindow.open(map, marker);
+                    }
+                });
+            });
+
+            function searchAddrFromCoords(coords, callback) {
+                // 좌표로 행정동 주소 정보를 요청합니다
+                geocoder.coord2RegionCode(coords.getLng(), coords.getLat(), callback);
+            }
+
+            function searchDetailAddrFromCoords(coords, callback) {
+                // 좌표로 법정동 상세 주소 정보를 요청합니다
+                geocoder.coord2Address(coords.getLng(), coords.getLat(), callback);
+            }
+
+
+            // 장소 검색 객체를 생성합니다
+            var ps = new kakao.maps.services.Places();
+
+            // 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성합니다
+            var infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
+
+            // 키워드로 장소를 검색합니다
+
+
+            // 키워드 검색을 요청하는 함수입니다
+            function searchPlaces() {
+
+                var keyword = document.getElementById('keyword').value;
+
+                if (!keyword.replace(/^\s+|\s+$/g, '')) {
+                    alert('장소를 입력해주세요!');
+                    return false;
+                }
+
+                // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
+                ps.keywordSearch(keyword, placesSearchCB);
+            }
+
+
+            // 키워드 검색 완료 시 호출되는 콜백함수 입니다
+            function placesSearchCB(data, status, pagination) {
+                if (status === kakao.maps.services.Status.OK) {
+
+                    // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+                    // LatLngBounds 객체에 좌표를 추가합니다
+                    var bounds = new kakao.maps.LatLngBounds();
+
+                    for (var i = 0; i < data.length; i++) {
+                        displayMarker(data[i]);
+                        bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
+                    }
+
+                    // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+                    map.setBounds(bounds);
+                }
+            }
+
+            // 지도에 마커를 표시하는 함수입니다
+            function displayMarker(place) {
+
+                // 마커를 생성하고 지도에 표시합니다
+                var marker = new kakao.maps.Marker({
+                    map: map,
+                    position: new kakao.maps.LatLng(place.y, place.x)
+                });
+
+                // 마커에 클릭이벤트를 등록합니다
+                kakao.maps.event.addListener(marker, 'click', function () {
+                    // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
+                    infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.place_name + '</div>');
+                    infowindow.open(map, marker);
+                });
+            }
+
+
+
+        </script>
+
+    </div>
+</body>
+
+</html>
