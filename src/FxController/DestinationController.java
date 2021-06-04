@@ -193,7 +193,7 @@ public class DestinationController implements Initializable{
           				if (packetType.equals(Protocol.PT_RES_RENEWAL)) {
           					switch (packetCode) {
           						case Protocol.RES_UPDATE_VIEWSCOUNT_Y: {
-          							//RecentInquiryData.setRecentList(userId, myTableView.getSelectionModel().getSelectedItem());
+          							RecentInquiryData.setRecentList(userId, myTableView.getSelectionModel().getSelectedItem());
           							stage.showAndWait();
           							return;
           						}
@@ -209,6 +209,8 @@ public class DestinationController implements Initializable{
 //                    //  최근 조회 리스트 추가
 //                    RecentInquiryData.setRecentList(userId, myTableView.getSelectionModel().getSelectedItem());
 //                    stage.showAndWait();
+
+
                 }
                 catch(Exception e) {
                     System.out.println(e);
