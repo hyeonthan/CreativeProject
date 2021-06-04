@@ -395,8 +395,28 @@ public class MypageController implements Initializable {
                 try {
                     String destinationCode = tv_favorite.getSelectionModel().getSelectedItem().getDestination_code();
                     String destinationName = tv_favorite.getSelectionModel().getSelectedItem().getDestination_name();
-                    MyPageDAO myPageDAO = new MyPageDAO();
-                    DestinationDTO destinationDTO = myPageDAO.loadDestinationDTO(destinationCode);
+                    clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_DESTINATION +"`"+destinationCode);
+
+                    String packet = clientMain.readPacket();
+                    String packetArr[] = packet.split("`");
+                    String packetType = packetArr[0];
+                    String packetCode = packetArr[1];
+                    DestinationDTO destinationDTO =null;
+
+                    System.out.println(packetType + " , "+ packetCode);
+
+                    if (packetType.equals(Protocol.PT_RES_VIEW)) {
+                        switch (packetCode) {
+                            case Protocol.RES_DESTINATION_Y:{
+                                destinationDTO = (DestinationDTO) clientMain.readObject();
+                                break;
+                            }
+                            case Protocol.RES_DESTINATION_N:{
+                                ShowAlert.showAlert("WARNING", "경고", "상세정보 조회 실패");
+                                return;
+                            }
+                        }
+                    }
 
                     FXMLLoader loader = null;
                     if (tv_favorite.getSelectionModel().getSelectedItem().getSortation().equals("해수욕장")) {
@@ -415,28 +435,16 @@ public class MypageController implements Initializable {
                         //  해수욕장 상세정보로 code, userId 넘기기
                         String beachCode = destinationDTO.getBeach_code();
                         BeachDetailController beachDetailController = loader.<BeachDetailController>getController();
-                        beachDetailController.setBeachCode(beachCode);
-                        beachDetailController.setSaveUserId(userId);
-                        beachDetailController.setDestinationCode(destinationCode);
-                        beachDetailController.setDestinationName(destinationName);
                         beachDetailController.setBeachDetail(beachCode, userId, destinationCode, destinationName);
                     }
                     if (tv_favorite.getSelectionModel().getSelectedItem().getSortation().equals("휴양림")) {
                         String forestCode = destinationDTO.getForestLodge_code();
                         ForestLodgeDetailController forestLodgeDetailController = loader.<ForestLodgeDetailController>getController();
-                        forestLodgeDetailController.setForestLodgeCode(forestCode);
-                        forestLodgeDetailController.setSaveUserId(userId);
-                        forestLodgeDetailController.setDestinationCode(destinationCode);
-                        forestLodgeDetailController.setDestinationName(destinationName);
                         forestLodgeDetailController.setForestDetail(forestCode,userId,destinationCode,destinationName);
                     }
                     if (tv_favorite.getSelectionModel().getSelectedItem().getSortation().equals("관광지")) {
                         String touristSpotCode = destinationDTO.getTouristSpot_code();
                         TouristSpotDetailController touristSpotDetailController = loader.<TouristSpotDetailController>getController();
-                        touristSpotDetailController.setTouristCode(touristSpotCode);
-                        touristSpotDetailController.setSaveUserId(userId);
-                        touristSpotDetailController.setDestinationCode(destinationCode);
-                        touristSpotDetailController.setDestinationName(destinationName);
                         touristSpotDetailController.setTouristDetail(touristSpotCode,userId,destinationCode,destinationName);
                     }
                     stage.showAndWait();
