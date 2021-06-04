@@ -53,7 +53,7 @@ public class ForestLodgeDetailController implements Initializable {
 	@FXML private Text resultTextCapacityPeople;
 	@FXML private Text reusltTextEnterFee;
 	@FXML private Text resultTextAcconmodation;
-	@FXML private Text resultTextHomePage;
+	@FXML private TextArea resultTextHomePage;
 	@FXML private Button btn_favorite;
 	@FXML private Button btn_registerImg;
 	@FXML private ComboBox<Integer> cb_star;

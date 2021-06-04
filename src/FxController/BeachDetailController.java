@@ -60,7 +60,7 @@ public class BeachDetailController extends Object implements Initializable {
 	@FXML private Text resultTextConvenient;
 	@FXML private Text reusltTextOpenPeriod;
 	@FXML private Text resultTextAvailableTime;
-	@FXML private Text resultTextHomepage;
+	@FXML private TextArea resultTextHomepage;
 	@FXML private Button btn_favorite;
 	@FXML private Button btn_registerImg;
 	@FXML private ComboBox<Integer> cb_star;
@@ -110,6 +110,7 @@ public class BeachDetailController extends Object implements Initializable {
 		reusltTextOpenPeriod.setText(beachDTO.getOpening_period());
 		resultTextAvailableTime.setText(beachDTO.getAvailable_time());
 		resultTextHomepage.setText(beachDTO.getHome_page());
+		resultTextHomepage.setDisable(true);
 		latitude = beachDTO.getLatitude();
 		longitude = beachDTO.getLongitude();
 	}
