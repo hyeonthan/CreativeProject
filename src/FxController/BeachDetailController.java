@@ -95,7 +95,7 @@ public class BeachDetailController extends Object implements Initializable {
 				System.out.println(html);
 			}/*from w  w  w.java  2s.co  m*/
 		});
-		webEngine.load("http://localhost:8080/detail.html");
+		webEngine.load("http://localhost:8081/detail.html");
 	}
 	public void setBeachCode(String beachCode){
 		this.beachCode = beachCode;
