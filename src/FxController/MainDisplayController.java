@@ -76,6 +76,9 @@ public class MainDisplayController implements Initializable{
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/Statistics.fxml"));
 			Parent inquiry = (Parent)loader.load();
+			//	통계 화면으로 userId 넘기기
+			StatisticsController statisticsController = loader.<StatisticsController>getController();
+			statisticsController.setSaveUserId(userId);
 			borderpaneId.setCenter(inquiry);
 		} catch (IOException e1) {
 			e1.printStackTrace();
