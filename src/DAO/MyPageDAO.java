@@ -6,11 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Savepoint;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import DBcontrol.DBconnection;
+import DTO.DestinationDTO;
 import DTO.FavoriteDTO;
 import DTO.ReviewDTO;
 import DTO.UserDTO;
@@ -287,6 +286,48 @@ public class MyPageDAO {
             }
         }
         return check;
+    }
+    //  DestinationDTO 가져오기
+    public DestinationDTO loadDestinationDTO(String code){
+        DestinationDTO dto = null;
+        try {
+            String query = "select * from destination where code=?";
+
+            conn= DBconnection.getConnection();
+            psmt = conn.prepareStatement(query);
+            psmt.setString(1, code);
+            rs = psmt.executeQuery();
+
+            rs.next();
+                String sortation = rs.getString("sortation");
+                String Do = rs.getString("Do");
+                String city = rs.getString("city");
+                String forest_lodge_code = rs.getString("forest_lodge_code");
+                String beach_code = rs.getString("beach_code");
+                String tourist_code = rs.getString("tourist_spot_code");
+                String name = rs.getString("name");
+                String address = rs.getString("address");
+                double scope = rs.getDouble("scope");
+                int views = rs.getInt("views");
+                dto = new DestinationDTO(code,sortation,forest_lodge_code,beach_code,tourist_code,name,Do,city,address,scope,views);
+               
+        }
+        catch (SQLException sqle) {
+            sqle.printStackTrace();
+        } finally {
+            try {
+                conn.setAutoCommit(true);
+                if (psmt != null) {
+                    psmt.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (Exception e) {
+                throw new RuntimeException(e.getMessage());
+            }
+        }
+        return dto;
     }
 }
 

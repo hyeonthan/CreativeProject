@@ -29,6 +29,8 @@ public class Protocol {
     public static final String REQ_MYPAGE = "6-9";                  //마이페이지 조회 요청
     public static final String REQ_ID_DUPLICATION = "6-A";          //아이디 중복 확인 요청
     public static final String REQ_STATISTICS_DETAIL = "6-B";       //상세정보 조회 시 통계 요청 
+    public static final String REQ_FAVORITES = "6-C";               //즐겨찾기 조회 요청
+    public static final String REQ_REVIEWS = "6-D";                 //리뷰 조회 요청
 
     //조회 요청에 대한 응답
     public static final String RES_DESTINATION_REGION_Y = "7-0";      //여행지 조회 요청 승인
@@ -51,10 +53,15 @@ public class Protocol {
     public static final String RES_STATISTICS_N = "7-11";             //통계정보 조회 요청 거절
     public static final String RES_MYPAGE_Y = "7-12";                 //마이페이지 조회 요청 승인
     public static final String RES_MYPAGE_N = "7-13";                 //마이페이지 조회 요청 거절
-    public static final String RES_ID_DUPLICATION_Y = "6-A";          //아이디 중복 확인 요청 승인
-    public static final String RES_ID_DUPLICATION_N = "6-B";          //아이디 중복 확인 요청 거절
-    public static final String RES_STATISTICS_DETAIL_Y = "6-C";       //상세정보 조회 시 통계 요청 승인
-    public static final String RES_STATISTICS_DETAIL_N = "6-D";       //상세정보 조회 시 통계 요청 거절
+    public static final String RES_ID_DUPLICATION_Y = "7-14";          //아이디 중복 확인 요청 승인
+    public static final String RES_ID_DUPLICATION_N = "7-15";          //아이디 중복 확인 요청 거절
+    public static final String RES_STATISTICS_DETAIL_Y = "7-16";       //상세정보 조회 시 통계 요청 승인
+    public static final String RES_STATISTICS_DETAIL_N = "7-17";       //상세정보 조회 시 통계 요청 거절
+    public static final String RES_FAVORITES_Y = "7-18";               //즐겨찾기 조회 요청 승인
+    public static final String RES_FAVORITES_N = "7-19";               //즐겨찾기 조회 요청 승인
+    public static final String RES_REVIEWS_Y = "7-20";                 //리뷰 조회 요청 승인
+    public static final String RES_REVIEWS_N = "7-21";                 //리뷰 조회 요청 거절
+
 
     // 갱신 요청
     public static final String REQ_SIGNUP = "8-0";                  //회원가입 요청
