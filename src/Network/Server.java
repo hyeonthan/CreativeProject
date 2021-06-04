@@ -134,7 +134,7 @@ public class Server extends Thread{
                     		case Protocol.REQ_BEACH_DETAIL:{		//해수욕장 상세정보
 								DetailDAO detailDAO = new DetailDAO();
 
-								ForestLodgeDTO beachDTO = detailDAO.detailForestLodge(packetArr[2]);
+								BeachDTO beachDTO = detailDAO.detailBeach(packetArr[2]);
 								ArrayList<ReviewDTO> arrayList = detailDAO.inquireReview(packetArr[3]);
 
 								if (beachDTO!=null) {
