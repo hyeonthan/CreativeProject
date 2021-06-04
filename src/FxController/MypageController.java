@@ -76,7 +76,7 @@ public class MypageController implements Initializable {
 
     //	로그인 정보 받은 후 초기화
     public void setUserInformation(String userId) {
-        clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_MYPAGE);
+        clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_MYPAGE +"`"+userId);
         String packet = clientMain.readPacket();
         String packetArr[] = packet.split("`");
         String packetType = packetArr[0];
@@ -123,11 +123,14 @@ public class MypageController implements Initializable {
     //	즐겨찾기 리스트 불러오기
     public void setFavoriteList(String userId) {
         tv_favorite.getItems().clear();
-        clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_FAVORITES);
+        clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_FAVORITES +"`"+ userId);
         String packet = clientMain.readPacket();
+        System.out.println("즐겨찾기 : "  +packet);
+
         String packetArr[] = packet.split("`");
         String packetType = packetArr[0];
         String packetCode = packetArr[1];
+        System.out.println(packetType + ","+ packetCode);
 
         if (packetType.equals(Protocol.PT_RES_VIEW)) {
             switch (packetCode) {
@@ -147,9 +150,10 @@ public class MypageController implements Initializable {
     //	내가 쓴 리뷰 리스트 불러오기
     public void setReviewList(String userId) {
         tv_review.getItems().clear();
-        clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_REVIEWS);
+        clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_REVIEWS + "`"+userId);
         String packet = clientMain.readPacket();
         String packetArr[] = packet.split("`");
+        System.out.println("리뷰 : "  +packet);
         String packetType = packetArr[0];
         String packetCode = packetArr[1];
 
@@ -464,7 +468,7 @@ public class MypageController implements Initializable {
                         beachDetailController.setSaveUserId(userId);
                         beachDetailController.setDestinationCode(destinationCode);
                         beachDetailController.setDestinationName(destinationName);
-//                        beachDetailController.setBeachDetail(beachCode, userId, destinationCode, destinationName);
+                        beachDetailController.setBeachDetail(beachCode, userId, destinationCode, destinationName);
                     }
                     if (tv_recent.getSelectionModel().getSelectedItem().getSortation().equals("휴양림")) {
                         String forestCode = destinationDTO.getForestLodge_code();
@@ -473,15 +477,16 @@ public class MypageController implements Initializable {
                         forestLodgeDetailController.setSaveUserId(userId);
                         forestLodgeDetailController.setDestinationCode(destinationCode);
                         forestLodgeDetailController.setDestinationName(destinationName);
-                        //forestLodgeDetailController.setF
+                        forestLodgeDetailController.setForestDetail(forestCode,userId,destinationCode,destinationName);
                     }
                     if (tv_recent.getSelectionModel().getSelectedItem().getSortation().equals("관광지")) {
                         String touristSpotCode = destinationDTO.getTouristSpot_code();
                         TouristSpotDetailController touristSpotDetailController = loader.<TouristSpotDetailController>getController();
-                        //touristSpotDetailController.setCode(touristSpotCode);
+                        touristSpotDetailController.setTouristCode(touristSpotCode);
                         touristSpotDetailController.setSaveUserId(userId);
                         touristSpotDetailController.setDestinationCode(destinationCode);
                         touristSpotDetailController.setDestinationName(destinationName);
+                        touristSpotDetailController.setTouristDetail(touristSpotCode,userId,destinationCode,destinationName);
                     }
                     stage.showAndWait();
                 } catch (Exception e) {

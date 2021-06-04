@@ -11,13 +11,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
-import java.sql.Array;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import DTO.*;
-import com.sun.org.apache.bcel.internal.generic.FADD;
 
 
 public class Server extends Thread{
@@ -235,9 +233,9 @@ public class Server extends Thread{
                     		}
                     		case Protocol.REQ_MYPAGE:{ //마이페이지 요청
                     			MyPageDAO myPageDAO = new MyPageDAO();
-                    			UserDTO userDTO = myPageDAO.roadUser(id);
-								ArrayList<ReviewDTO> arrayList = myPageDAO.inquireMyReview(id);
-								ArrayList<FavoriteDTO> arrayList1 = myPageDAO.inquiryFavorite(id);
+                    			UserDTO userDTO = myPageDAO.roadUser(packetArr[2]);
+								ArrayList<ReviewDTO> arrayList = myPageDAO.inquireMyReview(packetArr[2]);
+								ArrayList<FavoriteDTO> arrayList1 = myPageDAO.inquiryFavorite(packetArr[2]);
 
 								if(userDTO != null){
 									writePacket(Protocol.PT_RES_VIEW + "`" + Protocol.RES_MYPAGE_Y);
