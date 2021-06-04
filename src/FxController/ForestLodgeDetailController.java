@@ -91,7 +91,6 @@ public class ForestLodgeDetailController implements Initializable {
 		webEngine.load("http://localhost:8080/detail.html");
 	}
 	public void setForestLodgeCode(String forestcode){
-		setLatLng();
 		this.forestCode = forestcode;
 
 		DetailDAO detailDAO = new DetailDAO();
@@ -165,6 +164,7 @@ public class ForestLodgeDetailController implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		setLatLng();
 		cb_star.setItems(starList);
 		tc_date.setCellValueFactory(cellData -> new SimpleStringProperty((cellData.getValue().getReporting_date()).toString()));
 		tc_content.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getContent()));
