@@ -95,8 +95,6 @@ public class MainDisplayController implements Initializable{
 			//	마이페이지로 로그인한 유저 정보 넘기기
 			MypageController mypageController = loader.<MypageController>getController();
 			mypageController.setUserInformation(userId);
-			mypageController.setFavoriteList(userId);
-			mypageController.setReviewList(userId);
 			mypageController.setRecentList(userId);
 			borderpaneId.setCenter(root);
 		} catch (IOException e1) {

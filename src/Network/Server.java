@@ -88,6 +88,19 @@ public class Server extends Thread{
 								}
                     			break;
                     		}
+							case Protocol.REQ_DESTINATION:{			//여행지 하나 조회
+								MyPageDAO myPageDAO = new MyPageDAO();
+								DestinationDTO destinationDTO = myPageDAO.loadDestinationDTO(packetArr[2]);
+
+								if(destinationDTO!=null){
+									writePacket(Protocol.PT_RES_VIEW + "`" + Protocol.RES_DESTINATION_Y);
+									writeObject(destinationDTO);
+								}
+								else{
+									writePacket(Protocol.PT_RES_VIEW + "`" + Protocol.RES_DESTINATION_N);
+								}
+								break;
+							}
                     		case Protocol.REQ_TOURIST_DETAIL:{	//관광지 상세정보
 								DetailDAO detailDAO = new DetailDAO();
 

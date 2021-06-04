@@ -1,5 +1,6 @@
 package FxController;
 
+import java.io.ObjectInputStream;
 import java.net.URL;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -79,16 +80,19 @@ public class MypageController implements Initializable {
         clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_MYPAGE +"`"+userId);
         String packet = clientMain.readPacket();
         String packetArr[] = packet.split("`");
+        System.out.println(packet);
         String packetType = packetArr[0];
         String packetCode = packetArr[1];
 
-        if (packetType.equals(Protocol.PT_RES_RENEWAL)) {
+        if (packetType.equals(Protocol.PT_RES_VIEW)) {
             switch (packetCode) {
 				case Protocol.RES_MYPAGE_Y: {
-					UserDTO userDTO = (UserDTO) clientMain.readObject();
+                    UserDTO userDTO = (UserDTO) clientMain.readObject();
 					ArrayList<ReviewDTO> arrayList = (ArrayList<ReviewDTO>) clientMain.readObject();
 					ArrayList<FavoriteDTO> arrayList1 = (ArrayList<FavoriteDTO>) clientMain.readObject();
 					this.userId = userDTO.getId();
+					System.out.println(userId);
+					System.out.println(userDTO.getName());
 
 					tfId.setText(userDTO.getId());
 					tfName.setText(userDTO.getName());
@@ -252,6 +256,13 @@ public class MypageController implements Initializable {
                 switch (packetCode) {
                     case Protocol.RES_UPDATE_USER_Y: {
                         ShowAlert.showAlert("INFORMATION", "알림창", "개인정보 수정 완료");
+                        tfId.setDisable(true);
+                        tfName.setDisable(true);
+                        cbBoxDo.setDisable(true);
+                        cbBoxCity.setDisable(true);
+                        tfAge.setDisable(true);
+                        cbBoxGender.setDisable(true);
+                        tfAddress.setDisable(true);
                         return;
                     }
                     case Protocol.RES_UPDATE_USER_N: {

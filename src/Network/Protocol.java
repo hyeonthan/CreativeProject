@@ -31,6 +31,7 @@ public class Protocol {
     public static final String REQ_STATISTICS_DETAIL = "6-B";       //상세정보 조회 시 통계 요청 
     public static final String REQ_FAVORITES = "6-C";               //즐겨찾기 조회 요청
     public static final String REQ_REVIEWS = "6-D";                 //리뷰 조회 요청
+    public static final String REQ_DESTINATION = "6-E";             //여행지 하나 조회 요청
 
     //조회 요청에 대한 응답
     public static final String RES_DESTINATION_REGION_Y = "7-0";      //여행지 조회 요청 승인
@@ -61,6 +62,8 @@ public class Protocol {
     public static final String RES_FAVORITES_N = "7-19";               //즐겨찾기 조회 요청 승인
     public static final String RES_REVIEWS_Y = "7-20";                 //리뷰 조회 요청 승인
     public static final String RES_REVIEWS_N = "7-21";                 //리뷰 조회 요청 거절
+    public static final String RES_DESTINATION_Y = "7-22";             //여행지 하나 조회 요청 승인
+    public static final String RES_DESTINATION_N = "7-23";             //여행지 하나 조회 요청 거절
 
 
     // 갱신 요청
