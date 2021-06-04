@@ -69,7 +69,7 @@ public class StatisticsController implements Initializable {
         String statistics = comboBoxStatistics.getValue();
         
         //  통계 DAO 메모리 할당
-        StatisticsDAO statisticsDAO = new StatisticsDAO();
+//        StatisticsDAO statisticsDAO = new StatisticsDAO();
         //  list 메모리 할당
         ArrayList<DestinationDTO> list = null;
         //  테이블 컬럼 변수
