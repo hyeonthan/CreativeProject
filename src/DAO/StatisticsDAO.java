@@ -19,7 +19,7 @@ public class StatisticsDAO {
 
     //조회수 구분 없이 모두 가져오기
     public ArrayList<DestinationDTO> loadViewsStat(){
-        String sql = "SELECT code, sortation, name, views FROM destination WHERE views != 0";
+        String sql = "SELECT code, sortation, name, views, forest_lodge_code, beach_code, tourist_spot_code FROM destination WHERE views != 0";
         ArrayList<DestinationDTO> list = new ArrayList<DestinationDTO>();
         try{
             conn = DBconnection.getConnection();
@@ -60,7 +60,7 @@ public class StatisticsDAO {
     }
      //조회수 모두 가져오기
      public ArrayList<DestinationDTO> loadViewsStat(String sortation){
-        String sql = "SELECT code, name, views FROM destination WHERE sortation = ? AND views != 0";
+        String sql = "SELECT code, name, views, forest_lodge_code, beach_code, tourist_spot_code FROM destination WHERE sortation = ? AND views != 0";
         ArrayList<DestinationDTO> list = new ArrayList<DestinationDTO>();
         try{
             conn = DBconnection.getConnection();
@@ -101,7 +101,7 @@ public class StatisticsDAO {
     }
     // 여행지 평점 구분 없이 모두 가져오기
     public ArrayList<DestinationDTO> loadScopeStat(){
-        String sql = "SELECT code, sortation, name, scope FROM destination WHERE scope != 0";
+        String sql = "SELECT code, sortation, name, scope, forest_lodge_code, beach_code, tourist_spot_code FROM destination WHERE scope != 0";
         ArrayList<DestinationDTO> list = new ArrayList<DestinationDTO>();
         try{
             conn = DBconnection.getConnection();
@@ -141,7 +141,7 @@ public class StatisticsDAO {
     }
     //  여행지 평점 모두 가져오기
     public ArrayList<DestinationDTO> loadScopeStat(String sortation){
-        String sql = "SELECT code, name, scope FROM destination WHERE sortation = ? AND scope != 0";
+        String sql = "SELECT code, name, scope, forest_lodge_code, beach_code, tourist_spot_code FROM destination WHERE sortation = ? AND scope != 0";
         ArrayList<DestinationDTO> list = new ArrayList<DestinationDTO>();
         try{
             conn = DBconnection.getConnection();
@@ -190,7 +190,7 @@ public class StatisticsDAO {
         //  화면에 출력할 리스트
         ArrayList<DestinationDTO> list = new ArrayList<DestinationDTO>();
 
-        String sql1 = "SELECT code, sortation, name FROM destination WHERE scope != 0";
+        String sql1 = "SELECT code, sortation, name, forest_lodge_code, beach_code, tourist_spot_code FROM destination WHERE scope != 0";
         Connection conn2 = null;
         PreparedStatement psmt2 = null;
         ResultSet rs2 = null;
@@ -271,7 +271,7 @@ public class StatisticsDAO {
         //  화면에 출력할 리스트
         ArrayList<DestinationDTO> list = new ArrayList<DestinationDTO>();
 
-        String sql1 = "SELECT code, name FROM destination WHERE scope != 0 AND sortation = ?";
+        String sql1 = "SELECT code, name, forest_lodge_code, beach_code, tourist_spot_code FROM destination WHERE scope != 0 AND sortation = ?";
         Connection conn2 = null;
         PreparedStatement psmt2 = null;
         ResultSet rs2 = null;
@@ -343,7 +343,7 @@ public class StatisticsDAO {
     //  여행지별 리뷰수 통계
     public ArrayList<DestinationDTO> reviewCntStat(){
         ArrayList<DestinationDTO> list = new ArrayList<DestinationDTO>();
-        String sql = "SELECT code, name, sortation FROM destination WHERE scope != 0";
+        String sql = "SELECT code, name, sortation, forest_lodge_code, beach_code, tourist_spot_code FROM destination WHERE scope != 0";
         String sql2 = "SELECT COUNT(*) FROM review WHERE destination_code = ?";
      
         try{
@@ -392,7 +392,7 @@ public class StatisticsDAO {
     //  여행지별 리뷰수 통계 (sortation)
     public ArrayList<DestinationDTO> reviewCntStat(String sortation){
         ArrayList<DestinationDTO> list = new ArrayList<DestinationDTO>();
-        String sql = "SELECT code, name FROM destination WHERE scope != 0 AND sortation = ?";
+        String sql = "SELECT code, name, forest_lodge_code, beach_code, tourist_spot_code FROM destination WHERE scope != 0 AND sortation = ?";
         String sql2 = "SELECT COUNT(*) FROM review WHERE destination_code = ?";
      
         try{
