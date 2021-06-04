@@ -131,7 +131,7 @@ public class BeachDetailController extends Object implements Initializable {
 		this.userId = userId;
 		this.destinationCode = destinationCode;
 		this.destinationName = destinationName;
-		
+		System.out.println("beachCode : " + beachCode + ", destinationCode : " + destinationCode);
 		clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_BEACH_DETAIL+ "`" + beachCode + "`" + destinationCode);
 		
 		while (true) {
@@ -152,9 +152,11 @@ public class BeachDetailController extends Object implements Initializable {
 						reusltTextOpenPeriod.setText(beachDTO.getOpening_period());
 						resultTextAvailableTime.setText(beachDTO.getAvailable_time());
 						resultTextHomepage.setText(beachDTO.getHome_page());
+						System.out.println("beachDTO 성공");
 						
 						ArrayList<ReviewDTO> list = (ArrayList<ReviewDTO>) clientMain.readObject();
 						tv_review.getItems().addAll(list);
+						System.out.println("리뷰DTO 성공");
 						return;
 					}
 					case Protocol.RES_BEACH_DETAIL_N: {
@@ -195,7 +197,7 @@ public class BeachDetailController extends Object implements Initializable {
 						return;
 					}
 					case Protocol.RES_CREATE_FAVORITES_N: {
-						ShowAlert.showAlert("WARNING", "경고", "즐겨찾기 등록에 실패하였습니다.");
+						ShowAlert.showAlert("WARNING", "경고", "이미 등록된 즐겨찾기입니다.");
 						return;
 					}
 				}
@@ -473,6 +475,7 @@ public class BeachDetailController extends Object implements Initializable {
 				switch (packetCode) {
 					case Protocol.RES_CREATE_REVIEW_Y: {
 						ShowAlert.showAlert("WARNING", "경고", "리뷰 등록에 성공하였습니다.");
+						tv_review.getItems().clear();
 						setBeachDetail(beachCode, userId, destinationCode, destinationName);
 						return;
 					}

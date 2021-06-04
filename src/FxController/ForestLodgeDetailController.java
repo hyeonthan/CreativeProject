@@ -106,11 +106,13 @@ public class ForestLodgeDetailController implements Initializable {
 		this.userId = userId;
 		this.destinationCode = destinationCode;
 		this.destinationName = destinationName;
-
+		System.out.println(forestCode);
+		System.out.println(destinationCode);
 		clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_FOREST_DETAIL+ "`" + forestCode + "`" + destinationCode);
-
+		System.out.println("전송완료");
 		while (true) {
 			String packet = clientMain.readPacket();
+			System.out.println(packet);
 			String packetArr[] = packet.split("`");
 			String packetType = packetArr[0];
 			String packetCode = packetArr[1];
@@ -123,13 +125,15 @@ public class ForestLodgeDetailController implements Initializable {
 						resultTextAddress.setText(forestLodgeDTO.getDo() + " " + forestLodgeDTO.getCity() + " " + forestLodgeDTO.getAddress());
 						resultTextPhoneNum.setText(forestLodgeDTO.getPhone_num());
 						resultTextAmenities.setText(forestLodgeDTO.getAmenities());
-						resultTextCapacityPeople.setText(forestLodgeDTO.getAmenities());
+						resultTextCapacityPeople.setText(forestLodgeDTO.getCapacity_people());
 						reusltTextEnterFee.setText(forestLodgeDTO.getEnter_fee());
 						resultTextAcconmodation.setText(forestLodgeDTO.getAccommodation());
 						resultTextHomePage.setText(forestLodgeDTO.getHome_page());
+						System.out.println("forestDTO 성공");
 
 						ArrayList<ReviewDTO> list = (ArrayList<ReviewDTO>) clientMain.readObject();
 						tv_review.getItems().addAll(list);
+						System.out.println("리뷰DTO 성공");
 						return;
 					}
 					case Protocol.RES_FOREST_DETAIL_N: {
@@ -169,7 +173,7 @@ public class ForestLodgeDetailController implements Initializable {
 						return;
 					}
 					case Protocol.RES_CREATE_FAVORITES_N: {
-						ShowAlert.showAlert("WARNING", "경고", "즐겨찾기 등록에 실패하였습니다.");
+						ShowAlert.showAlert("WARNING", "경고", "이미 등록된 즐겨찾기입니다.");
 						return;
 					}
 				}
