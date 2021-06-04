@@ -92,7 +92,7 @@ public class Main extends Application {
 //			} catch (Exception e) {
 //				e.printStackTrace();
 //			}
-//		}
+//		} 
 	}
 	
 	@FXML // 회원가입 버튼 클릭
