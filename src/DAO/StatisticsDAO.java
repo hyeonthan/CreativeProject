@@ -15,6 +15,7 @@ public class StatisticsDAO {
     private Connection conn;
     private PreparedStatement psmt;
     private ResultSet rs;
+    private ResultSet rs2;
     
 
     //조회수 구분 없이 모두 가져오기
@@ -286,8 +287,7 @@ public class StatisticsDAO {
                 String beach_code = rs.getString("beach_code");
                 String tourist_spot_code = rs.getString("tourist_spot_code");
                 String sql2 = "select do from user WHERE id IN (select user_id from review where destination_code = ?)";
-              
-                conn2 = DBconnection.getConnection();
+
                 psmt2 = conn.prepareStatement(sql2);
                 psmt2.setString(1, code);
                 rs2 = psmt2.executeQuery();
@@ -340,7 +340,7 @@ public class StatisticsDAO {
         }
         return list;
     }
-    //  여행지별 리뷰수 통계
+    //  여행지 리뷰수 통계
     public ArrayList<DestinationDTO> reviewCntStat(){
         ArrayList<DestinationDTO> list = new ArrayList<DestinationDTO>();
         String sql = "SELECT code, name, sortation, forest_lodge_code, beach_code, tourist_spot_code FROM destination WHERE scope != 0";
@@ -358,16 +358,16 @@ public class StatisticsDAO {
                 String forest_lodge_code = rs.getString("forest_lodge_code");
                 String beach_code = rs.getString("beach_code");
                 String tourist_spot_code = rs.getString("tourist_spot_code");
-                conn = DBconnection.getConnection();
+
                 psmt = conn.prepareStatement(sql2);
                 psmt.setString(1, code);
-                rs = psmt.executeQuery();
-                rs.next();
+                rs2 = psmt.executeQuery();
+                rs2.next();
                 int count = rs.getInt(1);
                 DestinationDTO destinationDTO = new DestinationDTO(code, sortation, name, forest_lodge_code , beach_code, tourist_spot_code);
                 destinationDTO.setCount(count);
                 list.add(destinationDTO);
-                
+                rs2.close();
             }
             
         }catch (SQLException sqle) {
