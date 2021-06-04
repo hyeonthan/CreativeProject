@@ -21,12 +21,11 @@ public class InquireByLocationDAO {
     public ArrayList<DestinationDTO> inquireDestinationByLocation(String selLatitude, String selLongitude, String range) {
         ArrayList<DestinationDTO> dtos = new ArrayList<DestinationDTO>();
         try {
-            String query = "select * from destination where beach_code in (select code from beach where 6371*acos(cos(radians("+selLatitude+"))*cos(radians(latitude))*cos(radians(longitude)-radians("+selLongitude+"))+sin(radians(37.30157898))*sin(radians(latitude))) <="+range+") or forest_lodge_code in (select code from forest_lodge where 6371*acos(cos(radians("+selLatitude+"))*cos(radians(latitude))*cos(radians(longitude)-radians("+selLongitude+"))+sin(radians(37.30157898))*sin(radians(latitude))) <="+range+") or tourist_spot_code in (select code from tourist_spot where 6371*acos(cos(radians("+selLatitude+"))*cos(radians(latitude))*cos(radians(longitude)-radians("+selLongitude+"))+sin(radians(37.30157898))*sin(radians(latitude))) <="+range+")";
+            String query = "select * from destination where beach_code in (select code from beach where 6371*acos(cos(radians("+selLatitude+"))*cos(radians(latitude))*cos(radians(longitude)-radians("+selLongitude+"))+sin(radians("+selLatitude+"))*sin(radians(latitude))) <="+range+") or forest_lodge_code in (select code from forest_lodge where 6371*acos(cos(radians("+selLatitude+"))*cos(radians(latitude))*cos(radians(longitude)-radians("+selLongitude+"))+sin(radians("+selLatitude+"))*sin(radians(latitude))) <="+range+") or tourist_spot_code in (select code from tourist_spot where 6371*acos(cos(radians("+selLatitude+"))*cos(radians(latitude))*cos(radians(longitude)-radians("+selLongitude+"))+sin(radians("+selLatitude+"))*sin(radians(latitude))) <="+range+")";
             conn = DBconnection.getConnection();
             pstmt = conn.prepareStatement(query);
             rs = pstmt.executeQuery();
-
-            while (rs.next()) {
+            while (rs.next()) { 
                 String code = rs.getString("code");
                 String sortation = rs.getString("sortation");
                 String forest_lodge_code = rs.getString("forest_lodge_code");
@@ -63,7 +62,7 @@ public class InquireByLocationDAO {
     public ArrayList<DestinationDTO> inquireBeachByLocation(String selLatitude, String selLongitude, String range) {
         ArrayList<DestinationDTO> dtos = new ArrayList<DestinationDTO>();
         try {
-            String query = "select * from destination where beach_code in (select code from beach where 6371*acos(cos(radians("+selLatitude+"))*cos(radians(latitude))*cos(radians(longitude)-radians("+selLongitude+"))+sin(radians(37.30157898))*sin(radians(latitude))) <="+range+")";
+            String query = "select * from destination where beach_code in (select code from beach where 6371*acos(cos(radians("+selLatitude+"))*cos(radians(latitude))*cos(radians(longitude)-radians("+selLongitude+"))+sin(radians("+selLatitude+"))*sin(radians(latitude))) <="+range+")";
 
             conn = DBconnection.getConnection();
             pstmt = conn.prepareStatement(query);
@@ -107,7 +106,7 @@ public class InquireByLocationDAO {
         ArrayList<DestinationDTO> dtos = new ArrayList<DestinationDTO>();
         try {
 
-            String query = "select * from destination where forest_lodge_code in (select code from forest_lodge where 6371*acos(cos(radians("+selLatitude+"))*cos(radians(latitude))*cos(radians(longitude)-radians("+selLongitude+"))+sin(radians(37.30157898))*sin(radians(latitude))) <="+range+")";
+            String query = "select * from destination where forest_lodge_code in (select code from forest_lodge where 6371*acos(cos(radians("+selLatitude+"))*cos(radians(latitude))*cos(radians(longitude)-radians("+selLongitude+"))+sin(radians("+selLatitude+"))*sin(radians(latitude))) <="+range+")";
 
             conn = DBconnection.getConnection();
             pstmt = conn.prepareStatement(query);
@@ -151,7 +150,7 @@ public class InquireByLocationDAO {
     public ArrayList<DestinationDTO> inquireTouristSpotByLocation(String selLatitude, String selLongitude, String range) {
         ArrayList<DestinationDTO> dtos = new ArrayList<DestinationDTO>();
         try {
-            String query = "select * from destination where tourist_spot_code in (select code from tourist_spot where 6371*acos(cos(radians("+selLatitude+"))*cos(radians(latitude))*cos(radians(longitude)-radians("+selLongitude+"))+sin(radians(37.30157898))*sin(radians(latitude))) <="+range+")";
+            String query = "select * from destination where tourist_spot_code in (select code from tourist_spot where 6371*acos(cos(radians("+selLatitude+"))*cos(radians(latitude))*cos(radians(longitude)-radians("+selLongitude+"))+sin(radians("+selLatitude+"))*sin(radians(latitude))) <="+range+")";
 
             conn = DBconnection.getConnection();
             pstmt = conn.prepareStatement(query);
