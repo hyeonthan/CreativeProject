@@ -109,13 +109,14 @@ public class NearbyController implements Initializable {
     		
     		while (true) {
     			String packet = clientMain.readPacket();
+    			System.out.println(packet+".");
     			String packetArr[] = packet.split("`");
     			String packetType = packetArr[0];
     			String packetCode = packetArr[1];
     			
     			if (packetType.equals(Protocol.PT_RES_VIEW)) {
     				switch (packetCode) {
-    					case Protocol.RES_STATISTICS_Y: {
+    					case Protocol.RES_DESTINATION_LOCATION_Y: {
     						try {
     							dtos = (ArrayList<DestinationDTO>)clientMain.readObject();
     					        myTableView.getItems().addAll(dtos);
@@ -124,7 +125,7 @@ public class NearbyController implements Initializable {
     						}
     						return;
     					}
-    					case Protocol.RES_STATISTICS_N: {
+    					case Protocol.RES_DESTINATION_LOCATION_N: {
     						ShowAlert.showAlert("WARNING", "경고", "주변 검색에 실패하였습니다.");
     						return;
     					}
@@ -143,7 +144,7 @@ public class NearbyController implements Initializable {
     			
     			if (packetType.equals(Protocol.PT_RES_VIEW)) {
     				switch (packetCode) {
-    					case Protocol.RES_STATISTICS_Y: {
+    					case Protocol.RES_DESTINATION_LOCATION_Y: {
     						try {
     							dtos = (ArrayList<DestinationDTO>)clientMain.readObject();
     					        myTableView.getItems().addAll(dtos);
@@ -152,7 +153,7 @@ public class NearbyController implements Initializable {
     						}
     						return;
     					}
-    					case Protocol.RES_STATISTICS_N: {
+    					case Protocol.RES_DESTINATION_LOCATION_N: {
     						ShowAlert.showAlert("WARNING", "경고", "주변 검색에 실패하였습니다.");
     						return;
     					}
@@ -171,7 +172,7 @@ public class NearbyController implements Initializable {
     			
     			if (packetType.equals(Protocol.PT_RES_VIEW)) {
     				switch (packetCode) {
-    					case Protocol.RES_STATISTICS_Y: {
+    					case Protocol.RES_DESTINATION_LOCATION_Y: {
     						try {
     							dtos = (ArrayList<DestinationDTO>)clientMain.readObject();
     					        myTableView.getItems().addAll(dtos);
@@ -180,7 +181,7 @@ public class NearbyController implements Initializable {
     						}
     						return;
     					}
-    					case Protocol.RES_STATISTICS_N: {
+    					case Protocol.RES_DESTINATION_LOCATION_N: {
     						ShowAlert.showAlert("WARNING", "경고", "주변 검색에 실패하였습니다.");
     						return;
     					}
@@ -199,7 +200,7 @@ public class NearbyController implements Initializable {
     			
     			if (packetType.equals(Protocol.PT_RES_VIEW)) {
     				switch (packetCode) {
-    					case Protocol.RES_STATISTICS_Y: {
+    					case Protocol.RES_DESTINATION_LOCATION_Y: {
     						try {
     							dtos = (ArrayList<DestinationDTO>)clientMain.readObject();
     					        myTableView.getItems().addAll(dtos);
@@ -208,7 +209,7 @@ public class NearbyController implements Initializable {
     						}
     						return;
     					}
-    					case Protocol.RES_STATISTICS_N: {
+    					case Protocol.RES_DESTINATION_LOCATION_N: {
     						ShowAlert.showAlert("WARNING", "경고", "주변 검색에 실패하였습니다.");
     						return;
     					}

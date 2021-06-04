@@ -47,7 +47,7 @@ public class TouristSpotDetailController implements Initializable {
 	@FXML private Text resultTextAddress;
 	@FXML private Text resultTextPhoneNum;
 	@FXML private Text resultTextAmenities;
-	@FXML private Text resultTextIntroduction;
+	@FXML private TextArea resultTextIntroduction;
 	@FXML private Text reusltTextPossibleParking;
 	@FXML private Text resultTextManagement;
 	@FXML private Button btn_favorite;
