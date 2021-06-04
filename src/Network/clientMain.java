@@ -9,6 +9,7 @@ import java.io.OutputStreamWriter;
 import java.net.InetAddress;
 import java.net.Socket;
 
+import DataSetControl.RecentInquiryData;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -38,6 +39,7 @@ public class clientMain extends Application {
 			bufferedWriter.close();
 			bufferedReader.close();
 			socket.close();
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

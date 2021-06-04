@@ -10,7 +10,10 @@ public class RecentInquiryData {
     //  String(userId)를 key 값으로 queue(여행지DTO가 들어간)를 put 한다.
     private static HashMap<String, Queue<DestinationDTO>> recentListHashMap=new HashMap<String, Queue<DestinationDTO>>();
     private static Queue<DestinationDTO> queue = new LinkedList<DestinationDTO>();
-
+    public RecentInquiryData(){
+        recentListHashMap = new HashMap<String, Queue<DestinationDTO>>();
+        queue = new LinkedList<DestinationDTO>();
+    }
     public static void setRecentList (String userId, DestinationDTO destinationDTO){
         queue.add(destinationDTO);
         if(queue.size() > 5){
