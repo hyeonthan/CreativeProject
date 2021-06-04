@@ -65,7 +65,7 @@ public class ForestLodgeDetailController implements Initializable {
 	@FXML private PieChart pieChart;
 	private Tooltip tooltip;
 	private PieChart.Data pData;
-	private String forestcode;	//	넘어온 beachCode 변수 저장
+	private String forestCode;	//	넘어온 beachCode 변수 저장
 	private String userId;		//	넘어온 userId 변수 저장
 	private String destinationCode;	// 	넘어온 destinationCode 변수 저장
 	private String destinationName;	//	넘어온 destinationName 변수 저장
@@ -73,7 +73,7 @@ public class ForestLodgeDetailController implements Initializable {
 	private double latitude;
 	private double longitude;
 	public void setForestLodgeCode(String forestcode){
-		this.forestcode = forestcode;
+		this.forestCode = forestcode;
 
 		DetailDAO detailDAO = new DetailDAO();
 		ForestLodgeDTO forestLodgeDTO = detailDAO.detailForestLodge(forestcode);
@@ -101,13 +101,13 @@ public class ForestLodgeDetailController implements Initializable {
 	public void setDestinationName(String destinationName){
 		this.destinationName = destinationName;
 	}
-	public void setForestDetail(String forestcode, String userId, String destinationCode, String destinationName) {
-		this.forestcode = forestcode;
+	public void setForestDetail(String forestCode, String userId, String destinationCode, String destinationName) {
+		this.forestCode = forestCode;
 		this.userId = userId;
 		this.destinationCode = destinationCode;
 		this.destinationName = destinationName;
 
-		clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_FOREST_DETAIL+ "`" + forestcode);
+		clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_FOREST_DETAIL+ "`" + forestCode + "`" + destinationCode);
 
 		while (true) {
 			String packet = clientMain.readPacket();
@@ -133,7 +133,7 @@ public class ForestLodgeDetailController implements Initializable {
 						return;
 					}
 					case Protocol.RES_FOREST_DETAIL_N: {
-						ShowAlert.showAlert("WARNING", "경고", "해수욕장 정보를 불러오는데 실패하였습니다.");
+						ShowAlert.showAlert("WARNING", "경고", "휴양림 정보를 불러오는데 실패하였습니다.");
 						return;
 					}
 				}
@@ -153,61 +153,173 @@ public class ForestLodgeDetailController implements Initializable {
 	// 	즐겨찾기 등록
 	@FXML
 	public void handleBtnFavorite(ActionEvent event){
-		DetailDAO detailDAO = new DetailDAO();
-		detailDAO.addFavorite(new FavoriteDTO(userId, destinationCode, destinationName, Timestamp.valueOf(LocalDateTime.now()),"해수욕장"));
-		ShowAlert.showAlert("INFORMATION", "알림창", "즐겨찾기 등록 완료!");
+		FavoriteDTO favoriteDTO = new FavoriteDTO(userId, destinationCode, destinationName, Timestamp.valueOf(LocalDateTime.now()),"휴양림");
+		clientMain.writePacket(Protocol.PT_REQ_RENEWAL + "`" + Protocol.REQ_CREATE_FAVORITES);
+		clientMain.writeObject(favoriteDTO);
+		while (true) {
+			String packet = clientMain.readPacket();
+			String packetArr[] = packet.split("`");
+			String packetType = packetArr[0];
+			String packetCode = packetArr[1];
+			
+			if (packetType.equals(Protocol.PT_RES_RENEWAL)) {
+				switch (packetCode) {
+					case Protocol.RES_CREATE_FAVORITES_Y: {
+						ShowAlert.showAlert("INFORMATION", "알림창", "즐겨찾기 등록 완료!");
+						return;
+					}
+					case Protocol.RES_CREATE_FAVORITES_N: {
+						ShowAlert.showAlert("WARNING", "경고", "즐겨찾기 등록에 실패하였습니다.");
+						return;
+					}
+				}
+			}
+		}
 	}
 	//	나이별 통계
 	@FXML
 	public void handleBtnAgeStat(ActionEvent event){
 		pieChart.getData().clear();
-		DetailDAO detailDAO = new DetailDAO();
-		HashMap<Integer, Integer> hsMap = detailDAO.ageStatistic(destinationCode);
-		for(int i = 10; i <= 60; i+=10){
-			if(hsMap.get(i) != 0){
-				String age = Integer.toString(i) + "대";
-				System.out.println(age);
-				if(i == 60){
-					age += " 이상";
+		
+		clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_STATISTICS_DETAIL + "`" + "나이별" + "`" + destinationCode);
+		
+		while (true) {
+			String packet = clientMain.readPacket();
+			String packetArr[] = packet.split("`");
+			String packetType = packetArr[0];
+			String packetCode = packetArr[1];
+			
+			if (packetType.equals(Protocol.PT_RES_VIEW)) {
+				switch (packetCode) {
+					case Protocol.RES_STATISTICS_DETAIL_Y: {
+						HashMap<Integer, Integer> hsMap = (HashMap<Integer, Integer>) clientMain.readObject();
+						for(int i = 10; i <= 60; i+=10){
+							if(hsMap.get(i) != 0){
+								String age = Integer.toString(i) + "대";
+								System.out.println(age);
+								if(i == 60){
+									age += " 이상";
+								}
+								pData = new PieChart.Data(age, hsMap.get(i));
+								pieChart.getData().add(pData);
+							}
+						} 
+						pieChartCaption(pieChart);
+						return;
+					}
+					case Protocol.RES_STATISTICS_DETAIL_N: {
+						ShowAlert.showAlert("WARNING", "경고", "나이별 통계 조회에 실패하였습니다.");
+						return;
+					}
 				}
-				pData = new PieChart.Data(age, hsMap.get(i));
-				pieChart.getData().add(pData);
 			}
 		}
-		pieChartCaption(pieChart);
-
+		
+//		DetailDAO detailDAO = new DetailDAO();
+//		HashMap<Integer, Integer> hsMap = detailDAO.ageStatistic(destinationCode);
+//		for(int i = 10; i <= 60; i+=10){
+//			if(hsMap.get(i) != 0){
+//				String age = Integer.toString(i) + "대";
+//				System.out.println(age);
+//				if(i == 60){
+//					age += " 이상";
+//				}
+//				pData = new PieChart.Data(age, hsMap.get(i));
+//				pieChart.getData().add(pData);
+//			}
+//		}
+//		pieChartCaption(pieChart);
 	}
 	//	성별 통계
 	@FXML
 	public void handleBtnGenderStat(ActionEvent event){
 		pieChart.getData().clear();
-		DetailDAO detailDAO = new DetailDAO();
-		String genderResult = detailDAO.genderStatistic(destinationCode);
-		//	"/"로 구분 -> 남성 인원수/여성 인원수
-		int menCount = Integer.parseInt(genderResult.split("/")[0]);
-		int womenCount = Integer.parseInt(genderResult.split("/")[1]);
-		pData = new PieChart.Data("남성", menCount);
-		pieChart.getData().add(pData);
-		pData = new PieChart.Data("여성", womenCount);
-		pieChart.getData().add(pData);
+		clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_STATISTICS_DETAIL + "`" + "성별" + "`" + destinationCode);
+		
+		while (true) {
+			String packet = clientMain.readPacket();
+			String packetArr[] = packet.split("`");
+			String packetType = packetArr[0];
+			String packetCode = packetArr[1];
+			
+			if (packetType.equals(Protocol.PT_RES_VIEW)) {
+				switch (packetCode) {
+					case Protocol.RES_STATISTICS_DETAIL_Y: {
+						String genderResult = clientMain.readPacket();
+						//	"/"로 구분 -> 남성 인원수/여성 인원수
+						int menCount = Integer.parseInt(genderResult.split("/")[0]);
+						int womenCount = Integer.parseInt(genderResult.split("/")[1]);
+						pData = new PieChart.Data("남성", menCount);
+						pieChart.getData().add(pData);
+						pData = new PieChart.Data("여성", womenCount);
+						pieChart.getData().add(pData);
 
-		pieChartCaption(pieChart);
+						pieChartCaption(pieChart);
+						return;
+					}
+					case Protocol.RES_STATISTICS_DETAIL_N: {
+						ShowAlert.showAlert("WARNING", "경고", "성별 통계 조회에 실패하였습니다.");
+						return;
+					}
+				}
+			}
+		}
+//		DetailDAO detailDAO = new DetailDAO();
+//		String genderResult = detailDAO.genderStatistic(destinationCode);
+//		//	"/"로 구분 -> 남성 인원수/여성 인원수
+//		int menCount = Integer.parseInt(genderResult.split("/")[0]);
+//		int womenCount = Integer.parseInt(genderResult.split("/")[1]);
+//		pData = new PieChart.Data("남성", menCount);
+//		pieChart.getData().add(pData);
+//		pData = new PieChart.Data("여성", womenCount);
+//		pieChart.getData().add(pData);
+//
+//		pieChartCaption(pieChart);
 
 	}
 	//	출신지별 통계
 	@FXML
 	public void handleBtnRegionStat(ActionEvent event){
 		pieChart.getData().clear();
-		DetailDAO detailDAO = new DetailDAO();
-		HashMap<String, Integer> hsMap = detailDAO.regionStatistic(destinationCode);
-		final String[] region = RegionList.Do;
-		for(int i = 0; i < region.length; i++){
-			if(hsMap.get(region[i]) != 0){
-				pData = new PieChart.Data(region[i], hsMap.get(region[i]));
-				pieChart.getData().add(pData);
+		clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_STATISTICS_DETAIL + "`" + "출신지" + "`" + destinationCode);
+		
+		while (true) {
+			String packet = clientMain.readPacket();
+			String packetArr[] = packet.split("`");
+			String packetType = packetArr[0];
+			String packetCode = packetArr[1];
+			
+			if (packetType.equals(Protocol.PT_RES_VIEW)) {
+				switch (packetCode) {
+					case Protocol.RES_STATISTICS_DETAIL_Y: {
+						HashMap<String, Integer> hsMap = (HashMap<String, Integer>) clientMain.readObject();
+						final String[] region = RegionList.Do;
+						for(int i = 0; i < region.length; i++){
+							if(hsMap.get(region[i]) != 0){
+								pData = new PieChart.Data(region[i], hsMap.get(region[i]));
+								pieChart.getData().add(pData);
+							}
+						}
+						pieChartCaption(pieChart);
+						return;
+					}
+					case Protocol.RES_STATISTICS_DETAIL_N: {
+						ShowAlert.showAlert("WARNING", "경고", "출신지별 통계 조회에 실패하였습니다.");
+						return;
+					}
+				}
 			}
 		}
-		pieChartCaption(pieChart);
+//		DetailDAO detailDAO = new DetailDAO();
+//		HashMap<String, Integer> hsMap = detailDAO.regionStatistic(destinationCode);
+//		final String[] region = RegionList.Do;
+//		for(int i = 0; i < region.length; i++){
+//			if(hsMap.get(region[i]) != 0){
+//				pData = new PieChart.Data(region[i], hsMap.get(region[i]));
+//				pieChart.getData().add(pData);
+//			}
+//		}
+//		pieChartCaption(pieChart);
 	}
 	//	글씨 띄우기
 	private void pieChartCaption(PieChart pieChart){
@@ -321,10 +433,36 @@ public class ForestLodgeDetailController implements Initializable {
 		int scope = cb_star.getValue();
 		Timestamp reportingDate = Timestamp.valueOf(LocalDateTime.now());
 		ReviewDTO reviewDTO = new ReviewDTO(userId, content, scope, destinationCode, destinationName, null, reportingDate, imageInByte);
-		DetailDAO detailDAO = new DetailDAO();
-		detailDAO.insertReview(reviewDTO);
-		ShowAlert.showAlert("INFORMATION", "알림창", "리뷰 등록 완료");
-		setDestinationCode(destinationCode);
+		
+		clientMain.writePacket(Protocol.PT_REQ_RENEWAL + "`" + Protocol.REQ_CREATE_REVIEW);
+		clientMain.writeObject(reviewDTO);
+		
+		while (true) {
+			String packet = clientMain.readPacket();
+			System.out.println(packet);
+			String packetArr[] = packet.split("`");
+			String packetType = packetArr[0];
+			String packetCode = packetArr[1];
+			
+			if (packetType.equals(Protocol.PT_RES_RENEWAL)) {
+				switch (packetCode) {
+					case Protocol.RES_CREATE_REVIEW_Y: {
+						ShowAlert.showAlert("WARNING", "경고", "리뷰 등록에 성공하였습니다.");
+						setForestDetail(forestCode, userId, destinationCode, destinationName);
+						return;
+					}
+					case Protocol.RES_CREATE_REVIEW_N: {
+						ShowAlert.showAlert("WARNING", "경고", "리뷰 등록에 실패하였습니다.");
+						return;
+					}
+				}
+			}
+		}
+		
+//		DetailDAO detailDAO = new DetailDAO();
+//		detailDAO.insertReview(reviewDTO);
+//		ShowAlert.showAlert("INFORMATION", "알림창", "리뷰 등록 완료");
+//		setDestinationCode(destinationCode);
 	}
 	//	리뷰 테이블 더블 클릭시 리뷰 상세정보
 	@FXML
