@@ -31,7 +31,10 @@ public class StatisticsDAO {
                 String sortation = rs.getString("sortation");
                 String name = rs.getString("name");
                 int views = rs.getInt("views");
-                DestinationDTO destinationDTO = new DestinationDTO(code, sortation, name);
+                String forest_lodge_code = rs.getString("forest_lodge_code");
+                String beach_code = rs.getString("beach_code");
+                String tourist_spot_code = rs.getString("tourist_spot_code");
+                DestinationDTO destinationDTO = new DestinationDTO(code, sortation, name, forest_lodge_code , beach_code, tourist_spot_code);
                 destinationDTO.setViews(views);
                 list.add(destinationDTO);
             }
@@ -69,7 +72,10 @@ public class StatisticsDAO {
                 String code = rs.getString("code");
                 String name = rs.getString("name");
                 int views = rs.getInt("views");
-                DestinationDTO destinationDTO = new DestinationDTO(code, sortation, name);
+                String forest_lodge_code = rs.getString("forest_lodge_code");
+                String beach_code = rs.getString("beach_code");
+                String tourist_spot_code = rs.getString("tourist_spot_code");
+                DestinationDTO destinationDTO = new DestinationDTO(code, sortation, name, forest_lodge_code , beach_code, tourist_spot_code);
                 destinationDTO.setViews(views);
                 list.add(destinationDTO);
             }
@@ -107,7 +113,10 @@ public class StatisticsDAO {
                 String sortation = rs.getString("sortation");
                 String name = rs.getString("name");
                 double scope = rs.getDouble("scope");
-                DestinationDTO destinationDTO = new DestinationDTO(code, sortation, name, scope);
+                String forest_lodge_code = rs.getString("forest_lodge_code");
+                String beach_code = rs.getString("beach_code");
+                String tourist_spot_code = rs.getString("tourist_spot_code");
+                DestinationDTO destinationDTO = new DestinationDTO(code, sortation, name, scope, forest_lodge_code , beach_code, tourist_spot_code);
                 list.add(destinationDTO);
             }
 
@@ -144,7 +153,10 @@ public class StatisticsDAO {
                 String code = rs.getString("code");
                 String name = rs.getString("name");
                 double scope = rs.getDouble("scope");
-                DestinationDTO destinationDTO = new DestinationDTO(code, name, scope);
+                String forest_lodge_code = rs.getString("forest_lodge_code");
+                String beach_code = rs.getString("beach_code");
+                String tourist_spot_code = rs.getString("tourist_spot_code");
+                DestinationDTO destinationDTO = new DestinationDTO(code, name, scope,  forest_lodge_code , beach_code, tourist_spot_code);
                 list.add(destinationDTO);
             }
         }catch (SQLException sqle) {
@@ -190,6 +202,9 @@ public class StatisticsDAO {
                 String code = rs.getString("code");
                 String sortation = rs.getString("sortation");
                 String name = rs.getString("name");
+                String forest_lodge_code = rs.getString("forest_lodge_code");
+                String beach_code = rs.getString("beach_code");
+                String tourist_spot_code = rs.getString("tourist_spot_code");
                 String sql2 = "select do from user WHERE id IN (select user_id from review where destination_code = ?)";
               
                 conn2 = DBconnection.getConnection();
@@ -211,7 +226,7 @@ public class StatisticsDAO {
                         maxRegion = region[i];
                     }
                 }
-                DestinationDTO destinationDTO = new DestinationDTO(code, sortation, name, maxRegion);
+                DestinationDTO destinationDTO = new DestinationDTO(code, sortation, name, maxRegion, forest_lodge_code , beach_code, tourist_spot_code);
                 list.add(destinationDTO);
                 rs2.close();
                 psmt2.close();
@@ -267,6 +282,9 @@ public class StatisticsDAO {
             while(rs.next()){
                 String code = rs.getString("code");
                 String name = rs.getString("name");
+                String forest_lodge_code = rs.getString("forest_lodge_code");
+                String beach_code = rs.getString("beach_code");
+                String tourist_spot_code = rs.getString("tourist_spot_code");
                 String sql2 = "select do from user WHERE id IN (select user_id from review where destination_code = ?)";
               
                 conn2 = DBconnection.getConnection();
@@ -288,7 +306,7 @@ public class StatisticsDAO {
                         maxRegion = region[i];
                     }
                 }
-                DestinationDTO destinationDTO = new DestinationDTO(code, sortation, name, maxRegion);
+                DestinationDTO destinationDTO = new DestinationDTO(code, sortation, name, maxRegion,  forest_lodge_code , beach_code, tourist_spot_code);
                 list.add(destinationDTO);
                 rs2.close();
                 psmt2.close();
@@ -337,13 +355,16 @@ public class StatisticsDAO {
                 System.out.println(code);
                 String name = rs.getString("name");
                 String sortation = rs.getString("sortation");
+                String forest_lodge_code = rs.getString("forest_lodge_code");
+                String beach_code = rs.getString("beach_code");
+                String tourist_spot_code = rs.getString("tourist_spot_code");
                 conn = DBconnection.getConnection();
                 psmt = conn.prepareStatement(sql2);
                 psmt.setString(1, code);
                 rs = psmt.executeQuery();
                 rs.next();
                 int count = rs.getInt(1);
-                DestinationDTO destinationDTO = new DestinationDTO(code, sortation, name);
+                DestinationDTO destinationDTO = new DestinationDTO(code, sortation, name, forest_lodge_code , beach_code, tourist_spot_code);
                 destinationDTO.setCount(count);
                 list.add(destinationDTO);
                 
@@ -382,13 +403,16 @@ public class StatisticsDAO {
                 String code = rs.getString("code");
                 System.out.println(code);
                 String name = rs.getString("name");
+                String forest_lodge_code = rs.getString("forest_lodge_code");
+                String beach_code = rs.getString("beach_code");
+                String tourist_spot_code = rs.getString("tourist_spot_code");
                 conn = DBconnection.getConnection();
                 psmt = conn.prepareStatement(sql2);
                 psmt.setString(1, code);
                 rs = psmt.executeQuery();
                 rs.next();
                 int count = rs.getInt(1);
-                DestinationDTO destinationDTO = new DestinationDTO(code, sortation, name);
+                DestinationDTO destinationDTO = new DestinationDTO(code, sortation, name,  forest_lodge_code , beach_code, tourist_spot_code);
                 destinationDTO.setCount(count);
                 list.add(destinationDTO);
                 
