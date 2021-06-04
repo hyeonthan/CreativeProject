@@ -3,8 +3,8 @@ package DTO;
 
 import java.io.Serializable;
 
-public class DestinationDTO implements Serializable {
-	private static final long serialVersionUID = 1L;
+public class DestinationDTO implements Serializable{
+    private static final long serialVersionUID = 1L;
     private String code;
     private String sortation;
     private String forestLodge_code;
@@ -16,6 +16,7 @@ public class DestinationDTO implements Serializable {
     private String address;
     private double scope;
     private int views;
+
 
     // not column
     private int count;
@@ -45,12 +46,7 @@ public class DestinationDTO implements Serializable {
         this.name = name;
         this.scope = scope;
     }
-    public DestinationDTO(String code, String sortation, String name, int count) {
-        this.code = code;
-        this.sortation = sortation;
-        this.name = name;
-        this.count = count;
-    }
+  
     public DestinationDTO(String code, String sortation, String name) {
         this.code = code;
         this.sortation = sortation;
@@ -61,10 +57,9 @@ public class DestinationDTO implements Serializable {
         this.name = name;
         this.scope = scope;
     }
-    public DestinationDTO(String code, String name, int count) {
+    public DestinationDTO(String code, String name) {
         this.code = code;
         this.name = name;
-        this.count = count;
     }
     public String getCode() {
         return code;
@@ -156,6 +151,13 @@ public class DestinationDTO implements Serializable {
     }
     public void setCount(int count) {
         this.count = count;
+    }
+    @Override
+    public String toString() {
+        return "DestinationDTO [Do=" + Do + ", address=" + address + ", beach_code=" + beach_code + ", city=" + city
+                + ", code=" + code + ", count=" + count + ", forestLodge_code=" + forestLodge_code + ", name=" + name
+                + ", scope=" + scope + ", sortation=" + sortation + ", touristSpot_code=" + touristSpot_code
+                + ", views=" + views + "]";
     }
 
     
