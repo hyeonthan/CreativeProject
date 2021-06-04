@@ -97,9 +97,6 @@ public class StatisticsController implements Initializable {
         			                tbViews.setPrefWidth(115);
         			                tbViews.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getViews()));
         			                myTableView.getColumns().add(tbViews);
-        			                System.out.println("aaaA" + list.get(0).getBeach_code());
-        			                System.out.println("aaaA" + list.get(0).getForestLodge_code());
-        			                System.out.println("aaaA" + list.get(0).getTouristSpot_code());
         			                myTableView.getItems().addAll(list);
         						} catch (Exception e) {
         							e.printStackTrace();
