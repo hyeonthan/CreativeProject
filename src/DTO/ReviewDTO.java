@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 
 public class ReviewDTO implements Serializable {
+	private static final long serialVersionUID = 1L;
     int no;
     private String user_id;
     private String content;

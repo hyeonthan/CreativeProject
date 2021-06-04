@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 
 public class FavoriteDTO implements Serializable {
+	private static final long serialVersionUID = 1L;
     private int no;
     private String user_id;
     private String destination_code;
