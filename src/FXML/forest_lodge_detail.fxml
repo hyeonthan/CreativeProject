@@ -61,7 +61,7 @@
          <font>
             <Font size="20.0" />
          </font></Text>
-      <Text fx:id="t_homPage" layoutX="59.0" layoutY="273.0" strokeType="OUTSIDE" strokeWidth="0.0" text="홈페이지 : ">
+      <Text fx:id="t_homPage" layoutX="429.0" layoutY="111.0" strokeType="OUTSIDE" strokeWidth="0.0" text="홈페이지 : ">
          <font>
             <Font size="20.0" />
          </font></Text>
@@ -130,11 +130,7 @@
             <Font size="13.0" />
          </font>
       </Text>
-      <Text fx:id="resultTextHomePage" layoutX="156.0" layoutY="272.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
-         <font>
-            <Font size="13.0" />
-         </font>
-      </Text>
       <PieChart fx:id="pieChart" layoutX="178.0" layoutY="316.0" prefHeight="210.0" prefWidth="502.0" />
+      <TextArea fx:id="resultTextHomePage" layoutX="540.0" layoutY="86.0" prefHeight="200.0" prefWidth="200.0" />
    </children>
 </AnchorPane>

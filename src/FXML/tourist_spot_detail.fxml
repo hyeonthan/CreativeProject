@@ -45,7 +45,7 @@
          <font>
             <Font size="20.0" />
          </font></Text>
-      <Text fx:id="t_introduction" layoutX="99.0" layoutY="169.0" strokeType="OUTSIDE" strokeWidth="0.0" text="소개 : ">
+      <Text fx:id="t_introduction" layoutX="473.0" layoutY="111.0" strokeType="OUTSIDE" strokeWidth="0.0" text="소개 : ">
          <font>
             <Font size="20.0" />
          </font></Text>
@@ -106,11 +106,6 @@
             <Font size="13.0" />
          </font>
       </Text>
-      <Text fx:id="resultTextIntroduction" layoutX="156.0" layoutY="168.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
-         <font>
-            <Font size="13.0" />
-         </font>
-      </Text>
       <Text fx:id="resultTextAmenities" layoutX="156.0" layoutY="192.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
          <font>
             <Font size="13.0" />
@@ -127,5 +122,6 @@
          </font>
       </Text>
       <PieChart fx:id="pieChart" layoutX="178.0" layoutY="316.0" prefHeight="210.0" prefWidth="502.0" />
+      <TextArea fx:id="resultTextIntroduction" layoutX="547.0" layoutY="86.0" prefHeight="200.0" prefWidth="200.0" />
    </children>
 </AnchorPane>
