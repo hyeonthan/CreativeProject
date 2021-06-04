@@ -193,7 +193,7 @@ public class DestinationController implements Initializable{
           				if (packetType.equals(Protocol.PT_RES_RENEWAL)) {
           					switch (packetCode) {
           						case Protocol.RES_UPDATE_VIEWSCOUNT_Y: {
-          							//RecentInquiryData.setRecentList(userId, myTableView.getSelectionModel().getSelectedItem());
+          							RecentInquiryData.setRecentList(userId, myTableView.getSelectionModel().getSelectedItem());
           							stage.showAndWait();
           							return;
           						}
