@@ -156,7 +156,7 @@ public class StatisticsDAO {
                 String forest_lodge_code = rs.getString("forest_lodge_code");
                 String beach_code = rs.getString("beach_code");
                 String tourist_spot_code = rs.getString("tourist_spot_code");
-                DestinationDTO destinationDTO = new DestinationDTO(code, name, scope,  forest_lodge_code , beach_code, tourist_spot_code);
+                DestinationDTO destinationDTO = new DestinationDTO(code, sortation, name, scope,  forest_lodge_code , beach_code, tourist_spot_code);
                 list.add(destinationDTO);
             }
         }catch (SQLException sqle) {

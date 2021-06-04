@@ -31,7 +31,7 @@ public class ServerSystem {
 		{
 			serverSocket = new ServerSocket();
 			String localHostAddress = InetAddress.getLocalHost().getHostAddress();
-			serverSocket.bind(new InetSocketAddress("192.168.237.50", SERVER_PORT));
+			serverSocket.bind(new InetSocketAddress("192.168.225.151", SERVER_PORT));
 			System.out.println("[server] binding! \n[server] address:" + localHostAddress + ", port:" + SERVER_PORT);
 			System.out.println("클라이언트 접속 대기중...");
 			while (true)

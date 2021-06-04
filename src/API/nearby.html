@@ -34,8 +34,8 @@ var markers = [];
 var latlngs = [];
 
 // 마커를 생성하고 지도위에 표시하는 함수입니다
+var sumLat = 0, sumLng = 0, cnt = 0;
 function addMarker(position) {
-    
     // 마커를 생성합니다
     var marker = new kakao.maps.Marker({
         position: position
@@ -50,6 +50,9 @@ function addMarker(position) {
     // 위경도를 배열에 추가
     var lat = position.getLat();
     var lng = position.getLng();
+    sumLat += lat;
+    sumLng += lng;
+    cnt += 1;
     var message = lat + ' ';
     message += lng;
     latlngs.push(message);
@@ -60,6 +63,15 @@ function setLatLng() {
     for (var i = 0; i < latlngs.length; i++) {
         alert(latlngs[i]);
     }   
+    sumLat /= cnt;
+    sumLng /= cnt;
+    var position = sumLat +"" + sumLng;
+    console.log(position);
+     // 마커를 생성합니다
+    var marker = new kakao.maps.Marker({
+        position: position
+    });
+    marker.setMap(map);
 }
 
 // 배열에 추가된 마커들을 지도에 표시하거나 삭제하는 함수입니다
