@@ -8,6 +8,9 @@ import DAO.DetailDAO;
 import DAO.InquireByLocationDAO;
 import DTO.DestinationDTO;
 import DataSetControl.RecentInquiryData;
+import Network.Protocol;
+import Network.clientMain;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -96,24 +99,123 @@ public class NearbyController implements Initializable {
         lat /= list.size();
         lng /= list.size();
         System.out.println(lat + " " + lng);
+        
         InquireByLocationDAO inquireByLocationDAO = new InquireByLocationDAO();
         
         String sortation = comboBoxClassification.getValue();
         ArrayList<DestinationDTO> dtos = null;
         if(sortation.equals("통합검색")){
-            dtos = inquireByLocationDAO.inquireDestinationByLocation(Double.toString(lat), Double.toString(lng) , distance);
+            clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_DESTINATION_LOCATION + "`" + " " + "`" + Double.toString(lat) + "`" + Double.toString(lng) + "`" + distance);
+    		
+    		while (true) {
+    			String packet = clientMain.readPacket();
+    			String packetArr[] = packet.split("`");
+    			String packetType = packetArr[0];
+    			String packetCode = packetArr[1];
+    			
+    			if (packetType.equals(Protocol.PT_RES_VIEW)) {
+    				switch (packetCode) {
+    					case Protocol.RES_STATISTICS_Y: {
+    						try {
+    							dtos = (ArrayList<DestinationDTO>)clientMain.readObject();
+    					        myTableView.getItems().addAll(dtos);
+    						} catch (Exception e) {
+    							e.printStackTrace();
+    						}
+    						return;
+    					}
+    					case Protocol.RES_STATISTICS_N: {
+    						ShowAlert.showAlert("WARNING", "경고", "주변 검색에 실패하였습니다.");
+    						return;
+    					}
+    				}
+    			}
+    		}
         }
         else if(sortation.equals("해수욕장")){
-            dtos = inquireByLocationDAO.inquireBeachByLocation(Double.toString(lat), Double.toString(lng) , distance);
+        	clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_DESTINATION_LOCATION + "`" + "해수욕장" + "`" + Double.toString(lat) + "`" + Double.toString(lng) + "`" + distance);
+    		
+    		while (true) {
+    			String packet = clientMain.readPacket();
+    			String packetArr[] = packet.split("`");
+    			String packetType = packetArr[0];
+    			String packetCode = packetArr[1];
+    			
+    			if (packetType.equals(Protocol.PT_RES_VIEW)) {
+    				switch (packetCode) {
+    					case Protocol.RES_STATISTICS_Y: {
+    						try {
+    							dtos = (ArrayList<DestinationDTO>)clientMain.readObject();
+    					        myTableView.getItems().addAll(dtos);
+    						} catch (Exception e) {
+    							e.printStackTrace();
+    						}
+    						return;
+    					}
+    					case Protocol.RES_STATISTICS_N: {
+    						ShowAlert.showAlert("WARNING", "경고", "주변 검색에 실패하였습니다.");
+    						return;
+    					}
+    				}
+    			}
+    		}
         }
         else if(sortation.equals("휴양림")){
-            dtos = inquireByLocationDAO.inquireForestLodgeByLocation(Double.toString(lat), Double.toString(lng) , distance);
+        	clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_DESTINATION_LOCATION + "`" + "휴양림" + "`" + Double.toString(lat) + "`" + Double.toString(lng) + "`" + distance);
+    		
+    		while (true) {
+    			String packet = clientMain.readPacket();
+    			String packetArr[] = packet.split("`");
+    			String packetType = packetArr[0];
+    			String packetCode = packetArr[1];
+    			
+    			if (packetType.equals(Protocol.PT_RES_VIEW)) {
+    				switch (packetCode) {
+    					case Protocol.RES_STATISTICS_Y: {
+    						try {
+    							dtos = (ArrayList<DestinationDTO>)clientMain.readObject();
+    					        myTableView.getItems().addAll(dtos);
+    						} catch (Exception e) {
+    							e.printStackTrace();
+    						}
+    						return;
+    					}
+    					case Protocol.RES_STATISTICS_N: {
+    						ShowAlert.showAlert("WARNING", "경고", "주변 검색에 실패하였습니다.");
+    						return;
+    					}
+    				}
+    			}
+    		}
         }
         else if(sortation.equals("관광지")){
-            dtos = inquireByLocationDAO.inquireTouristSpotByLocation(Double.toString(lat), Double.toString(lng) , distance);
+        	clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_DESTINATION_LOCATION + "`" + "관광지" + "`" + Double.toString(lat) + "`" + Double.toString(lng) + "`" + distance);
+    		
+    		while (true) {
+    			String packet = clientMain.readPacket();
+    			String packetArr[] = packet.split("`");
+    			String packetType = packetArr[0];
+    			String packetCode = packetArr[1];
+    			
+    			if (packetType.equals(Protocol.PT_RES_VIEW)) {
+    				switch (packetCode) {
+    					case Protocol.RES_STATISTICS_Y: {
+    						try {
+    							dtos = (ArrayList<DestinationDTO>)clientMain.readObject();
+    					        myTableView.getItems().addAll(dtos);
+    						} catch (Exception e) {
+    							e.printStackTrace();
+    						}
+    						return;
+    					}
+    					case Protocol.RES_STATISTICS_N: {
+    						ShowAlert.showAlert("WARNING", "경고", "주변 검색에 실패하였습니다.");
+    						return;
+    					}
+    				}
+    			}
+    		}
         }
-        myTableView.getItems().addAll(dtos);
-        ShowAlert.showAlert("INFORMATION", "알림창", "조회 성공!");
     }
 
      //  더블 클릭시 해당 여행지 상세정보
@@ -140,35 +242,35 @@ public class NearbyController implements Initializable {
                          //  해수욕장 상세정보로 code, userId 넘기기
                          String beachCode = myTableView.getSelectionModel().getSelectedItem().getBeach_code();
                          BeachDetailController beachDetailController = loader.<BeachDetailController>getController();
-                         beachDetailController.setBeachCode(beachCode);
-                         beachDetailController.setSaveUserId(userId);
+//                         beachDetailController.setBeachCode(beachCode);
+//                         beachDetailController.setSaveUserId(userId);
                          destinationCode = myTableView.getSelectionModel().getSelectedItem().getCode();
                          destinationName = myTableView.getSelectionModel().getSelectedItem().getName();
-                         beachDetailController.setDestinationCode(destinationCode);
-                         beachDetailController.setDestinationName(destinationName);
- //                        beachDetailController.setBeachDetail(beachCode, userId, destinationCode, destinationName);
+//                         beachDetailController.setDestinationCode(destinationCode);
+//                         beachDetailController.setDestinationName(destinationName);
+                         beachDetailController.setBeachDetail(beachCode, userId, destinationCode, destinationName);
                      }
                      else if(myTableView.getSelectionModel().getSelectedItem().getSortation().equals("휴양림")){
                          String forestCode= myTableView.getSelectionModel().getSelectedItem().getForestLodge_code();
                          ForestLodgeDetailController forestLodgeDetailController = loader.<ForestLodgeDetailController>getController();
-                         forestLodgeDetailController.setForestLodgeCode(forestCode);
-                         forestLodgeDetailController.setSaveUserId(userId);
+//                         forestLodgeDetailController.setForestLodgeCode(forestCode);
+//                         forestLodgeDetailController.setSaveUserId(userId);
                          destinationCode = myTableView.getSelectionModel().getSelectedItem().getCode();
                          destinationName = myTableView.getSelectionModel().getSelectedItem().getName();
-                         forestLodgeDetailController.setDestinationCode(destinationCode);
-                         forestLodgeDetailController.setDestinationName(destinationName);
-                         //forestLodgeDetailController.setForestDetail(forestCode,userId,destinationCode,destinationName);
+//                         forestLodgeDetailController.setDestinationCode(destinationCode);
+//                         forestLodgeDetailController.setDestinationName(destinationName);
+                         forestLodgeDetailController.setForestDetail(forestCode,userId,destinationCode,destinationName);
                      }
                      else if(myTableView.getSelectionModel().getSelectedItem().getSortation().equals("관광지")){
                          String touristCode= myTableView.getSelectionModel().getSelectedItem().getTouristSpot_code();
                          TouristSpotDetailController touristSpotDetailController = loader.<TouristSpotDetailController>getController();
-                         touristSpotDetailController.setTouristCode(touristCode);
-                         touristSpotDetailController.setSaveUserId(userId);
+//                         touristSpotDetailController.setTouristCode(touristCode);
+//                         touristSpotDetailController.setSaveUserId(userId);
                          destinationCode = myTableView.getSelectionModel().getSelectedItem().getCode();
                          destinationName = myTableView.getSelectionModel().getSelectedItem().getName();
-                         touristSpotDetailController.setDestinationCode(destinationCode);
-                         touristSpotDetailController.setDestinationName(destinationName);
-                         //touristSpotDetailController.setForestDetail(touristCode,userId,destinationCode,destinationName);
+//                         touristSpotDetailController.setDestinationCode(destinationCode);
+//                         touristSpotDetailController.setDestinationName(destinationName);
+                         touristSpotDetailController.setTouristDetail(touristCode,userId,destinationCode,destinationName);
                      }
                      //  상세정보 클릭시 조회수 증가0
  //                  clientMain.writePacket(Protocol.PT_REQ_RENEWAL + "`" + Protocol.REQ_UPDATE_VIEWSCOUNT+ "`" + destinationCode);
@@ -191,11 +293,34 @@ public class NearbyController implements Initializable {
  //          				}
  //          			}
  //          		}
-                     DetailDAO detailDAO = new DetailDAO();
-                     detailDAO.viewsCountIncrease(destinationCode);
-                     //  최근 조회 리스트 추가
-                     RecentInquiryData.setRecentList(userId, myTableView.getSelectionModel().getSelectedItem());
-                     stage.showAndWait();
+                     //  상세정보 클릭시 조회수 증가0
+                     clientMain.writePacket(Protocol.PT_REQ_RENEWAL + "`" + Protocol.REQ_UPDATE_VIEWSCOUNT+ "`" + destinationCode);
+           		
+                     while (true) {
+                     	String packet = clientMain.readPacket();
+                     	String packetArr[] = packet.split("`");
+                     	String packetType = packetArr[0];
+                     	String packetCode = packetArr[1];
+           			
+                     	if (packetType.equals(Protocol.PT_RES_RENEWAL)) {
+                     		switch (packetCode) {
+                     			case Protocol.RES_UPDATE_VIEWSCOUNT_Y: {
+                     				RecentInquiryData.setRecentList(userId, myTableView.getSelectionModel().getSelectedItem());
+                     				stage.showAndWait();
+                     				return;
+                     			}
+                     			case Protocol.RES_UPDATE_VIEWSCOUNT_N: {
+                     				ShowAlert.showAlert("WARNING", "경고", "조회수 증가 오류.");
+                     				return;
+                     			}
+                     		}
+                     	}
+                     }
+//                     DetailDAO detailDAO = new DetailDAO();
+//                     detailDAO.viewsCountIncrease(destinationCode);
+//                     //  최근 조회 리스트 추가
+//                     RecentInquiryData.setRecentList(userId, myTableView.getSelectionModel().getSelectedItem());
+//                     stage.showAndWait();
                      
                  }
                  catch(Exception e) {
