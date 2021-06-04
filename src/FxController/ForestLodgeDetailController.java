@@ -88,7 +88,7 @@ public class ForestLodgeDetailController implements Initializable {
 				System.out.println(html);
 			}/*from w  w  w.java  2s.co  m*/
 		});
-		webEngine.load("http://localhost:8080/detail.html");
+		webEngine.load("http://localhost:8081/detail.html");
 	}
 	public void setForestLodgeCode(String forestcode){
 		this.forestCode = forestcode;
