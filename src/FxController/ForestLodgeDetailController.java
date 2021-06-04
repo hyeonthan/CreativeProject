@@ -20,6 +20,7 @@ import Network.clientMain;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Worker;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -35,6 +36,8 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
@@ -63,6 +66,7 @@ public class ForestLodgeDetailController implements Initializable {
 	@FXML private TableColumn<ReviewDTO, String> tc_star;
 	@FXML private TableColumn<ReviewDTO, String> tc_writer;
 	@FXML private PieChart pieChart;
+	@FXML private WebView webView;
 	private Tooltip tooltip;
 	private PieChart.Data pData;
 	private String forestCode;	//	넘어온 beachCode 변수 저장
@@ -72,6 +76,20 @@ public class ForestLodgeDetailController implements Initializable {
 	private byte[] imageInByte;
 	private double latitude;
 	private double longitude;
+	public void setLatLng() { //위경도 값 보내기
+		WebEngine webEngine = webView.getEngine();
+
+		webEngine.getLoadWorker().stateProperty().addListener((obs, oldValue, newValue) -> {
+			System.out.println(newValue);
+			if (newValue == Worker.State.SUCCEEDED) {
+				System.out.println("finished loading");
+				webEngine.executeScript("document.getElementById('keyword').value='"+destinationName+"'");
+				String html = (String) webEngine.executeScript("document.getElementById('keyword').value");
+				System.out.println(html);
+			}/*from w  w  w.java  2s.co  m*/
+		});
+		webEngine.load("http://localhost:8080/detail.html");
+	}
 	public void setForestLodgeCode(String forestcode){
 		this.forestCode = forestcode;
 
@@ -146,6 +164,7 @@ public class ForestLodgeDetailController implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		setLatLng();
 		cb_star.setItems(starList);
 		tc_date.setCellValueFactory(cellData -> new SimpleStringProperty((cellData.getValue().getReporting_date()).toString()));
 		tc_content.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getContent()));

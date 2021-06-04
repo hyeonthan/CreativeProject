@@ -10,10 +10,12 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
+<?import javafx.scene.web.WebView?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="849.0" prefWidth="1093.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FxController.TouristSpotDetailController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1fb8ff00" height="843.0" layoutX="3.0" layoutY="2.0" stroke="BLACK" strokeType="INSIDE" width="1096.0" />
+      <WebView fx:id="webView" layoutX="774.0" layoutY="13.0" prefHeight="516.0" prefWidth="314.0" />
       <TableView fx:id="tv_review" layoutX="12.0" layoutY="550.0" onMouseClicked="#doubleClickMouse" prefHeight="260.0" prefWidth="744.0">
          <columns>
             <TableColumn fx:id="tc_date" prefWidth="91.99996948242188" text="날짜" />
