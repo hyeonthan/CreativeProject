@@ -34,28 +34,40 @@ public class DestinationDTO implements Serializable{
         this.scope = scope;
         this.views = views;
     }
-    public DestinationDTO(String code, String sortation, String name, String Do) {
+    public DestinationDTO(String code, String sortation, String name, String Do, String forestLodge_code, String beach_code, String touristSpot_code) {
         this.code = code;
         this.sortation = sortation;
         this.name = name;
         this.Do = Do;
+        this.forestLodge_code = forestLodge_code;
+        this.beach_code = beach_code;
+        this.touristSpot_code = touristSpot_code;
     }
-    public DestinationDTO(String code, String sortation, String name, double scope) {
+    public DestinationDTO(String code, String sortation, String name, double scope, String forestLodge_code, String beach_code, String touristSpot_code) {
         this.code = code;
         this.sortation = sortation;
         this.name = name;
         this.scope = scope;
+        this.forestLodge_code = forestLodge_code;
+        this.beach_code = beach_code;
+        this.touristSpot_code = touristSpot_code;
     }
   
-    public DestinationDTO(String code, String sortation, String name) {
+    public DestinationDTO(String code, String sortation, String name,String forestLodge_code, String beach_code, String touristSpot_code) {
         this.code = code;
         this.sortation = sortation;
         this.name = name;
+        this.forestLodge_code = forestLodge_code;
+        this.beach_code = beach_code;
+        this.touristSpot_code = touristSpot_code;
     }
-    public DestinationDTO(String code, String name, double scope) {
+    public DestinationDTO(String code, String name, double scope, String forestLodge_code, String beach_code, String touristSpot_code) {
         this.code = code;
         this.name = name;
         this.scope = scope;
+        this.forestLodge_code = forestLodge_code;
+        this.beach_code = beach_code;
+        this.touristSpot_code = touristSpot_code;
     }
     public DestinationDTO(String code, String name) {
         this.code = code;

@@ -67,7 +67,7 @@ public class StatisticsController implements Initializable {
         }
         String sortation = comboBoxSortation.getValue();
         String statistics = comboBoxStatistics.getValue();
-
+        
         //  통계 DAO 메모리 할당
         StatisticsDAO statisticsDAO = new StatisticsDAO();
         //  list 메모리 할당
@@ -79,74 +79,275 @@ public class StatisticsController implements Initializable {
         TableColumn<DestinationDTO, Number> tbReviewCount;
         if(sortation.equals("통합검색")){
             if(statistics.equals("조회수")){
-                list = statisticsDAO.loadViewsStat();
-                //  조회수 컬럼 동적 생성
-                tbViews = new TableColumn<DestinationDTO, Number>("조회수");
-                tbViews.setPrefWidth(115);
-                tbViews.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getViews()));
-                myTableView.getColumns().add(tbViews);
+            	clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_STATISTICS + "`" + " " + "`" + "조회수");
+        		
+        		while (true) {
+        			String packet = clientMain.readPacket();
+        			String packetArr[] = packet.split("`");
+        			String packetType = packetArr[0];
+        			String packetCode = packetArr[1];
+        			
+        			if (packetType.equals(Protocol.PT_RES_VIEW)) {
+        				switch (packetCode) {
+        					case Protocol.RES_STATISTICS_Y: {
+        						try {
+        							list = (ArrayList<DestinationDTO>)clientMain.readObject();
+        			                //  조회수 컬럼 동적 생성
+        			                tbViews = new TableColumn<DestinationDTO, Number>("조회수");
+        			                tbViews.setPrefWidth(115);
+        			                tbViews.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getViews()));
+        			                myTableView.getColumns().add(tbViews);
+        			                System.out.println("aaaA" + list.get(0).getBeach_code());
+        			                System.out.println("aaaA" + list.get(0).getForestLodge_code());
+        			                System.out.println("aaaA" + list.get(0).getTouristSpot_code());
+        			                myTableView.getItems().addAll(list);
+        						} catch (Exception e) {
+        							e.printStackTrace();
+        						}
+        						return;
+        					}
+        					case Protocol.RES_STATISTICS_N: {
+        						ShowAlert.showAlert("WARNING", "경고", "통계 조회에 실패하였습니다.");
+        						return;
+        					}
+        				}
+        			}
+        		}
             }
             else if (statistics.equals("별점")){
-                list = statisticsDAO.loadScopeStat();
-                //  별점 컬럼 동적 생성
-                tbScope = new TableColumn<DestinationDTO, Number>("별점");
-                tbScope.setPrefWidth(115);
-                tbScope.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getScope()));
-                myTableView.getColumns().add(tbScope);
+            	clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_STATISTICS + "`" + " " + "`" + "별점");
+        		
+        		while (true) {
+        			String packet = clientMain.readPacket();
+        			String packetArr[] = packet.split("`");
+        			String packetType = packetArr[0];
+        			String packetCode = packetArr[1];
+        			
+        			if (packetType.equals(Protocol.PT_RES_VIEW)) {
+        				switch (packetCode) {
+        					case Protocol.RES_STATISTICS_Y: {
+        						try {
+        							list = (ArrayList<DestinationDTO>)clientMain.readObject();
+        			                //  별점 컬럼 동적 생성
+        			                tbScope = new TableColumn<DestinationDTO, Number>("별점");
+        			                tbScope.setPrefWidth(115);
+        			                tbScope.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getScope()));
+        			                myTableView.getColumns().add(tbScope);
+        			                myTableView.getItems().addAll(list);
+        						} catch (Exception e) {
+        							e.printStackTrace();
+        						}
+        						return;
+        					}
+        					case Protocol.RES_STATISTICS_N: {
+        						ShowAlert.showAlert("WARNING", "경고", "통계 조회에 실패하였습니다.");
+        						return;
+        					}
+        				}
+        			}
+        		}
             }
             else if(statistics.equals("출신지")){
-                list = statisticsDAO.birthRegionStat();
-                //  출신지 컬럼 동적 생성
-                tbBirth = new TableColumn<DestinationDTO, String>("출신지");
-                tbBirth.setPrefWidth(115);
-                tbBirth.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDo()));
-                myTableView.getColumns().add(tbBirth);
+            	clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_STATISTICS + "`" + " " + "`" + "출신지");
+        		
+        		while (true) {
+        			String packet = clientMain.readPacket();
+        			String packetArr[] = packet.split("`");
+        			String packetType = packetArr[0];
+        			String packetCode = packetArr[1];
+        			
+        			if (packetType.equals(Protocol.PT_RES_VIEW)) {
+        				switch (packetCode) {
+        					case Protocol.RES_STATISTICS_Y: {
+        						try {
+        							list = (ArrayList<DestinationDTO>)clientMain.readObject();
+        			                //  출신지 컬럼 동적 생성
+        			                tbBirth = new TableColumn<DestinationDTO, String>("출신지");
+        			                tbBirth.setPrefWidth(115);
+        			                tbBirth.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDo()));
+        			                myTableView.getColumns().add(tbBirth);
+        			                myTableView.getItems().addAll(list);
+        						} catch (Exception e) {
+        							e.printStackTrace();
+        						}
+        						return;
+        					}
+        					case Protocol.RES_STATISTICS_N: {
+        						ShowAlert.showAlert("WARNING", "경고", "통계 조회에 실패하였습니다.");
+        						return;
+        					}
+        				}
+        			}
+        		}
             }
             else if(statistics.equals("리뷰수")){
-                list = statisticsDAO.reviewCntStat();
-                //  리뷰수 컬럼 동적 생성
-                tbReviewCount = new TableColumn<DestinationDTO, Number>("리뷰수");
-                tbReviewCount.setPrefWidth(115);
-                tbReviewCount.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getCount()));
-                myTableView.getColumns().add(tbReviewCount);
+            	clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_STATISTICS + "`" + " " + "`" + "리뷰수");
+        		
+        		while (true) {
+        			String packet = clientMain.readPacket();
+        			String packetArr[] = packet.split("`");
+        			String packetType = packetArr[0];
+        			String packetCode = packetArr[1];
+        			
+        			if (packetType.equals(Protocol.PT_RES_VIEW)) {
+        				switch (packetCode) {
+        					case Protocol.RES_STATISTICS_Y: {
+        						try {
+        							list = (ArrayList<DestinationDTO>)clientMain.readObject();
+        			                //  리뷰수 컬럼 동적 생성
+        			                tbReviewCount = new TableColumn<DestinationDTO, Number>("리뷰수");
+        			                tbReviewCount.setPrefWidth(115);
+        			                tbReviewCount.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getCount()));
+        			                myTableView.getColumns().add(tbReviewCount);
+        			                myTableView.getItems().addAll(list);
+        						} catch (Exception e) {
+        							e.printStackTrace();
+        						}
+        						return;
+        					}
+        					case Protocol.RES_STATISTICS_N: {
+        						ShowAlert.showAlert("WARNING", "경고", "통계 조회에 실패하였습니다.");
+        						return;
+        					}
+        				}
+        			}
+        		}
             }
         }
         else {
             if(statistics.equals("조회수")){
-                list = statisticsDAO.loadViewsStat(sortation);
-                //  조회수 컬럼 동적 생성
-                tbViews = new TableColumn<DestinationDTO, Number>("조회수");
-                tbViews.setPrefWidth(115);
-                tbViews.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getViews()));
-                myTableView.getColumns().add(tbViews);
+            	clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_STATISTICS + "`" + sortation + "`" + "조회수");
+        		
+        		while (true) {
+        			String packet = clientMain.readPacket();
+        			String packetArr[] = packet.split("`");
+        			String packetType = packetArr[0];
+        			String packetCode = packetArr[1];
+        			
+        			if (packetType.equals(Protocol.PT_RES_VIEW)) {
+        				switch (packetCode) {
+        					case Protocol.RES_STATISTICS_Y: {
+        						try {
+        							list = (ArrayList<DestinationDTO>)clientMain.readObject();
+        			                //  조회수 컬럼 동적 생성
+        			                tbViews = new TableColumn<DestinationDTO, Number>("조회수");
+        			                tbViews.setPrefWidth(115);
+        			                tbViews.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getViews()));
+        			                myTableView.getColumns().add(tbViews);
+        			                myTableView.getItems().addAll(list);
+        						} catch (Exception e) {
+        							e.printStackTrace();
+        						}
+        						return;
+        					}
+        					case Protocol.RES_STATISTICS_N: {
+        						ShowAlert.showAlert("WARNING", "경고", "통계 조회에 실패하였습니다.");
+        						return;
+        					}
+        				}
+        			}
+        		}
             }
             else if (statistics.equals("별점")){
-                list = statisticsDAO.loadScopeStat(sortation);
-                //  별점 컬럼 동적 생성
-                tbScope = new TableColumn<DestinationDTO, Number>("별점");
-                tbScope.setPrefWidth(115);
-                tbScope.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getScope()));
-                myTableView.getColumns().add(tbScope);
+            	clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_STATISTICS + "`" + sortation + "`" + "별점");
+        		
+        		while (true) {
+        			String packet = clientMain.readPacket();
+        			String packetArr[] = packet.split("`");
+        			String packetType = packetArr[0];
+        			String packetCode = packetArr[1];
+        			
+        			if (packetType.equals(Protocol.PT_RES_VIEW)) {
+        				switch (packetCode) {
+        					case Protocol.RES_STATISTICS_Y: {
+        						try {
+        							list = (ArrayList<DestinationDTO>)clientMain.readObject();
+        			                //  별점 컬럼 동적 생성
+        			                tbScope = new TableColumn<DestinationDTO, Number>("별점");
+        			                tbScope.setPrefWidth(115);
+        			                tbScope.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getScope()));
+        			                myTableView.getColumns().add(tbScope);
+        			                myTableView.getItems().addAll(list);
+        						} catch (Exception e) {
+        							e.printStackTrace();
+        						}
+        						return;
+        					}
+        					case Protocol.RES_STATISTICS_N: {
+        						ShowAlert.showAlert("WARNING", "경고", "통계 조회에 실패하였습니다.");
+        						return;
+        					}
+        				}
+        			}
+        		}
             }
             else if(statistics.equals("출신지")){
-                list = statisticsDAO.birthRegionStat(sortation);
-                //  출신지 컬럼 동적 생성
-                tbBirth = new TableColumn<DestinationDTO, String>("출신지");
-                tbBirth.setPrefWidth(115);
-                tbBirth.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDo()));
-                myTableView.getColumns().add(tbBirth);
+            	clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_STATISTICS + "`" + sortation + "`" + "출신지");
+        		
+        		while (true) {
+        			String packet = clientMain.readPacket();
+        			String packetArr[] = packet.split("`");
+        			String packetType = packetArr[0];
+        			String packetCode = packetArr[1];
+        			
+        			if (packetType.equals(Protocol.PT_RES_VIEW)) {
+        				switch (packetCode) {
+        					case Protocol.RES_STATISTICS_Y: {
+        						try {
+        							list = (ArrayList<DestinationDTO>)clientMain.readObject();
+        			                //  출신지 컬럼 동적 생성
+        			                tbBirth = new TableColumn<DestinationDTO, String>("출신지");
+        			                tbBirth.setPrefWidth(115);
+        			                tbBirth.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDo()));
+        			                myTableView.getColumns().add(tbBirth);
+        			                myTableView.getItems().addAll(list);
+        						} catch (Exception e) {
+        							e.printStackTrace();
+        						}
+        						return;
+        					}
+        					case Protocol.RES_STATISTICS_N: {
+        						ShowAlert.showAlert("WARNING", "경고", "통계 조회에 실패하였습니다.");
+        						return;
+        					}
+        				}
+        			}
+        		}
             }
             else if(statistics.equals("리뷰수")){
-                list = statisticsDAO.reviewCntStat(sortation);
-                //  리뷰수 컬럼 동적 생성
-                tbReviewCount = new TableColumn<DestinationDTO, Number>("리뷰수");
-                tbReviewCount.setPrefWidth(115);
-                tbReviewCount.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getCount()));
-                myTableView.getColumns().add(tbReviewCount);
+            	clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_STATISTICS + "`" + sortation + "`" + "리뷰수");
+        		
+        		while (true) {
+        			String packet = clientMain.readPacket();
+        			String packetArr[] = packet.split("`");
+        			String packetType = packetArr[0];
+        			String packetCode = packetArr[1];
+        			
+        			if (packetType.equals(Protocol.PT_RES_VIEW)) {
+        				switch (packetCode) {
+        					case Protocol.RES_STATISTICS_Y: {
+        						try {
+        							list = (ArrayList<DestinationDTO>)clientMain.readObject();
+        			                //  리뷰수 컬럼 동적 생성
+        			                tbReviewCount = new TableColumn<DestinationDTO, Number>("리뷰수");
+        			                tbReviewCount.setPrefWidth(115);
+        			                tbReviewCount.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getCount()));
+        			                myTableView.getColumns().add(tbReviewCount);
+        			                myTableView.getItems().addAll(list);
+        						} catch (Exception e) {
+        							e.printStackTrace();
+        						}
+        						return;
+        					}
+        					case Protocol.RES_STATISTICS_N: {
+        						ShowAlert.showAlert("WARNING", "경고", "통계 조회에 실패하였습니다.");
+        						return;
+        					}
+        				}
+        			}
+        		}
             }
         }
-        myTableView.getItems().addAll(list);
-        ShowAlert.showAlert("INFORMATION", "알림창", "조회 성공!");
     }
     //  더블 클릭시 해당 여행지 상세정보
     @FXML
@@ -178,6 +379,7 @@ public class StatisticsController implements Initializable {
                         destinationName = myTableView.getSelectionModel().getSelectedItem().getName();
 //                        beachDetailController.setDestinationCode(destinationCode);
 //                        beachDetailController.setDestinationName(destinationName);
+                        System.out.println(beachCode + "/" + userId + "/" + destinationCode + "/" + destinationName);
                         beachDetailController.setBeachDetail(beachCode, userId, destinationCode, destinationName);
                     }
                     else if(myTableView.getSelectionModel().getSelectedItem().getSortation().equals("휴양림")){
@@ -189,6 +391,7 @@ public class StatisticsController implements Initializable {
                         destinationName = myTableView.getSelectionModel().getSelectedItem().getName();
 //                        forestLodgeDetailController.setDestinationCode(destinationCode);
 //                        forestLodgeDetailController.setDestinationName(destinationName);
+                        System.out.println(forestCode + "/" + userId + "/" + destinationCode + "/" + destinationName);
                         forestLodgeDetailController.setForestDetail(forestCode,userId,destinationCode,destinationName);
                     }
                     else if(myTableView.getSelectionModel().getSelectedItem().getSortation().equals("관광지")){
@@ -200,6 +403,7 @@ public class StatisticsController implements Initializable {
                         destinationName = myTableView.getSelectionModel().getSelectedItem().getName();
 //                        touristSpotDetailController.setDestinationCode(destinationCode);
 //                        touristSpotDetailController.setDestinationName(destinationName);
+                        System.out.println(touristCode + "/" + userId + "/" + destinationCode + "/" + destinationName);
                         touristSpotDetailController.setTouristDetail(touristCode,userId,destinationCode,destinationName);
                     }
                     //  상세정보 클릭시 조회수 증가0
