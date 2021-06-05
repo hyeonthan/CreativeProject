@@ -1,5 +1,6 @@
 package FxController;
 
+import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -105,20 +106,29 @@ public class NearbyController implements Initializable {
         String sortation = comboBoxClassification.getValue();
         ArrayList<DestinationDTO> dtos = null;
         if(sortation.equals("통합검색")){
-            clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_DESTINATION_LOCATION + "`" + " " + "`" + Double.toString(lat) + "`" + Double.toString(lng) + "`" + distance);
-    		
+            //clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_DESTINATION_LOCATION + "`" + " " + "`" + Double.toString(lat) + "`" + Double.toString(lng) + "`" + distance);
+            ArrayList<Object> objectList = new ArrayList<Object>();
+            objectList.add(Protocol.PT_REQ_VIEW);
+            objectList.add(Protocol.REQ_DESTINATION_LOCATION);
+            objectList.add(" ");
+            objectList.add(Double.toString(lat));
+            objectList.add(Double.toString(lng));
+            objectList.add(distance);
+            clientMain.writeObject(objectList);
+            objectList.clear();
+
     		while (true) {
-    			String packet = clientMain.readPacket();
+    			ArrayList<Object> packet =(ArrayList<Object>) clientMain.readObject();
     			System.out.println(packet+".");
-    			String packetArr[] = packet.split("`");
-    			String packetType = packetArr[0];
-    			String packetCode = packetArr[1];
+    			//String packetArr[] = packet.split("`");
+    			String packetType =(String) packet.get(0);
+    			String packetCode =(String) packet.get(1);
     			
     			if (packetType.equals(Protocol.PT_RES_VIEW)) {
     				switch (packetCode) {
     					case Protocol.RES_DESTINATION_LOCATION_Y: {
     						try {
-    							dtos = (ArrayList<DestinationDTO>)clientMain.readObject();
+    							dtos = (ArrayList<DestinationDTO>)packet.get(2);
     					        myTableView.getItems().addAll(dtos);
     						} catch (Exception e) {
     							e.printStackTrace();
@@ -134,19 +144,28 @@ public class NearbyController implements Initializable {
     		}
         }
         else if(sortation.equals("해수욕장")){
-        	clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_DESTINATION_LOCATION + "`" + "해수욕장" + "`" + Double.toString(lat) + "`" + Double.toString(lng) + "`" + distance);
-    		
+        	//clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_DESTINATION_LOCATION + "`" + "해수욕장" + "`" + Double.toString(lat) + "`" + Double.toString(lng) + "`" + distance);
+            ArrayList<Object> objectList = new ArrayList<Object>();
+            objectList.add(Protocol.PT_REQ_VIEW);
+            objectList.add(Protocol.REQ_DESTINATION_LOCATION);
+            objectList.add("해수욕장");
+            objectList.add(Double.toString(lat));
+            objectList.add(Double.toString(lng));
+            objectList.add(distance);
+            clientMain.writeObject(objectList);
+            objectList.clear();
+
     		while (true) {
-    			String packet = clientMain.readPacket();
-    			String packetArr[] = packet.split("`");
-    			String packetType = packetArr[0];
-    			String packetCode = packetArr[1];
+    			ArrayList<Object> packet = (ArrayList<Object>) clientMain.readObject();
+    			//String packetArr[] = packet.split("`");
+    			String packetType = (String) packet.get(0);
+    			String packetCode = (String) packet.get(1);
     			
     			if (packetType.equals(Protocol.PT_RES_VIEW)) {
     				switch (packetCode) {
     					case Protocol.RES_DESTINATION_LOCATION_Y: {
     						try {
-    							dtos = (ArrayList<DestinationDTO>)clientMain.readObject();
+    							dtos = (ArrayList<DestinationDTO>)packet.get(2);
     					        myTableView.getItems().addAll(dtos);
     						} catch (Exception e) {
     							e.printStackTrace();
@@ -162,19 +181,28 @@ public class NearbyController implements Initializable {
     		}
         }
         else if(sortation.equals("휴양림")){
-        	clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_DESTINATION_LOCATION + "`" + "휴양림" + "`" + Double.toString(lat) + "`" + Double.toString(lng) + "`" + distance);
-    		
+        	//clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_DESTINATION_LOCATION + "`" + "휴양림" + "`" + Double.toString(lat) + "`" + Double.toString(lng) + "`" + distance);
+            ArrayList<Object> objectList = new ArrayList<Object>();
+            objectList.add(Protocol.PT_REQ_VIEW);
+            objectList.add(Protocol.REQ_DESTINATION_LOCATION);
+            objectList.add("휴양림");
+            objectList.add(Double.toString(lat));
+            objectList.add(Double.toString(lng));
+            objectList.add(distance);
+            clientMain.writeObject(objectList);
+            objectList.clear();
+
     		while (true) {
-    			String packet = clientMain.readPacket();
-    			String packetArr[] = packet.split("`");
-    			String packetType = packetArr[0];
-    			String packetCode = packetArr[1];
+    			ArrayList<Object> packet = (ArrayList<Object>) clientMain.readObject();
+    			//String packetArr[] = packet.split("`");
+    			String packetType = (String) packet.get(0);
+    			String packetCode = (String) packet.get(1);
     			
     			if (packetType.equals(Protocol.PT_RES_VIEW)) {
     				switch (packetCode) {
     					case Protocol.RES_DESTINATION_LOCATION_Y: {
     						try {
-    							dtos = (ArrayList<DestinationDTO>)clientMain.readObject();
+    							dtos = (ArrayList<DestinationDTO>)packet.get(2);
     					        myTableView.getItems().addAll(dtos);
     						} catch (Exception e) {
     							e.printStackTrace();
@@ -190,19 +218,28 @@ public class NearbyController implements Initializable {
     		}
         }
         else if(sortation.equals("관광지")){
-        	clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_DESTINATION_LOCATION + "`" + "관광지" + "`" + Double.toString(lat) + "`" + Double.toString(lng) + "`" + distance);
-    		
+        	//clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_DESTINATION_LOCATION + "`" + "관광지" + "`" + Double.toString(lat) + "`" + Double.toString(lng) + "`" + distance);
+            ArrayList<Object> objectList = new ArrayList<Object>();
+            objectList.add(Protocol.PT_REQ_VIEW);
+            objectList.add(Protocol.REQ_DESTINATION_LOCATION);
+            objectList.add("관광지");
+            objectList.add(Double.toString(lat));
+            objectList.add(Double.toString(lng));
+            objectList.add(distance);
+            clientMain.writeObject(objectList);
+            objectList.clear();
+
     		while (true) {
-    			String packet = clientMain.readPacket();
-    			String packetArr[] = packet.split("`");
-    			String packetType = packetArr[0];
-    			String packetCode = packetArr[1];
+    			ArrayList<Object> packet =(ArrayList<Object>) clientMain.readObject();
+    			//String packetArr[] = packet.split("`");
+    			String packetType = (String) packet.get(0);
+    			String packetCode = (String) packet.get(1);
     			
     			if (packetType.equals(Protocol.PT_RES_VIEW)) {
     				switch (packetCode) {
     					case Protocol.RES_DESTINATION_LOCATION_Y: {
     						try {
-    							dtos = (ArrayList<DestinationDTO>)clientMain.readObject();
+    							dtos = (ArrayList<DestinationDTO>)packet.get(2);
     					        myTableView.getItems().addAll(dtos);
     						} catch (Exception e) {
     							e.printStackTrace();
@@ -295,13 +332,19 @@ public class NearbyController implements Initializable {
  //          			}
  //          		}
                      //  상세정보 클릭시 조회수 증가0
-                     clientMain.writePacket(Protocol.PT_REQ_RENEWAL + "`" + Protocol.REQ_UPDATE_VIEWSCOUNT+ "`" + destinationCode);
-           		
+                    // clientMain.writePacket(Protocol.PT_REQ_RENEWAL + "`" + Protocol.REQ_UPDATE_VIEWSCOUNT+ "`" + destinationCode);
+                     ArrayList<Object> objectList = new ArrayList<Object>();
+                     objectList.add(Protocol.PT_REQ_RENEWAL);
+                     objectList.add(Protocol.REQ_UPDATE_VIEWSCOUNT);
+                     objectList.add(destinationCode);
+                     clientMain.writeObject(objectList);
+                     objectList.clear();
+
                      while (true) {
-                     	String packet = clientMain.readPacket();
-                     	String packetArr[] = packet.split("`");
-                     	String packetType = packetArr[0];
-                     	String packetCode = packetArr[1];
+                     	ArrayList<Object> packet =(ArrayList<Object>) clientMain.readObject();
+                     	//String packetArr[] = packet.split("`");
+                     	String packetType = (String) packet.get(0);
+                     	String packetCode = (String) packet.get(1);
            			
                      	if (packetType.equals(Protocol.PT_RES_RENEWAL)) {
                      		switch (packetCode) {

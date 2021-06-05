@@ -1,5 +1,6 @@
 package FxController;
 
+import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -101,19 +102,28 @@ public class DestinationController implements Initializable{
                 city = comboBoxCity.getValue();
             }
         }
-        clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_DESTINATION_REGION + "`" + sortation + "`" + Do + "`" + city);
-		
+        //clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_DESTINATION_REGION + "`" + sortation + "`" + Do + "`" + city);
+
+        ArrayList<Object> objectList = new ArrayList<Object>();
+        objectList.add(Protocol.PT_REQ_VIEW);
+        objectList.add(Protocol.REQ_DESTINATION_REGION);
+        objectList.add(sortation);
+        objectList.add(Do);
+        objectList.add(city);
+        clientMain.writeObject(objectList);
+        objectList.clear();
+
 		while (true) {
-			String packet = clientMain.readPacket();
-			String packetArr[] = packet.split("`");
-			String packetType = packetArr[0];
-			String packetCode = packetArr[1];
+			ArrayList<Object> packet =(ArrayList<Object>) clientMain.readObject();
+			//String packetArr[] = packet.split("`");
+			String packetType = (String) packet.get(0);
+			String packetCode = (String) packet.get(1);
 			
 			if (packetType.equals(Protocol.PT_RES_VIEW)) {
 				switch (packetCode) {
 					case Protocol.RES_DESTINATION_REGION_Y: {
 						try {
-							list = (ArrayList<DestinationDTO>)clientMain.readObject();
+							list = (ArrayList<DestinationDTO>)packet.get(2);
 					        myTableView.getItems().addAll(list);
 						} catch (Exception e) {
 							e.printStackTrace();
@@ -182,13 +192,20 @@ public class DestinationController implements Initializable{
                         touristSpotDetailController.setTouristDetail(touristCode, userId, destinationCode, destinationName);
                     }
                     //  상세정보 클릭시 조회수 증가0
-                 	clientMain.writePacket(Protocol.PT_REQ_RENEWAL + "`" + Protocol.REQ_UPDATE_VIEWSCOUNT+ "`" + destinationCode);
+                 	//clientMain.writePacket(Protocol.PT_REQ_RENEWAL + "`" + Protocol.REQ_UPDATE_VIEWSCOUNT+ "`" + destinationCode);
+
+                    ArrayList<Object> objectList = new ArrayList<Object>();
+                    objectList.add(Protocol.PT_REQ_RENEWAL);
+                    objectList.add(Protocol.REQ_UPDATE_VIEWSCOUNT);
+                    objectList.add(destinationCode);
+                    clientMain.writeObject(objectList);
+                    objectList.clear();
           		
           			while (true) {
-          				String packet = clientMain.readPacket();
-          				String packetArr[] = packet.split("`");
-          				String packetType = packetArr[0];
-          				String packetCode = packetArr[1];
+          				ArrayList<Object> packet = (ArrayList<Object>) clientMain.readObject();
+          				//String packetArr[] = packet.split("`");
+          				String packetType = (String) packet.get(0);
+          				String packetCode = (String) packet.get(1);
           			
           				if (packetType.equals(Protocol.PT_RES_RENEWAL)) {
           					switch (packetCode) {

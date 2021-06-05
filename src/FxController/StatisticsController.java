@@ -79,19 +79,26 @@ public class StatisticsController implements Initializable {
         TableColumn<DestinationDTO, Number> tbReviewCount;
         if(sortation.equals("통합검색")){
             if(statistics.equals("조회수")){
-            	clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_STATISTICS + "`" + " " + "`" + "조회수");
-        		
+            	//clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_STATISTICS + "`" + " " + "`" + "조회수");
+				ArrayList<Object> objectList = new ArrayList<Object>();
+				objectList.add(Protocol.PT_REQ_VIEW);
+				objectList.add(Protocol.REQ_STATISTICS);
+				objectList.add(" ");
+				objectList.add("조회수");
+				clientMain.writeObject(objectList);
+				objectList.clear();
+
         		while (true) {
-        			String packet = clientMain.readPacket();
-        			String packetArr[] = packet.split("`");
-        			String packetType = packetArr[0];
-        			String packetCode = packetArr[1];
+        			ArrayList<Object> packet =(ArrayList<Object>) clientMain.readObject();
+        			//String packetArr[] = packet.split("`");
+        			String packetType = (String) packet.get(0);
+        			String packetCode = (String) packet.get(1);
         			
         			if (packetType.equals(Protocol.PT_RES_VIEW)) {
         				switch (packetCode) {
         					case Protocol.RES_STATISTICS_Y: {
         						try {
-        							list = (ArrayList<DestinationDTO>)clientMain.readObject();
+        							list = (ArrayList<DestinationDTO>)packet.get(2);
         			                //  조회수 컬럼 동적 생성
         			                tbViews = new TableColumn<DestinationDTO, Number>("조회수");
         			                tbViews.setPrefWidth(115);
@@ -112,19 +119,26 @@ public class StatisticsController implements Initializable {
         		}
             }
             else if (statistics.equals("별점")){
-            	clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_STATISTICS + "`" + " " + "`" + "별점");
-        		
+            	//clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_STATISTICS + "`" + " " + "`" + "별점");
+				ArrayList<Object> objectList = new ArrayList<Object>();
+				objectList.add(Protocol.PT_REQ_VIEW);
+				objectList.add(Protocol.REQ_STATISTICS);
+				objectList.add(" ");
+				objectList.add("별점");
+				clientMain.writeObject(objectList);
+				objectList.clear();
+
         		while (true) {
-        			String packet = clientMain.readPacket();
-        			String packetArr[] = packet.split("`");
-        			String packetType = packetArr[0];
-        			String packetCode = packetArr[1];
+        			ArrayList<Object> packet = (ArrayList<Object>) clientMain.readObject();
+        			//String packetArr[] = packet.split("`");
+        			String packetType = (String) packet.get(0);
+        			String packetCode = (String) packet.get(1);
         			
         			if (packetType.equals(Protocol.PT_RES_VIEW)) {
         				switch (packetCode) {
         					case Protocol.RES_STATISTICS_Y: {
         						try {
-        							list = (ArrayList<DestinationDTO>)clientMain.readObject();
+        							list = (ArrayList<DestinationDTO>)packet.get(2);
         			                //  별점 컬럼 동적 생성
         			                tbScope = new TableColumn<DestinationDTO, Number>("별점");
         			                tbScope.setPrefWidth(115);
@@ -145,19 +159,26 @@ public class StatisticsController implements Initializable {
         		}
             }
             else if(statistics.equals("출신지")){
-            	clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_STATISTICS + "`" + " " + "`" + "출신지");
-        		
+            	//clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_STATISTICS + "`" + " " + "`" + "출신지");
+				ArrayList<Object> objectList = new ArrayList<Object>();
+				objectList.add(Protocol.PT_REQ_VIEW);
+				objectList.add(Protocol.REQ_STATISTICS);
+				objectList.add(" ");
+				objectList.add("출신지");
+				clientMain.writeObject(objectList);
+				objectList.clear();
+
         		while (true) {
-        			String packet = clientMain.readPacket();
-        			String packetArr[] = packet.split("`");
-        			String packetType = packetArr[0];
-        			String packetCode = packetArr[1];
+        			ArrayList<Object> packet = (ArrayList<Object>) clientMain.readObject();
+        			//String packetArr[] = packet.split("`");
+        			String packetType =(String) packet.get(0);
+        			String packetCode = (String) packet.get(1);
         			
         			if (packetType.equals(Protocol.PT_RES_VIEW)) {
         				switch (packetCode) {
         					case Protocol.RES_STATISTICS_Y: {
         						try {
-        							list = (ArrayList<DestinationDTO>)clientMain.readObject();
+        							list = (ArrayList<DestinationDTO>)packet.get(2);
         			                //  출신지 컬럼 동적 생성
         			                tbBirth = new TableColumn<DestinationDTO, String>("출신지");
         			                tbBirth.setPrefWidth(115);
@@ -178,19 +199,26 @@ public class StatisticsController implements Initializable {
         		}
             }
             else if(statistics.equals("리뷰수")){
-            	clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_STATISTICS + "`" + " " + "`" + "리뷰수");
-        		
+            	//clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_STATISTICS + "`" + " " + "`" + "리뷰수");
+				ArrayList<Object> objectList = new ArrayList<Object>();
+				objectList.add(Protocol.PT_REQ_VIEW);
+				objectList.add(Protocol.REQ_STATISTICS);
+				objectList.add(" ");
+				objectList.add("리뷰수");
+				clientMain.writeObject(objectList);
+				objectList.clear();
+
         		while (true) {
-        			String packet = clientMain.readPacket();
-        			String packetArr[] = packet.split("`");
-        			String packetType = packetArr[0];
-        			String packetCode = packetArr[1];
+        			ArrayList<Object> packet = (ArrayList<Object>) clientMain.readObject();
+        			//String packetArr[] = packet.split("`");
+        			String packetType = (String) packet.get(0);
+        			String packetCode = (String) packet.get(1);
         			
         			if (packetType.equals(Protocol.PT_RES_VIEW)) {
         				switch (packetCode) {
         					case Protocol.RES_STATISTICS_Y: {
         						try {
-        							list = (ArrayList<DestinationDTO>)clientMain.readObject();
+        							list = (ArrayList<DestinationDTO>)packet.get(2);
         			                //  리뷰수 컬럼 동적 생성
         			                tbReviewCount = new TableColumn<DestinationDTO, Number>("리뷰수");
         			                tbReviewCount.setPrefWidth(115);
@@ -213,19 +241,26 @@ public class StatisticsController implements Initializable {
         }
         else {
             if(statistics.equals("조회수")){
-            	clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_STATISTICS + "`" + sortation + "`" + "조회수");
-        		
+            	//clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_STATISTICS + "`" + sortation + "`" + "조회수");
+				ArrayList<Object> objectList = new ArrayList<Object>();
+				objectList.add(Protocol.PT_REQ_VIEW);
+				objectList.add(Protocol.REQ_STATISTICS);
+				objectList.add(sortation);
+				objectList.add("조회수");
+				clientMain.writeObject(objectList);
+				objectList.clear();
+
         		while (true) {
-        			String packet = clientMain.readPacket();
-        			String packetArr[] = packet.split("`");
-        			String packetType = packetArr[0];
-        			String packetCode = packetArr[1];
+        			ArrayList<Object> packet = (ArrayList<Object>) clientMain.readObject();
+        			//String packetArr[] = packet.split("`");
+        			String packetType = (String) packet.get(0);
+        			String packetCode = (String) packet.get(1);
         			
         			if (packetType.equals(Protocol.PT_RES_VIEW)) {
         				switch (packetCode) {
         					case Protocol.RES_STATISTICS_Y: {
         						try {
-        							list = (ArrayList<DestinationDTO>)clientMain.readObject();
+        							list = (ArrayList<DestinationDTO>)packet.get(2);
         			                //  조회수 컬럼 동적 생성
         			                tbViews = new TableColumn<DestinationDTO, Number>("조회수");
         			                tbViews.setPrefWidth(115);
@@ -246,19 +281,26 @@ public class StatisticsController implements Initializable {
         		}
             }
             else if (statistics.equals("별점")){
-            	clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_STATISTICS + "`" + sortation + "`" + "별점");
-        		
+            	//clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_STATISTICS + "`" + sortation + "`" + "별점");
+				ArrayList<Object> objectList = new ArrayList<Object>();
+				objectList.add(Protocol.PT_REQ_VIEW);
+				objectList.add(Protocol.REQ_STATISTICS);
+				objectList.add(sortation);
+				objectList.add("별점");
+				clientMain.writeObject(objectList);
+				objectList.clear();
+
         		while (true) {
-        			String packet = clientMain.readPacket();
-        			String packetArr[] = packet.split("`");
-        			String packetType = packetArr[0];
-        			String packetCode = packetArr[1];
+        			ArrayList<Object> packet = (ArrayList<Object>) clientMain.readObject();
+        			//String packetArr[] = packet.split("`");
+        			String packetType = (String) packet.get(0);
+        			String packetCode = (String) packet.get(1);
         			
         			if (packetType.equals(Protocol.PT_RES_VIEW)) {
         				switch (packetCode) {
         					case Protocol.RES_STATISTICS_Y: {
         						try {
-        							list = (ArrayList<DestinationDTO>)clientMain.readObject();
+        							list = (ArrayList<DestinationDTO>)packet.get(2);
         			                //  별점 컬럼 동적 생성
         			                tbScope = new TableColumn<DestinationDTO, Number>("별점");
         			                tbScope.setPrefWidth(115);
@@ -279,19 +321,26 @@ public class StatisticsController implements Initializable {
         		}
             }
             else if(statistics.equals("출신지")){
-            	clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_STATISTICS + "`" + sortation + "`" + "출신지");
-        		
+            	//clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_STATISTICS + "`" + sortation + "`" + "출신지");
+				ArrayList<Object> objectList = new ArrayList<Object>();
+				objectList.add(Protocol.PT_REQ_VIEW);
+				objectList.add(Protocol.REQ_STATISTICS);
+				objectList.add(sortation);
+				objectList.add("출신지");
+				clientMain.writeObject(objectList);
+				objectList.clear();
+
         		while (true) {
-        			String packet = clientMain.readPacket();
-        			String packetArr[] = packet.split("`");
-        			String packetType = packetArr[0];
-        			String packetCode = packetArr[1];
+        			ArrayList<Object> packet = (ArrayList<Object>) clientMain.readObject();
+        			//String packetArr[] = packet.split("`");
+        			String packetType = (String)packet.get(0);
+        			String packetCode = (String) packet.get(1);
         			
         			if (packetType.equals(Protocol.PT_RES_VIEW)) {
         				switch (packetCode) {
         					case Protocol.RES_STATISTICS_Y: {
         						try {
-        							list = (ArrayList<DestinationDTO>)clientMain.readObject();
+        							list = (ArrayList<DestinationDTO>)packet.get(2);
         			                //  출신지 컬럼 동적 생성
         			                tbBirth = new TableColumn<DestinationDTO, String>("출신지");
         			                tbBirth.setPrefWidth(115);
@@ -312,19 +361,26 @@ public class StatisticsController implements Initializable {
         		}
             }
             else if(statistics.equals("리뷰수")){
-            	clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_STATISTICS + "`" + sortation + "`" + "리뷰수");
-        		
+            	//clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_STATISTICS + "`" + sortation + "`" + "리뷰수");
+				ArrayList<Object> objectList = new ArrayList<Object>();
+				objectList.add(Protocol.PT_REQ_VIEW);
+				objectList.add(Protocol.REQ_STATISTICS);
+				objectList.add(sortation);
+				objectList.add("리뷰수");
+				clientMain.writeObject(objectList);
+				objectList.clear();
+
         		while (true) {
-        			String packet = clientMain.readPacket();
-        			String packetArr[] = packet.split("`");
-        			String packetType = packetArr[0];
-        			String packetCode = packetArr[1];
+					ArrayList<Object> packet = (ArrayList<Object>) clientMain.readObject();
+					//String packetArr[] = packet.split("`");
+					String packetType = (String)packet.get(0);
+					String packetCode = (String) packet.get(1);
         			
         			if (packetType.equals(Protocol.PT_RES_VIEW)) {
         				switch (packetCode) {
         					case Protocol.RES_STATISTICS_Y: {
         						try {
-        							list = (ArrayList<DestinationDTO>)clientMain.readObject();
+        							list = (ArrayList<DestinationDTO>)packet.get(2);
         			                //  리뷰수 컬럼 동적 생성
         			                tbReviewCount = new TableColumn<DestinationDTO, Number>("리뷰수");
         			                tbReviewCount.setPrefWidth(115);
@@ -404,13 +460,19 @@ public class StatisticsController implements Initializable {
                         touristSpotDetailController.setTouristDetail(touristCode,userId,destinationCode,destinationName);
                     }
                     //  상세정보 클릭시 조회수 증가0
-                    clientMain.writePacket(Protocol.PT_REQ_RENEWAL + "`" + Protocol.REQ_UPDATE_VIEWSCOUNT+ "`" + destinationCode);
-          		
+                   // clientMain.writePacket(Protocol.PT_REQ_RENEWAL + "`" + Protocol.REQ_UPDATE_VIEWSCOUNT+ "`" + destinationCode);
+					ArrayList<Object> objectList = new ArrayList<Object>();
+					objectList.add(Protocol.PT_REQ_RENEWAL);
+					objectList.add(Protocol.REQ_UPDATE_VIEWSCOUNT);
+					objectList.add(destinationCode);
+					clientMain.writeObject(objectList);
+					objectList.clear();
+
                     while (true) {
-                    	String packet = clientMain.readPacket();
-                    	String packetArr[] = packet.split("`");
-                    	String packetType = packetArr[0];
-                    	String packetCode = packetArr[1];
+                    	ArrayList<Object> packet = (ArrayList<Object>) clientMain.readObject();
+                    	//String packetArr[] = packet.split("`");
+                    	String packetType = (String) packet.get(0);
+                    	String packetCode = (String) packet.get(1);
           			
                     	if (packetType.equals(Protocol.PT_RES_RENEWAL)) {
                     		switch (packetCode) {

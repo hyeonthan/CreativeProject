@@ -2,6 +2,7 @@ package FxController;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 import DAO.UserDAO;
 import DTO.UserDTO;
@@ -324,13 +325,19 @@ public class SignUp {
 //		UserDAO userDAO = new UserDAO();
 //		checkId = userDAO.duplicationId(tf_id.getText());
 		String id = tf_id.getText();
-		clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_ID_DUPLICATION + "`" + id);
-		
+		//clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_ID_DUPLICATION + "`" + id);
+		ArrayList<Object> objectList = new ArrayList<Object>();
+		objectList.add(Protocol.PT_REQ_VIEW);
+		objectList.add(Protocol.REQ_ID_DUPLICATION);
+		objectList.add(id);
+		clientMain.writeObject(objectList);
+		objectList.clear();
+
 		while (true) {
-			String packet = clientMain.readPacket();
-			String packetArr[] = packet.split("`");
-			String packetType = packetArr[0];
-			String packetCode = packetArr[1];
+			ArrayList<Object> packet = (ArrayList<Object>) clientMain.readObject();
+			//String packetArr[] = packet.split("`");
+			String packetType = (String) packet.get(0);
+			String packetCode = (String) packet.get(1);
 			
 			if (packetType.equals(Protocol.PT_RES_VIEW)) {
 				switch (packetCode) {
@@ -415,14 +422,20 @@ public class SignUp {
 //		userDAO.insertUser(userDTO);
 //		ShowAlert.showAlert("INFORMATION", "알림창", "회원가입 성공!");
 		
-		clientMain.writePacket(Protocol.PT_REQ_RENEWAL + "`" + Protocol.REQ_SIGNUP);
-		clientMain.writeObject(userDTO);
+//		clientMain.writePacket(Protocol.PT_REQ_RENEWAL + "`" + Protocol.REQ_SIGNUP);
+//		clientMain.writeObject(userDTO);
+		ArrayList<Object> objectList = new ArrayList<Object>();
+		objectList.add(Protocol.PT_REQ_RENEWAL);
+		objectList.add(Protocol.REQ_SIGNUP);
+		objectList.add(userDTO);
+		clientMain.writeObject(objectList);
+		objectList.clear();
 		
 		while (true) {
-			String packet = clientMain.readPacket();
-			String packetArr[] = packet.split("`");
-			String packetType = packetArr[0];
-			String packetCode = packetArr[1];
+			ArrayList<Object> packet = (ArrayList<Object>) clientMain.readObject();
+			//String packetArr[] = packet.split("`");
+			String packetType = (String) packet.get(0);
+			String packetCode = (String) packet.get(1);
 			
 			if (packetType.equals(Protocol.PT_RES_RENEWAL)) {
 				switch (packetCode) {

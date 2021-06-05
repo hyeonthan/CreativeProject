@@ -15,6 +15,9 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+
+import java.util.ArrayList;
+
 public class Main extends Application {
 	
 	@FXML // 아이디
@@ -34,14 +37,21 @@ public class Main extends Application {
 		String id = tf_id.getText();
 		String pw = pf_password.getText();
 		
-		  clientMain.writePacket(Protocol.PT_REQ_LOGIN + "`" + id + "`" + pw);
+//		  clientMain.writePacket(Protocol.PT_REQ_LOGIN + "`" + id + "`" + pw);
+		ArrayList<Object> objectList = new ArrayList<Object>();
+		objectList.add(Protocol.PT_REQ_LOGIN);
+		objectList.add(id);
+		objectList.add(pw);
+		clientMain.writeObject(objectList);
+		objectList.clear();
+
 		  while (true) {
-		  	String packet = clientMain.readPacket();
-		  	String packetArr[] = packet.split("`");
-		  	String packetType = packetArr[0];
+		  	ArrayList<Object> packet =(ArrayList<Object>) clientMain.readObject();
+		  	//String packetArr[] = packet.split("`");
+		  	String packetType =(String) packet.get(0);
 		  	switch (packetType) {
 		  		case Protocol.PT_RES_LOGIN: {
-		  			String loginResult = packetArr[1];
+		  			String loginResult =(String)packet.get(1);
 		  			switch (loginResult) {
 		  				case Protocol.RES_LOGIN_Y: {
 		  					try {
