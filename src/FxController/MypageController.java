@@ -77,19 +77,22 @@ public class MypageController implements Initializable {
 
     //	로그인 정보 받은 후 초기화
     public void setUserInformation(String userId) {
-        clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_MYPAGE +"`"+userId);
-        String packet = clientMain.readPacket();
-        String packetArr[] = packet.split("`");
-        System.out.println(packet);
-        String packetType = packetArr[0];
-        String packetCode = packetArr[1];
+        clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_MYPAGE + "`" + userId);
+        // String packet = clientMain.readPacket();
+        // String packetArr[] = packet.split("`");
+        // System.out.println(packet);
+        // String packetType = packetArr[0];
+        // String packetCode = packetArr[1];
 
-        if (packetType.equals(Protocol.PT_RES_VIEW)) {
-            switch (packetCode) {
+        ArrayList<Object> arrList = (ArrayList<Object>)clientMain.readObject();
+        String protocol = (String)arrList.get(0);
+
+        if (protocol.equals(Protocol.PT_RES_VIEW)) {
+            switch ((String)arrList.get(1)) {
 				case Protocol.RES_MYPAGE_Y: {
-                    UserDTO userDTO = (UserDTO) clientMain.readObject();
-					ArrayList<ReviewDTO> arrayList = (ArrayList<ReviewDTO>) clientMain.readObject();
-					ArrayList<FavoriteDTO> arrayList1 = (ArrayList<FavoriteDTO>) clientMain.readObject();
+                    UserDTO userDTO = (UserDTO) arrList.get(2);
+					ArrayList<ReviewDTO> arrayList = (ArrayList<ReviewDTO>) arrList.get(3);
+					ArrayList<FavoriteDTO> arrayList1 = (ArrayList<FavoriteDTO>) arrList.get(4);
 					this.userId = userDTO.getId();
 					System.out.println(userId);
 					System.out.println(userDTO.getName());
