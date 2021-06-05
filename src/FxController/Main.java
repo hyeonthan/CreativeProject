@@ -49,6 +49,7 @@ public class Main extends Application {
 		  	ArrayList<Object> packet =(ArrayList<Object>) clientMain.readObject();
 		  	//String packetArr[] = packet.split("`");
 		  	String packetType =(String) packet.get(0);
+		  	System.out.println(packetType+")"+(String)packet.get(1));
 		  	switch (packetType) {
 		  		case Protocol.PT_RES_LOGIN: {
 		  			String loginResult =(String)packet.get(1);

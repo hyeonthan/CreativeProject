@@ -79,15 +79,22 @@ public class MypageController implements Initializable {
 
     //	로그인 정보 받은 후 초기화
     public void setUserInformation(String userId) {
-        clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_MYPAGE + "`" + userId);
+        //clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_MYPAGE + "`" + userId);
         // String packet = clientMain.readPacket();
         // String packetArr[] = packet.split("`");
         // System.out.println(packet);
         // String packetType = packetArr[0];
         // String packetCode = packetArr[1];
+        ArrayList<Object> objectList = new ArrayList<Object>();
+        objectList.add(Protocol.PT_REQ_VIEW);
+        objectList.add(Protocol.REQ_MYPAGE);
+        objectList.add(userId);
+        clientMain.writeObject(objectList);
+        objectList.clear();
 
         ArrayList<Object> arrList = (ArrayList<Object>)clientMain.readObject();
         String protocol = (String)arrList.get(0);
+        System.out.println(protocol + ","+(String)arrList.get(1));
 
         if (protocol.equals(Protocol.PT_RES_VIEW)) {
             switch ((String)arrList.get(1)) {
