@@ -80,18 +80,27 @@ public class ParkingController implements Initializable {
             String lat = event.getData().split(" ")[0];
             String lng = event.getData().split(" ")[1];
 
-            clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_PARKING + "`" + lat + "`" + lng + "`" + distance);
-  		
+        //    clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_PARKING + "`" + lat + "`" + lng + "`" + distance);
+
+            ArrayList<Object> objectList = new ArrayList<Object>();
+            objectList.add(Protocol.PT_REQ_VIEW);
+            objectList.add(Protocol.REQ_PARKING);
+            objectList.add(lat);
+            objectList.add(lng);
+            objectList.add(distance);
+            clientMain.writeObject(objectList);
+            objectList.clear();
+
             while (true) {
-            	String packet = clientMain.readPacket();
-            	String packetArr[] = packet.split("`");
-            	String packetType = packetArr[0];
-            	String packetCode = packetArr[1];
+            	ArrayList<Object> packet = (ArrayList<Object>) clientMain.readObject();
+            	//String packetArr[] = packet.split("`");
+            	String packetType =(String) packet.get(0);
+            	String packetCode =(String) packet.get(1);
   			
             	if (packetType.equals(Protocol.PT_RES_VIEW)) {
             		switch (packetCode) {
             			case Protocol.RES_PARKING_Y: {
-            				ArrayList<ParkingLotsDTO> list = (ArrayList<ParkingLotsDTO>) clientMain.readObject();
+            				ArrayList<ParkingLotsDTO> list = (ArrayList<ParkingLotsDTO>)packet.get(2);
             				System.out.println(list.get(0).getAddress());
             	            myTableView.getItems().clear();
             	            myTableView.getItems().addAll(list);

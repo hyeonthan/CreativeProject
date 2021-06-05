@@ -83,7 +83,10 @@ public class ForestLodgeDetailController implements Initializable {
 			System.out.println(newValue);
 			if (newValue == Worker.State.SUCCEEDED) {
 				System.out.println("finished loading");
-				webEngine.executeScript("document.getElementById('keyword').value='"+destinationName+"'");
+				String lat1 = Double.toString(latitude);
+				String lnt2 = Double.toString(longitude);
+				webEngine.executeScript("document.getElementById('keyword').value='"+ destinationName + " " + lat1 + " " + lnt2 +"'");
+				webEngine.executeScript("test()");
 				String html = (String) webEngine.executeScript("document.getElementById('keyword').value");
 				System.out.println(html);
 			}/*from w  w  w.java  2s.co  m*/
@@ -92,7 +95,6 @@ public class ForestLodgeDetailController implements Initializable {
 	}
 	public void setForestLodgeCode(String forestcode){
 		this.forestCode = forestcode;
-
 		DetailDAO detailDAO = new DetailDAO();
 		ForestLodgeDTO forestLodgeDTO = detailDAO.detailForestLodge(forestcode);
 		resultTextName.setText(forestLodgeDTO.getName());
@@ -105,6 +107,7 @@ public class ForestLodgeDetailController implements Initializable {
 		resultTextHomePage.setText(forestLodgeDTO.getHome_page());
 		latitude = forestLodgeDTO.getLatitude();
 		longitude = forestLodgeDTO.getLongitude();
+		destinationName = forestLodgeDTO.getName();
 
 		
 	}
@@ -126,8 +129,17 @@ public class ForestLodgeDetailController implements Initializable {
 		this.userId = userId;
 		this.destinationCode = destinationCode;
 		this.destinationName = destinationName;
-		clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_FOREST_DETAIL+ "`" + forestCode + "`" + destinationCode);
+//		clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_FOREST_DETAIL+ "`" + forestCode + "`" + destinationCode);
+		ArrayList<Object> objectList = new ArrayList<Object>();
+		objectList.add(Protocol.PT_REQ_VIEW);
+		objectList.add(Protocol.REQ_FOREST_DETAIL);
+		objectList.add(forestCode);
+		objectList.add(destinationCode);
+		clientMain.writeObject(objectList);
+		objectList.clear();
 
+		latitude = 33.311500250000000;
+		longitude = 126.458761000000000;
 
 		while (true) {
 			// String packet = clientMain.readPacket();
@@ -181,14 +193,22 @@ public class ForestLodgeDetailController implements Initializable {
 	@FXML
 	public void handleBtnFavorite(ActionEvent event){
 		FavoriteDTO favoriteDTO = new FavoriteDTO(userId, destinationCode, destinationName, Timestamp.valueOf(LocalDateTime.now()),"휴양림");
-		clientMain.writePacket(Protocol.PT_REQ_RENEWAL + "`" + Protocol.REQ_CREATE_FAVORITES);
-		clientMain.writeObject(favoriteDTO);
+//		clientMain.writePacket(Protocol.PT_REQ_RENEWAL + "`" + Protocol.REQ_CREATE_FAVORITES);
+//		clientMain.writeObject(favoriteDTO);
+
+		ArrayList<Object> objectList = new ArrayList<Object>();
+		objectList.add(Protocol.PT_REQ_RENEWAL);
+		objectList.add(Protocol.REQ_CREATE_FAVORITES);
+		objectList.add(favoriteDTO);
+		clientMain.writeObject(objectList);
+		objectList.clear();
+
 		while (true) {
-			String packet = clientMain.readPacket();
+			ArrayList<Object> packet =(ArrayList<Object>) clientMain.readObject();
 			System.out.println(packet);
-			String packetArr[] = packet.split("`");
-			String packetType = packetArr[0];
-			String packetCode = packetArr[1];
+			//String packetArr[] = packet.split("`");
+			String packetType = (String) packet.get(0);
+			String packetCode = (String) packet.get(1);
 			
 			if (packetType.equals(Protocol.PT_RES_RENEWAL)) {
 				switch (packetCode) {
@@ -209,18 +229,26 @@ public class ForestLodgeDetailController implements Initializable {
 	public void handleBtnAgeStat(ActionEvent event){
 		pieChart.getData().clear();
 		
-		clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_STATISTICS_DETAIL + "`" + "나이별" + "`" + destinationCode);
-		
+		//clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_STATISTICS_DETAIL + "`" + "나이별" + "`" + destinationCode);
+		ArrayList<Object> objectList = new ArrayList<Object>();
+		objectList.add(Protocol.PT_REQ_VIEW);
+		objectList.add(Protocol.REQ_STATISTICS_DETAIL);
+		objectList.add("나이별");
+		objectList.add(destinationCode);
+		clientMain.writeObject(objectList);
+		objectList.clear();
+
+
 		while (true) {
-			String packet = clientMain.readPacket();
-			String packetArr[] = packet.split("`");
-			String packetType = packetArr[0];
-			String packetCode = packetArr[1];
+			ArrayList<Object> packet =(ArrayList<Object>) clientMain.readObject();
+			//String packetArr[] = packet.split("`");
+			String packetType = (String) packet.get(0);
+			String packetCode = (String) packet.get(1);
 			
 			if (packetType.equals(Protocol.PT_RES_VIEW)) {
 				switch (packetCode) {
 					case Protocol.RES_STATISTICS_DETAIL_Y: {
-						HashMap<Integer, Integer> hsMap = (HashMap<Integer, Integer>) clientMain.readObject();
+						HashMap<Integer, Integer> hsMap = (HashMap<Integer, Integer>) packet.get(2);
 						for(int i = 10; i <= 60; i+=10){
 							if(hsMap.get(i) != 0){
 								String age = Integer.toString(i) + "대";
@@ -262,18 +290,25 @@ public class ForestLodgeDetailController implements Initializable {
 	@FXML
 	public void handleBtnGenderStat(ActionEvent event){
 		pieChart.getData().clear();
-		clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_STATISTICS_DETAIL + "`" + "성별" + "`" + destinationCode);
-		
+		//clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_STATISTICS_DETAIL + "`" + "성별" + "`" + destinationCode);
+		ArrayList<Object> objectList = new ArrayList<Object>();
+		objectList.add(Protocol.PT_REQ_VIEW);
+		objectList.add(Protocol.REQ_STATISTICS_DETAIL);
+		objectList.add("성별");
+		objectList.add(destinationCode);
+		clientMain.writeObject(objectList);
+		objectList.clear();
+
 		while (true) {
-			String packet = clientMain.readPacket();
-			String packetArr[] = packet.split("`");
-			String packetType = packetArr[0];
-			String packetCode = packetArr[1];
+			ArrayList<Object> packet = (ArrayList<Object>)clientMain.readObject();
+			//String packetArr[] = packet.split("`");
+			String packetType = (String) packet.get(0);
+			String packetCode = (String) packet.get(1);
 			
 			if (packetType.equals(Protocol.PT_RES_VIEW)) {
 				switch (packetCode) {
 					case Protocol.RES_STATISTICS_DETAIL_Y: {
-						String genderResult = clientMain.readPacket();
+						String genderResult = (String)clientMain.readObject();
 						//	"/"로 구분 -> 남성 인원수/여성 인원수
 						int menCount = Integer.parseInt(genderResult.split("/")[0]);
 						int womenCount = Integer.parseInt(genderResult.split("/")[1]);
@@ -309,18 +344,25 @@ public class ForestLodgeDetailController implements Initializable {
 	@FXML
 	public void handleBtnRegionStat(ActionEvent event){
 		pieChart.getData().clear();
-		clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_STATISTICS_DETAIL + "`" + "출신지" + "`" + destinationCode);
-		
+		//clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_STATISTICS_DETAIL + "`" + "출신지" + "`" + destinationCode);
+		ArrayList<Object> objectList = new ArrayList<Object>();
+		objectList.add(Protocol.PT_REQ_VIEW);
+		objectList.add(Protocol.REQ_STATISTICS_DETAIL);
+		objectList.add("출신지");
+		objectList.add(destinationCode);
+		clientMain.writeObject(objectList);
+		objectList.clear();
+
 		while (true) {
-			String packet = clientMain.readPacket();
-			String packetArr[] = packet.split("`");
-			String packetType = packetArr[0];
-			String packetCode = packetArr[1];
+			ArrayList<Object> packet = (ArrayList<Object>) clientMain.readObject();
+			//String packetArr[] = packet.split("`");
+			String packetType = (String) packet.get(0);
+			String packetCode = (String) packet.get(1);
 			
 			if (packetType.equals(Protocol.PT_RES_VIEW)) {
 				switch (packetCode) {
 					case Protocol.RES_STATISTICS_DETAIL_Y: {
-						HashMap<String, Integer> hsMap = (HashMap<String, Integer>) clientMain.readObject();
+						HashMap<String, Integer> hsMap = (HashMap<String, Integer>)packet.get(2);
 						final String[] region = RegionList.Do;
 						for(int i = 0; i < region.length; i++){
 							if(hsMap.get(region[i]) != 0){
@@ -462,15 +504,22 @@ public class ForestLodgeDetailController implements Initializable {
 		Timestamp reportingDate = Timestamp.valueOf(LocalDateTime.now());
 		ReviewDTO reviewDTO = new ReviewDTO(userId, content, scope, destinationCode, destinationName, null, reportingDate, imageInByte);
 		
-		clientMain.writePacket(Protocol.PT_REQ_RENEWAL + "`" + Protocol.REQ_CREATE_REVIEW);
-		clientMain.writeObject(reviewDTO);
+//		clientMain.writePacket(Protocol.PT_REQ_RENEWAL + "`" + Protocol.REQ_CREATE_REVIEW);
+//		clientMain.writeObject(reviewDTO);
+
+		ArrayList<Object> objectList = new ArrayList<Object>();
+		objectList.add(Protocol.PT_REQ_RENEWAL);
+		objectList.add(Protocol.REQ_CREATE_REVIEW);
+		objectList.add(reviewDTO);
+		clientMain.writeObject(objectList);
+		objectList.clear();
 		
 		while (true) {
-			String packet = clientMain.readPacket();
-			System.out.println(packet);
-			String packetArr[] = packet.split("`");
-			String packetType = packetArr[0];
-			String packetCode = packetArr[1];
+			ArrayList<Object> packet =(ArrayList<Object>) clientMain.readObject();
+			//System.out.println(packet);
+			//String packetArr[] = packet.split("`");
+			String packetType = (String) packet.get(0);
+			String packetCode = (String) packet.get(1);
 			
 			if (packetType.equals(Protocol.PT_RES_RENEWAL)) {
 				switch (packetCode) {

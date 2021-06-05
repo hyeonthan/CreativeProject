@@ -1,6 +1,8 @@
 package FxController;
 
-import java.io.ObjectInputStream;
+import java.io.*;
+import java.net.InetAddress;
+import java.net.Socket;
 import java.net.URL;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -155,8 +157,9 @@ public class MypageController implements Initializable {
     }
 
     //	내가 쓴 리뷰 리스트 불러오기
-    public void setReviewList(String userId) {
+    public void setReviewList(String userId) throws IOException {
         tv_review.getItems().clear();
+        System.out.println(userId);
         clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_REVIEWS + "`"+userId);
         String packet = clientMain.readPacket();
         String packetArr[] = packet.split("`");
@@ -164,9 +167,12 @@ public class MypageController implements Initializable {
         String packetType = packetArr[0];
         String packetCode = packetArr[1];
 
+
+
         if (packetType.equals(Protocol.PT_RES_VIEW)) {
             switch (packetCode) {
                 case Protocol.RES_REVIEWS_Y:{
+
                     ArrayList<ReviewDTO> arrayList = (ArrayList<ReviewDTO>) clientMain.readObject();
                     tv_review.getItems().addAll(arrayList);
                     return;

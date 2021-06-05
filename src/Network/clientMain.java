@@ -26,7 +26,7 @@ public class clientMain extends Application {
 	public static void main(String[] args) {
 		try {
 			String localHostAddress = InetAddress.getLocalHost().getHostAddress(); // ip 주소
-			Socket socket = new Socket("192.168.225.151", 5000);
+			Socket socket = new Socket("172.20.10.2", 5000);
 			
 			bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));

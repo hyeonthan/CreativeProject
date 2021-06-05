@@ -70,18 +70,26 @@ public class ToiletController implements Initializable {
             }
             String lat = event.getData().split(" ")[0];
             String lng = event.getData().split(" ")[1];
-            clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_TOILET + "`" + lat + "`" + lng + "`" + distance);
-      		
+            //clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_TOILET + "`" + lat + "`" + lng + "`" + distance);
+            ArrayList<Object> objectList = new ArrayList<Object>();
+            objectList.add(Protocol.PT_REQ_VIEW);
+            objectList.add(Protocol.REQ_TOILET);
+            objectList.add(lat);
+            objectList.add(lng);
+            objectList.add(distance);
+            clientMain.writeObject(objectList);
+            objectList.clear();
+
             while (true) {
-            	String packet = clientMain.readPacket();
-            	String packetArr[] = packet.split("`");
-            	String packetType = packetArr[0];
-            	String packetCode = packetArr[1];
+            	ArrayList<Object> packet =(ArrayList<Object>) clientMain.readObject();
+            	//String packetArr[] = packet.split("`");
+            	String packetType = (String) packet.get(0);
+            	String packetCode = (String) packet.get(1);
   			
             	if (packetType.equals(Protocol.PT_RES_VIEW)) {
             		switch (packetCode) {
             			case Protocol.RES_TOILET_Y: {
-            				ArrayList<ToiletDTO> list = (ArrayList<ToiletDTO>) clientMain.readObject();
+            				ArrayList<ToiletDTO> list = (ArrayList<ToiletDTO>) packet.get(2);
             	            myTableView.getItems().clear();
             	            myTableView.getItems().addAll(list);
             	            try {
