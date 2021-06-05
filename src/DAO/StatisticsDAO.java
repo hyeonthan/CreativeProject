@@ -279,6 +279,7 @@ public class StatisticsDAO {
         try{
             conn = DBconnection.getConnection();
             psmt = conn.prepareStatement(sql1);
+            psmt.setString(1, sortation);
             rs = psmt.executeQuery();
             while(rs.next()){
                 String code = rs.getString("code");
@@ -306,7 +307,7 @@ public class StatisticsDAO {
                         maxRegion = region[i];
                     }
                 }
-                DestinationDTO destinationDTO = new DestinationDTO(code, sortation, name, maxRegion,  forest_lodge_code , beach_code, tourist_spot_code);
+                DestinationDTO destinationDTO = new DestinationDTO(code, sortation, name, maxRegion, forest_lodge_code, beach_code, tourist_spot_code);
                 list.add(destinationDTO);
                 rs2.close();
                 psmt2.close();
@@ -363,11 +364,11 @@ public class StatisticsDAO {
                 psmt.setString(1, code);
                 rs2 = psmt.executeQuery();
                 rs2.next();
-                int count = rs.getInt(1);
+                int count = rs2.getInt(1); // 임포스터
                 DestinationDTO destinationDTO = new DestinationDTO(code, sortation, name, forest_lodge_code , beach_code, tourist_spot_code);
                 destinationDTO.setCount(count);
                 list.add(destinationDTO);
-                rs2.close();
+                //rs2.close();
             }
             
         }catch (SQLException sqle) {
@@ -409,13 +410,13 @@ public class StatisticsDAO {
                 conn = DBconnection.getConnection();
                 psmt = conn.prepareStatement(sql2);
                 psmt.setString(1, code);
-                rs = psmt.executeQuery();
-                rs.next();
-                int count = rs.getInt(1);
+                rs2 = psmt.executeQuery(); // 진짜 한현택 임포스터
+                rs2.next();
+                int count = rs2.getInt(1);
                 DestinationDTO destinationDTO = new DestinationDTO(code, sortation, name,  forest_lodge_code , beach_code, tourist_spot_code);
                 destinationDTO.setCount(count);
                 list.add(destinationDTO);
-                
+                //rs2.close();
             }
             
         }catch (SQLException sqle) {
