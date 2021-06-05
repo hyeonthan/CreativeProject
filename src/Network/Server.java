@@ -507,6 +507,7 @@ public class Server extends Thread{
 									objectList.clear();
 									objectList.add(Protocol.PT_RES_VIEW);
 									objectList.add(Protocol.RES_FAVORITES_Y);
+									objectList.add(arrayList);
 									writeObject(objectList);
 									objectList.clear();
 								} else {
@@ -542,6 +543,28 @@ public class Server extends Thread{
 									objectList.clear();
 								}
 								break;
+							}
+							case Protocol.REQ_LATLON: {		// 위경도 요청
+								DetailDAO detailDAO = new DetailDAO();
+								String sortation = (String)objectList.get(2);
+								String code = (String)objectList.get(3);
+								String latLon = detailDAO.getLatLng(sortation, code);
+								
+								if(latLon != null) {
+									objectList.clear();
+									objectList.add(Protocol.PT_RES_VIEW);
+									objectList.add(Protocol.RES_LATLON_Y);
+									objectList.add(latLon);
+									writeObject(objectList);
+									objectList.clear();
+								}
+								else {
+									objectList.clear();
+									objectList.add(Protocol.PT_RES_VIEW);
+									objectList.add(Protocol.RES_LATLON_N);
+									writeObject(objectList);
+									objectList.clear();
+								}
 							}
                     	}
                     	break;

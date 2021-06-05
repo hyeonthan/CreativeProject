@@ -506,4 +506,53 @@ public class DetailDAO {
         }
         return check;
     }
+    //  위도 경도 불러오기
+    public String getLatLng(String sortation, String code) {
+        String query ="";
+        String latlng = "";
+        if(sortation.equals("해수욕장")) {
+            query = "SELECT latitude, longitude FROM beach WHERE code =?";
+        }
+        else if(sortation.equals("휴양림")) {
+            query = "SELECT latitude, longitude FROM forest_lodge WHERE code =?";
+        }
+        else if(sortation.equals("관광지")) {
+            query = "SELECT latitude, longitude FROM tourist_spot WHERE code =?";
+        }
+        try {
+           conn = DBconnection.getConnection();
+           pstmt = conn.prepareStatement(query);
+           pstmt.setString(1, code);
+
+           rs = pstmt.executeQuery();
+           rs.next();
+           latlng += rs.getString("latitude");
+           latlng += " ";
+           latlng += rs.getString("longitude");
+        }catch (SQLException sqlException) {
+            try {
+                System.out.println("rollback 실행");
+                conn.rollback(sp);
+                sqlException.printStackTrace();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } finally {
+            try {
+                conn.setAutoCommit(true);
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+                if(rs!=null){
+                    rs.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return latlng;
+     }
 }

@@ -156,10 +156,48 @@ public class TouristSpotDetailController implements Initializable {
 						// ArrayList<ReviewDTO> list = (ArrayList<ReviewDTO>) clientMain.readObject();
 						ArrayList<ReviewDTO> list = (ArrayList<ReviewDTO>) arrList.get(3);
 						tv_review.getItems().addAll(list);
+						
+						setLatLon("관광지", touristCode);
 						return;
 					}
 					case Protocol.RES_TOURIST_DETAIL_N: {
 						ShowAlert.showAlert("WARNING", "경고", "관광지 정보를 불러오는데 실패하였습니다.");
+						return;
+					}
+				}
+			}
+		}
+	}
+	public void setLatLon(String sortation, String code) {
+		ArrayList<Object> objectList = new ArrayList<Object>();
+		objectList.add(Protocol.PT_REQ_VIEW);
+		objectList.add(Protocol.REQ_LATLON);
+		objectList.add(sortation);
+		objectList.add(code);
+		clientMain.writeObject(objectList);
+		objectList.clear();
+		
+		while (true) {
+			// String packet = clientMain.readPacket();
+			// String packetArr[] = packet.split("`");
+			// String packetType = packetArr[0];
+			// String packetCode = packetArr[1];
+			ArrayList<Object> arrList = (ArrayList<Object>) clientMain.readObject();
+			String packetType = (String)arrList.get(0);
+			String packetCode = (String)arrList.get(1);
+			
+			if (packetType.equals(Protocol.PT_RES_VIEW)) {
+				switch (packetCode) {
+					case Protocol.RES_LATLON_Y: {
+						// BeachDTO beachDTO = (BeachDTO) clientMain.readObject();
+						String latLon = (String) arrList.get(2);
+						String splitStr[] = latLon.split(" ");
+						latitude = Double.parseDouble(splitStr[0]);
+						longitude = Double.parseDouble(splitStr[1]);
+						return;
+					}
+					case Protocol.RES_LATLON_N: {
+						ShowAlert.showAlert("WARNING", "경고", "위도, 경도 조회에 실패하였습니다.");
 						return;
 					}
 				}
