@@ -90,7 +90,10 @@ public class BeachDetailController extends Object implements Initializable {
 			System.out.println(newValue);
 			if (newValue == Worker.State.SUCCEEDED) {
 				System.out.println("finished loading");
-				webEngine.executeScript("document.getElementById('keyword').value='"+destinationName+"'");
+				String lat1 = Double.toString(latitude);
+				String lng1 = Double.toString(longitude);
+				webEngine.executeScript("document.getElementById('keyword').value='"+lat1 + " " + lng1+"'");
+				webEngine.executeScript("test()");
 				String html = (String) webEngine.executeScript("document.getElementById('keyword').value");
 				System.out.println(html);
 			}/*from w  w  w.java  2s.co  m*/

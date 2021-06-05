@@ -2,6 +2,7 @@ package FxController;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.ResourceBundle;
 
 import DTO.ParkingLotsDTO;
@@ -105,6 +106,18 @@ public class ParkingController implements Initializable {
             				System.out.println(list.get(0).getAddress());
             	            myTableView.getItems().clear();
             	            myTableView.getItems().addAll(list);
+            	            String sumLat = "", sumLng = "";
+            	            int index = list.size();
+                            for(int i =0; i < list.size(); i++){
+                                sumLat +=  Double.toString(list.get(i).getLatitude());
+                                sumLng +=  Double.toString(list.get(i).getLongitude());
+                                if(i + 1 != list.size()){
+                                    sumLat += " ";
+                                    sumLng += " ";
+                                }
+                            }
+
+                            engine.executeScript("loadMarker('" + sumLat + "', '" + sumLng +"','" + index + "')");
             	            try {
             	                System.out.println(lat);
             	                System.out.println(lng);

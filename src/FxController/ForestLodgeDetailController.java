@@ -85,7 +85,7 @@ public class ForestLodgeDetailController implements Initializable {
 				System.out.println("finished loading");
 				String lat1 = Double.toString(latitude);
 				String lnt2 = Double.toString(longitude);
-				webEngine.executeScript("document.getElementById('keyword').value='"+ destinationName + " " + lat1 + " " + lnt2 +"'");
+				webEngine.executeScript("document.getElementById('keyword').value='" + lat1 + " " + lnt2 +"'");
 				webEngine.executeScript("test()");
 				String html = (String) webEngine.executeScript("document.getElementById('keyword').value");
 				System.out.println(html);
@@ -137,9 +137,6 @@ public class ForestLodgeDetailController implements Initializable {
 		objectList.add(destinationCode);
 		clientMain.writeObject(objectList);
 		objectList.clear();
-
-		latitude = 33.311500250000000;
-		longitude = 126.458761000000000;
 
 		while (true) {
 			// String packet = clientMain.readPacket();

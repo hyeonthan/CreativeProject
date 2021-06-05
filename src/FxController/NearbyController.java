@@ -130,7 +130,8 @@ public class NearbyController implements Initializable {
     						try {
     							dtos = (ArrayList<DestinationDTO>)packet.get(2);
     					        myTableView.getItems().addAll(dtos);
-    						} catch (Exception e) {
+                                engine.executeScript("loadMarker('33.311500250000000', '126.458761000000000', 1)");
+                            } catch (Exception e) {
     							e.printStackTrace();
     						}
     						return;
