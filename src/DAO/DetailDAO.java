@@ -240,7 +240,7 @@ public class DetailDAO {
             // conn.close();
 
             pstmt = conn.prepareStatement(query3);
-            pstmt.setInt(1,scope);
+            pstmt.setDouble(1,scope);
             pstmt.setString(2,dto.getDestination_code());
             pstmt.executeUpdate();
 

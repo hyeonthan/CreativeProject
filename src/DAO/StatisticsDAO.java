@@ -229,9 +229,9 @@ public class StatisticsDAO {
                 }
                 DestinationDTO destinationDTO = new DestinationDTO(code, sortation, name, maxRegion, forest_lodge_code , beach_code, tourist_spot_code);
                 list.add(destinationDTO);
-                rs2.close();
-                psmt2.close();
-                conn2.close();
+                // rs2.close();
+                // psmt2.close();
+                // conn2.close();
             }
         }catch (SQLException sqle) {
             sqle.printStackTrace();
@@ -309,9 +309,9 @@ public class StatisticsDAO {
                 }
                 DestinationDTO destinationDTO = new DestinationDTO(code, sortation, name, maxRegion, forest_lodge_code, beach_code, tourist_spot_code);
                 list.add(destinationDTO);
-                rs2.close();
-                psmt2.close();
-                conn2.close();
+                // rs2.close();
+                // psmt2.close();
+                // conn2.close();
             }
         }catch (SQLException sqle) {
             sqle.printStackTrace();

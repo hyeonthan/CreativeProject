@@ -83,7 +83,7 @@ public class DestinationController implements Initializable{
             return;
         }
         //  구분 미선택 조회
-        if(comboBoxClassification.getValue() == null || comboBoxClassification.getValue().equals("통합")){
+        if(comboBoxClassification.getValue() == null || comboBoxClassification.getValue().equals("통합검색")){
             Do = comboBoxDo.getValue();
             if(Do.equals("서울특별시") || Do.equals("인천광역시") || Do.equals("울산광역시") || Do.equals("대전광역시") || Do.equals("대구광역시") || Do.equals("제주특별자치도") || Do.equals("부산광역시")){
             }
