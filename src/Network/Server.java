@@ -25,6 +25,7 @@ public class Server extends Thread{
     BufferedWriter bufferedWriter = null;
     ObjectInputStream objectInputStream = null;
     ObjectOutputStream objectOutputStream = null;
+	ArrayList<Object> objectList = new ArrayList<Object>();
 
     public Server(Socket socket) throws ClassNotFoundException, SQLException {
         this.socket = socket;
@@ -108,12 +109,20 @@ public class Server extends Thread{
 								ArrayList<ReviewDTO> arrayList = detailDAO.inquireReview(packetArr[3]);
 
 								if (touristSpotDTO != null) {
-									writePacket(Protocol.PT_RES_VIEW + "`" + Protocol.RES_TOURIST_DETAIL_Y);
-									writeObject(touristSpotDTO);
-									writeObject(arrayList);
+									// writePacket(Protocol.PT_RES_VIEW + "`" + Protocol.RES_TOURIST_DETAIL_Y);
+									// writeObject(touristSpotDTO);
+									// writeObject(arrayList);
+									objectList.add(Protocol.PT_RES_VIEW);
+									objectList.add(Protocol.RES_TOURIST_DETAIL_Y);
+									objectList.add(touristSpotDTO);
+									objectList.add(arrayList);
+									writeObject(objectList);
 								}
 								else
-									writePacket(Protocol.PT_RES_VIEW + "`" + Protocol.RES_TOURIST_DETAIL_N);
+									// writePacket(Protocol.PT_RES_VIEW + "`" + Protocol.RES_TOURIST_DETAIL_N);
+									objectList.add(Protocol.PT_RES_VIEW);
+									objectList.add(Protocol.RES_TOURIST_DETAIL_N);
+									writeObject(objectList);
                     			break;
                     		}
                     		case Protocol.REQ_FOREST_DETAIL:{		// 휴양림 상세정보
@@ -123,12 +132,20 @@ public class Server extends Thread{
 								ArrayList<ReviewDTO> arrayList = detailDAO.inquireReview(packetArr[3]);
 
 								if (forestLodgeDTO!=null) {
-									writePacket(Protocol.PT_RES_VIEW + "`" + Protocol.RES_FOREST_DETAIL_Y);
-									writeObject(forestLodgeDTO);
-									writeObject(arrayList);
+									// writePacket(Protocol.PT_RES_VIEW + "`" + Protocol.RES_FOREST_DETAIL_Y);
+									// writeObject(forestLodgeDTO);
+									// writeObject(arrayList);
+									objectList.add(Protocol.PT_RES_VIEW);
+									objectList.add(Protocol.RES_FOREST_DETAIL_Y);
+									objectList.add(forestLodgeDTO);
+									objectList.add(arrayList);
+									writeObject(objectList);
 								}
 								else
-									writePacket(Protocol.PT_RES_VIEW + "`" + Protocol.RES_FOREST_DETAIL_N);
+									// writePacket(Protocol.PT_RES_VIEW + "`" + Protocol.RES_FOREST_DETAIL_N);
+									objectList.add(Protocol.PT_RES_VIEW);
+									objectList.add(Protocol.RES_FOREST_DETAIL_N);
+									writeObject(objectList);
                     			break;
                     		}
                     		case Protocol.REQ_BEACH_DETAIL:{		//해수욕장 상세정보
@@ -138,12 +155,20 @@ public class Server extends Thread{
 								ArrayList<ReviewDTO> arrayList = detailDAO.inquireReview(packetArr[3]);
 
 								if (beachDTO!=null) {
-									writePacket(Protocol.PT_RES_VIEW + "`" + Protocol.RES_BEACH_DETAIL_Y);
-									writeObject(beachDTO);
-									writeObject(arrayList);
+									// writePacket(Protocol.PT_RES_VIEW + "`" + Protocol.RES_BEACH_DETAIL_Y);
+									// writeObject(beachDTO);
+									// writeObject(arrayList);
+									objectList.add(Protocol.PT_RES_VIEW);
+									objectList.add(Protocol.RES_BEACH_DETAIL_Y);
+									objectList.add(beachDTO);
+									objectList.add(arrayList);
+									writeObject(objectList);
 								}
 								else
-									writePacket(Protocol.PT_RES_VIEW + "`" + Protocol.RES_BEACH_DETAIL_N);
+									// writePacket(Protocol.PT_RES_VIEW + "`" + Protocol.RES_BEACH_DETAIL_N);
+									objectList.add(Protocol.PT_RES_VIEW);
+									objectList.add(Protocol.RES_BEACH_DETAIL_N);
+									writeObject(objectList);
                     			break;
                     		}
                     		case Protocol.REQ_TOILET:{		//화장실 정보 요청
@@ -251,13 +276,22 @@ public class Server extends Thread{
 								ArrayList<FavoriteDTO> arrayList1 = myPageDAO.inquiryFavorite(packetArr[2]);
 
 								if(userDTO != null){
-									writePacket(Protocol.PT_RES_VIEW + "`" + Protocol.RES_MYPAGE_Y);
-									writeObject(userDTO);
-									writeObject(arrayList);
-									writeObject(arrayList1);
+									//writePacket(Protocol.PT_RES_VIEW + "`" + Protocol.RES_MYPAGE_Y);
+									objectList.add(Protocol.PT_RES_VIEW);
+									objectList.add(Protocol.RES_MYPAGE_Y);
+									objectList.add(userDTO);
+									objectList.add(arrayList);
+									objectList.add(arrayList1);
+									writeObject(objectList);
+									// writeObject(userDTO);
+									// writeObject(arrayList);
+									// writeObject(arrayList1);
 								}
 								else{
 									writePacket(Protocol.PT_RES_VIEW + "`" + Protocol.RES_MYPAGE_N);
+									objectList.add(Protocol.PT_RES_VIEW);
+									objectList.add(Protocol.RES_MYPAGE_N);
+									writeObject(objectList);
 								}
 
                     			break;

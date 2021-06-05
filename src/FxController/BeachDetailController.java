@@ -136,15 +136,19 @@ public class BeachDetailController extends Object implements Initializable {
 		clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_BEACH_DETAIL+ "`" + beachCode + "`" + destinationCode);
 		
 		while (true) {
-			String packet = clientMain.readPacket();
-			String packetArr[] = packet.split("`");
-			String packetType = packetArr[0];
-			String packetCode = packetArr[1];
+			// String packet = clientMain.readPacket();
+			// String packetArr[] = packet.split("`");
+			// String packetType = packetArr[0];
+			// String packetCode = packetArr[1];
+			ArrayList<Object> arrList = (ArrayList<Object>) clientMain.readObject();
+			String packetType = (String)arrList.get(0);
+			String packetCode = (String)arrList.get(1);
 			
 			if (packetType.equals(Protocol.PT_RES_VIEW)) {
 				switch (packetCode) {
 					case Protocol.RES_BEACH_DETAIL_Y: {
-						BeachDTO beachDTO = (BeachDTO) clientMain.readObject();
+						// BeachDTO beachDTO = (BeachDTO) clientMain.readObject();
+						BeachDTO beachDTO = (BeachDTO) arrList.get(2);
 						resultTextName.setText(beachDTO.getName());
 						resultTextAddress.setText(beachDTO.getDo() + " " + beachDTO.getCity() + " " + beachDTO.getAddress());
 						resultTextPhoneNum.setText(beachDTO.getPhone_num());
@@ -155,7 +159,8 @@ public class BeachDetailController extends Object implements Initializable {
 						resultTextHomepage.setText(beachDTO.getHome_page());
 						System.out.println("beachDTO 성공");
 						
-						ArrayList<ReviewDTO> list = (ArrayList<ReviewDTO>) clientMain.readObject();
+						// ArrayList<ReviewDTO> list = (ArrayList<ReviewDTO>) clientMain.readObject();
+						ArrayList<ReviewDTO> list = (ArrayList<ReviewDTO>) arrList.get(3);
 						tv_review.getItems().addAll(list);
 						System.out.println("리뷰DTO 성공");
 						return;

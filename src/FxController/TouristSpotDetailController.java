@@ -125,15 +125,19 @@ public class TouristSpotDetailController implements Initializable {
 		clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_TOURIST_DETAIL+ "`" + touristCode + "`" + destinationCode);
 
 		while (true) {
-			String packet = clientMain.readPacket();
-			String packetArr[] = packet.split("`");
-			String packetType = packetArr[0];
-			String packetCode = packetArr[1];
+			// String packet = clientMain.readPacket();
+			// String packetArr[] = packet.split("`");
+			// String packetType = packetArr[0];
+			// String packetCode = packetArr[1];
+			ArrayList<Object> arrList = (ArrayList<Object>)clientMain.readObject();
+			String packetType = (String) arrList.get(0);
+			String packetCode = (String) arrList.get(1);
 
 			if (packetType.equals(Protocol.PT_RES_VIEW)) {
 				switch (packetCode) {
 					case Protocol.RES_TOURIST_DETAIL_Y: {
-						TouristSpotDTO touristSpotDTO = (TouristSpotDTO) clientMain.readObject();
+						// TouristSpotDTO touristSpotDTO = (TouristSpotDTO) clientMain.readObject();
+						TouristSpotDTO touristSpotDTO = (TouristSpotDTO) arrList.get(2);
 						resultTextName.setText(touristSpotDTO.getName());
 						resultTextAddress.setText(touristSpotDTO.getDo() + " " + touristSpotDTO.getCity() + " " + touristSpotDTO.getAddress());
 						resultTextPhoneNum.setText(touristSpotDTO.getPhone_num());
@@ -142,7 +146,8 @@ public class TouristSpotDetailController implements Initializable {
 						reusltTextPossibleParking.setText(Integer.toString(touristSpotDTO.getPossibleParking()));
 						resultTextManagement.setText(touristSpotDTO.getManagementAgency());
 
-						ArrayList<ReviewDTO> list = (ArrayList<ReviewDTO>) clientMain.readObject();
+						// ArrayList<ReviewDTO> list = (ArrayList<ReviewDTO>) clientMain.readObject();
+						ArrayList<ReviewDTO> list = (ArrayList<ReviewDTO>) arrList.get(3);
 						tv_review.getItems().addAll(list);
 						return;
 					}

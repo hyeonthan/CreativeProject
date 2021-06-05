@@ -130,16 +130,19 @@ public class ForestLodgeDetailController implements Initializable {
 
 
 		while (true) {
-			String packet = clientMain.readPacket();
-			System.out.println(packet);
-			String packetArr[] = packet.split("`");
-			String packetType = packetArr[0];
-			String packetCode = packetArr[1];
+			// String packet = clientMain.readPacket();
+			// String packetArr[] = packet.split("`");
+			// String packetType = packetArr[0];
+			// String packetCode = packetArr[1];
+			ArrayList<Object> arrList = (ArrayList<Object>) clientMain.readObject();
+			String packetType = (String) arrList.get(0);
+			String packetCode = (String) arrList.get(1);
 
 			if (packetType.equals(Protocol.PT_RES_VIEW)) {
 				switch (packetCode) {
 					case Protocol.RES_FOREST_DETAIL_Y: {
-						ForestLodgeDTO forestLodgeDTO = (ForestLodgeDTO) clientMain.readObject();
+						// ForestLodgeDTO forestLodgeDTO = (ForestLodgeDTO) clientMain.readObject();
+						ForestLodgeDTO forestLodgeDTO = (ForestLodgeDTO) arrList.get(2);
 						resultTextName.setText(forestLodgeDTO.getName());
 						resultTextAddress.setText(forestLodgeDTO.getDo() + " " + forestLodgeDTO.getCity() + " " + forestLodgeDTO.getAddress());
 						resultTextPhoneNum.setText(forestLodgeDTO.getPhone_num());
@@ -150,7 +153,8 @@ public class ForestLodgeDetailController implements Initializable {
 						resultTextHomePage.setText(forestLodgeDTO.getHome_page());
 						System.out.println("forestDTO 성공");
 
-						ArrayList<ReviewDTO> list = (ArrayList<ReviewDTO>) clientMain.readObject();
+						// ArrayList<ReviewDTO> list = (ArrayList<ReviewDTO>) clientMain.readObject();
+						ArrayList<ReviewDTO> list = (ArrayList<ReviewDTO>) arrList.get(3);
 						tv_review.getItems().addAll(list);
 						System.out.println("리뷰DTO 성공");
 						return;
