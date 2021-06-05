@@ -75,13 +75,14 @@ public class Server extends Thread{
 								objectList.clear();
 								id = loginId;
                     		}
-                    		else
+                    		else {
                     			// writePacket(Protocol.PT_RES_LOGIN + "`" + Protocol.RES_LOGIN_N);
 								objectList.clear();
 								objectList.add(Protocol.PT_RES_LOGIN);
 								objectList.add(Protocol.RES_LOGIN_N);
 								writeObject(objectList);
 								objectList.clear();
+							}
                     	} catch (Exception e) {
                     		e.printStackTrace();
                     	}
@@ -159,13 +160,14 @@ public class Server extends Thread{
 									writeObject(objectList);
 									objectList.clear();
 								}
-								else
+								else {
 									// writePacket(Protocol.PT_RES_VIEW + "`" + Protocol.RES_TOURIST_DETAIL_N);
 									objectList.clear();
 									objectList.add(Protocol.PT_RES_VIEW);
 									objectList.add(Protocol.RES_TOURIST_DETAIL_N);
 									writeObject(objectList);
 									objectList.clear();
+								}
                     			break;
                     		}
                     		case Protocol.REQ_FOREST_DETAIL:{		// 휴양림 상세정보
@@ -187,13 +189,14 @@ public class Server extends Thread{
 									writeObject(objectList);
 									objectList.clear();
 								}
-								else
+								else {
 									// writePacket(Protocol.PT_RES_VIEW + "`" + Protocol.RES_FOREST_DETAIL_N);
 									objectList.clear();
 									objectList.add(Protocol.PT_RES_VIEW);
 									objectList.add(Protocol.RES_FOREST_DETAIL_N);
 									writeObject(objectList);
 									objectList.clear();
+								}
                     			break;
                     		}
                     		case Protocol.REQ_BEACH_DETAIL:{		//해수욕장 상세정보
@@ -215,13 +218,14 @@ public class Server extends Thread{
 									writeObject(objectList);
 									objectList.clear();
 								}
-								else
+								else {
 									// writePacket(Protocol.PT_RES_VIEW + "`" + Protocol.RES_BEACH_DETAIL_N);
 									objectList.clear();
 									objectList.add(Protocol.PT_RES_VIEW);
 									objectList.add(Protocol.RES_BEACH_DETAIL_N);
 									writeObject(objectList);
 									objectList.clear();
+								}
                     			break;
                     		}
                     		case Protocol.REQ_TOILET:{		//화장실 정보 요청
@@ -235,6 +239,7 @@ public class Server extends Thread{
 									objectList.add(Protocol.PT_RES_VIEW);
 									objectList.add(Protocol.RES_TOILET_Y);
 									objectList.add(toiletDTOS);
+									writeObject(objectList);
 									objectList.clear();
 								}
 								else{
@@ -242,6 +247,7 @@ public class Server extends Thread{
 									objectList.clear();
 									objectList.add(Protocol.PT_RES_VIEW);
 									objectList.add(Protocol.RES_TOILET_Y);
+									writeObject(objectList);
 									objectList.clear();
 								}
                     			break;
@@ -256,6 +262,8 @@ public class Server extends Thread{
 									objectList.clear();
 									objectList.add(Protocol.PT_RES_VIEW);
 									objectList.add(Protocol.RES_PARKING_Y);
+									objectList.add(parkingLotsDTOS);
+									writeObject(objectList);
 									objectList.clear();
 								}
 								else{
@@ -263,6 +271,7 @@ public class Server extends Thread{
 									objectList.clear();
 									objectList.add(Protocol.PT_RES_VIEW);
 									objectList.add(Protocol.RES_PARKING_N);
+									writeObject(objectList);
 									objectList.clear();
 								}
                     			break;
@@ -296,6 +305,8 @@ public class Server extends Thread{
 									objectList.clear();
 									objectList.add(Protocol.PT_RES_VIEW);
 									objectList.add(Protocol.RES_DESTINATION_LOCATION_Y);
+									objectList.add(arrayList);
+									writeObject(objectList);
 									objectList.clear();
 								}
 								else{
@@ -303,6 +314,7 @@ public class Server extends Thread{
 									objectList.clear();
 									objectList.add(Protocol.PT_RES_VIEW);
 									objectList.add(Protocol.RES_DESTINATION_LOCATION_N);
+									writeObject(objectList);
 									objectList.clear();
 								}
                     			break;
@@ -349,6 +361,8 @@ public class Server extends Thread{
 									objectList.clear();
 									objectList.add(Protocol.PT_RES_VIEW);
 									objectList.add(Protocol.RES_STATISTICS_Y);
+									objectList.add(arrayList);
+									writeObject(objectList);
 									objectList.clear();
 								}
 								else{
@@ -356,6 +370,7 @@ public class Server extends Thread{
 									objectList.clear();
 									objectList.add(Protocol.PT_RES_VIEW);
 									objectList.add(Protocol.RES_STATISTICS_N);
+									writeObject(objectList);
 									objectList.clear();
 								}
                     			break;
@@ -466,7 +481,8 @@ public class Server extends Thread{
 											objectList.clear();
 											objectList.add(Protocol.PT_RES_VIEW);
 											objectList.add(Protocol.RES_STATISTICS_DETAIL_Y);
-											writeObject(hashMap1);
+											objectList.add(hashMap1);
+											writeObject(objectList);
 											objectList.clear();
 										}
 										else{
@@ -474,6 +490,7 @@ public class Server extends Thread{
 											objectList.clear();
 											objectList.add(Protocol.PT_RES_VIEW);
 											objectList.add(Protocol.RES_STATISTICS_DETAIL_N);
+											writeObject(objectList);
 											objectList.clear();
 										}
 										break;
@@ -490,13 +507,14 @@ public class Server extends Thread{
 									objectList.clear();
 									objectList.add(Protocol.PT_RES_VIEW);
 									objectList.add(Protocol.RES_FAVORITES_Y);
-									writeObject(arrayList);
+									writeObject(objectList);
 									objectList.clear();
 								} else {
 									// writePacket(Protocol.PT_RES_VIEW + "`" + Protocol.RES_FAVORITES_N);
 									objectList.clear();
 									objectList.add(Protocol.PT_RES_VIEW);
 									objectList.add(Protocol.RES_FAVORITES_N);
+									writeObject(objectList);
 									objectList.clear();
 								}
 								break;
@@ -511,7 +529,8 @@ public class Server extends Thread{
 									objectList.clear();
 									objectList.add(Protocol.PT_RES_VIEW);
 									objectList.add(Protocol.RES_REVIEWS_Y);
-									writeObject(arrayList);
+									objectList.add(arrayList);
+									writeObject(objectList);
 									objectList.clear();
 								}
 								else{
@@ -519,6 +538,7 @@ public class Server extends Thread{
 									objectList.clear();
 									objectList.add(Protocol.PT_RES_VIEW);
 									objectList.add(Protocol.RES_REVIEWS_N);
+									writeObject(objectList);
 									objectList.clear();
 								}
 								break;
@@ -540,6 +560,7 @@ public class Server extends Thread{
 									objectList.clear();
 									objectList.add(Protocol.PT_RES_RENEWAL);
 									objectList.add(Protocol.RES_SIGNUP_Y);
+									writeObject(objectList);
 									objectList.clear();
 								}
                     			else {
@@ -547,21 +568,26 @@ public class Server extends Thread{
 									objectList.clear();
 									objectList.add(Protocol.PT_RES_RENEWAL);
 									objectList.add(Protocol.RES_SIGNUP_N);
+									writeObject(objectList);
 									objectList.clear();
 								}
                     			break;
                     		}
                     		case Protocol.REQ_CREATE_REVIEW:{
+								System.out.println("뭐가문젤까");
                     			DetailDAO detailDAO = new DetailDAO();
                     			// ReviewDTO reviewDTO = (ReviewDTO)objectInputStream.readObject();
 								ReviewDTO reviewDTO = (ReviewDTO)objectList.get(2);
 
                     			boolean isInsertReview = detailDAO.insertReview(reviewDTO);
+								System.out.println("여기까진했는데");
                     			if(isInsertReview){
 									// writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.RES_CREATE_REVIEW_Y);
 									objectList.clear();
 									objectList.add(Protocol.PT_RES_RENEWAL);
 									objectList.add(Protocol.RES_CREATE_REVIEW_Y);
+									writeObject(objectList);
+									System.out.println("전송완료");
 									objectList.clear();
 								}
                     			else{
@@ -569,26 +595,29 @@ public class Server extends Thread{
 									objectList.clear();
 									objectList.add(Protocol.PT_RES_RENEWAL);
 									objectList.add(Protocol.RES_CREATE_REVIEW_N);
+									writeObject(objectList);
 									objectList.clear();
 								}
                     			break;
                     		}
                     		case Protocol.REQ_DELETE_REVIEW:{
                     			MyPageDAO myPageDAO = new MyPageDAO();
-                    			boolean isDeleteReview = myPageDAO.deleteReview( Integer.parseInt((String)objectList.get(2)), (String)objectList.get(3));
+                    			boolean isDeleteReview = myPageDAO.deleteReview((int)objectList.get(2), (String)objectList.get(3));
 
                     			if(isDeleteReview){
 									// writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.RES_DELETE_REVIEW_Y);
 									objectList.clear();
 									objectList.add(Protocol.PT_RES_RENEWAL);
 									objectList.add(Protocol.RES_DELETE_REVIEW_Y);
+									writeObject(objectList);
 									objectList.clear();
 								}
                     			else{
-									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.RES_DELETE_REVIEW_N);
+									//writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.RES_DELETE_REVIEW_N);
 									objectList.clear();
 									objectList.add(Protocol.PT_RES_RENEWAL);
 									objectList.add(Protocol.RES_DELETE_REVIEW_N);
+									writeObject(objectList);
 									objectList.clear();
 								}
 
@@ -605,6 +634,7 @@ public class Server extends Thread{
 									objectList.clear();
 									objectList.add(Protocol.PT_RES_RENEWAL);
 									objectList.add(Protocol.RES_UPDATE_USER_Y);
+									writeObject(objectList);
 									objectList.clear();
 								}
 								else{
@@ -612,6 +642,7 @@ public class Server extends Thread{
 									objectList.clear();
 									objectList.add(Protocol.PT_RES_RENEWAL);
 									objectList.add(Protocol.RES_UPDATE_USER_N);
+									writeObject(objectList);
 									objectList.clear();
 								}
                     			break;
@@ -627,6 +658,7 @@ public class Server extends Thread{
 									objectList.clear();
 									objectList.add(Protocol.PT_RES_RENEWAL);
 									objectList.add(Protocol.RES_CREATE_FAVORITES_Y);
+									writeObject(objectList);
 									objectList.clear();
 								}
 								else{
@@ -634,6 +666,7 @@ public class Server extends Thread{
 									objectList.clear();
 									objectList.add(Protocol.PT_RES_RENEWAL);
 									objectList.add(Protocol.RES_CREATE_FAVORITES_N);
+									writeObject(objectList);
 									objectList.clear();
 								}
 
@@ -641,13 +674,14 @@ public class Server extends Thread{
                     		}
                     		case Protocol.REQ_DELETE_FAVORITES:{
                     			MyPageDAO myPageDAO = new MyPageDAO();
-                    			boolean check = myPageDAO.deleteFavorite(Integer.parseInt((String)objectList.get(2)));
+                    			boolean check = myPageDAO.deleteFavorite((int)objectList.get(2));
 
                     			if(check){
 									// writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.RES_DELETE_FAVORITES_Y);
 									objectList.clear();
 									objectList.add(Protocol.PT_RES_RENEWAL);
 									objectList.add(Protocol.RES_DELETE_FAVORITES_Y);
+									writeObject(objectList);
 									objectList.clear();
 								}
                     			else{
@@ -655,6 +689,7 @@ public class Server extends Thread{
 									objectList.clear();
 									objectList.add(Protocol.PT_RES_RENEWAL);
 									objectList.add(Protocol.RES_DELETE_FAVORITES_N);
+									writeObject(objectList);
 									objectList.clear();
 								}
 
@@ -669,6 +704,7 @@ public class Server extends Thread{
 									objectList.clear();
 									objectList.add(Protocol.PT_RES_RENEWAL);
 									objectList.add(Protocol.RES_UPDATE_VIEWSCOUNT_Y);
+									writeObject(objectList);
 									objectList.clear();
 								}
 								else{
@@ -676,6 +712,7 @@ public class Server extends Thread{
 									objectList.clear();
 									objectList.add(Protocol.PT_RES_RENEWAL);
 									objectList.add(Protocol.RES_UPDATE_VIEWSCOUNT_N);
+									writeObject(objectList);
 									objectList.clear();
 								}
 							}
