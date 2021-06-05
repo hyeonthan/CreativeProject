@@ -14,6 +14,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class clientMain extends Application {
@@ -48,6 +49,9 @@ public class clientMain extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		try {
+			System.setProperty("prism.lcdtext", "false"); //폰트 깨짐 방지
+			Font.loadFont(getClass().getResourceAsStream("/FXML/CSS/resource/SsurroundAir.ttf"), 10); //폰트 설정
+			Font.loadFont(getClass().getResourceAsStream("/FXML/CSS/resource/Cafe24.ttf"), 10); //폰트 설정
 			Parent root = FXMLLoader.load(clientMain.class.getResource("../FXML/login.fxml"));
 			Scene scene = new Scene(root);
 			primaryStage.setScene(scene);

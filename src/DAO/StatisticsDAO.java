@@ -368,7 +368,6 @@ public class StatisticsDAO {
                 DestinationDTO destinationDTO = new DestinationDTO(code, sortation, name, forest_lodge_code , beach_code, tourist_spot_code);
                 destinationDTO.setCount(count);
                 list.add(destinationDTO);
-                //rs2.close();
             }
             
         }catch (SQLException sqle) {
@@ -377,6 +376,9 @@ public class StatisticsDAO {
             try {
                 if(rs != null){
                     rs.close();
+                }
+                if(rs2!=null){
+                    rs2.close();
                 }
                 if (psmt != null) {
                     psmt.close();
@@ -416,7 +418,6 @@ public class StatisticsDAO {
                 DestinationDTO destinationDTO = new DestinationDTO(code, sortation, name,  forest_lodge_code , beach_code, tourist_spot_code);
                 destinationDTO.setCount(count);
                 list.add(destinationDTO);
-                //rs2.close();
             }
             
         }catch (SQLException sqle) {
@@ -428,6 +429,9 @@ public class StatisticsDAO {
                 }
                 if (psmt != null) {
                     psmt.close();
+                }
+                if(rs2!=null){
+                    rs2.close();
                 }
                 if (conn != null) {
                     conn.close();
