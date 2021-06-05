@@ -15,6 +15,7 @@ public class StatisticsDAO {
     private Connection conn;
     private PreparedStatement psmt;
     private ResultSet rs;
+    private ResultSet rs2;
     
 
     //조회수 구분 없이 모두 가져오기
@@ -156,7 +157,7 @@ public class StatisticsDAO {
                 String forest_lodge_code = rs.getString("forest_lodge_code");
                 String beach_code = rs.getString("beach_code");
                 String tourist_spot_code = rs.getString("tourist_spot_code");
-                DestinationDTO destinationDTO = new DestinationDTO(code, name, scope,  forest_lodge_code , beach_code, tourist_spot_code);
+                DestinationDTO destinationDTO = new DestinationDTO(code, sortation, name, scope,  forest_lodge_code , beach_code, tourist_spot_code);
                 list.add(destinationDTO);
             }
         }catch (SQLException sqle) {
@@ -228,9 +229,9 @@ public class StatisticsDAO {
                 }
                 DestinationDTO destinationDTO = new DestinationDTO(code, sortation, name, maxRegion, forest_lodge_code , beach_code, tourist_spot_code);
                 list.add(destinationDTO);
-                rs2.close();
-                psmt2.close();
-                conn2.close();
+                // rs2.close();
+                // psmt2.close();
+                // conn2.close();
             }
         }catch (SQLException sqle) {
             sqle.printStackTrace();
@@ -278,6 +279,7 @@ public class StatisticsDAO {
         try{
             conn = DBconnection.getConnection();
             psmt = conn.prepareStatement(sql1);
+            psmt.setString(1, sortation);
             rs = psmt.executeQuery();
             while(rs.next()){
                 String code = rs.getString("code");
@@ -286,8 +288,7 @@ public class StatisticsDAO {
                 String beach_code = rs.getString("beach_code");
                 String tourist_spot_code = rs.getString("tourist_spot_code");
                 String sql2 = "select do from user WHERE id IN (select user_id from review where destination_code = ?)";
-              
-                conn2 = DBconnection.getConnection();
+
                 psmt2 = conn.prepareStatement(sql2);
                 psmt2.setString(1, code);
                 rs2 = psmt2.executeQuery();
@@ -306,11 +307,11 @@ public class StatisticsDAO {
                         maxRegion = region[i];
                     }
                 }
-                DestinationDTO destinationDTO = new DestinationDTO(code, sortation, name, maxRegion,  forest_lodge_code , beach_code, tourist_spot_code);
+                DestinationDTO destinationDTO = new DestinationDTO(code, sortation, name, maxRegion, forest_lodge_code, beach_code, tourist_spot_code);
                 list.add(destinationDTO);
-                rs2.close();
-                psmt2.close();
-                conn2.close();
+                // rs2.close();
+                // psmt2.close();
+                // conn2.close();
             }
         }catch (SQLException sqle) {
             sqle.printStackTrace();
@@ -340,7 +341,7 @@ public class StatisticsDAO {
         }
         return list;
     }
-    //  여행지별 리뷰수 통계
+    //  여행지 리뷰수 통계
     public ArrayList<DestinationDTO> reviewCntStat(){
         ArrayList<DestinationDTO> list = new ArrayList<DestinationDTO>();
         String sql = "SELECT code, name, sortation, forest_lodge_code, beach_code, tourist_spot_code FROM destination WHERE scope != 0";
@@ -358,16 +359,15 @@ public class StatisticsDAO {
                 String forest_lodge_code = rs.getString("forest_lodge_code");
                 String beach_code = rs.getString("beach_code");
                 String tourist_spot_code = rs.getString("tourist_spot_code");
-                conn = DBconnection.getConnection();
+
                 psmt = conn.prepareStatement(sql2);
                 psmt.setString(1, code);
-                rs = psmt.executeQuery();
-                rs.next();
-                int count = rs.getInt(1);
+                rs2 = psmt.executeQuery();
+                rs2.next();
+                int count = rs2.getInt(1); // 임포스터
                 DestinationDTO destinationDTO = new DestinationDTO(code, sortation, name, forest_lodge_code , beach_code, tourist_spot_code);
                 destinationDTO.setCount(count);
                 list.add(destinationDTO);
-                
             }
             
         }catch (SQLException sqle) {
@@ -376,6 +376,9 @@ public class StatisticsDAO {
             try {
                 if(rs != null){
                     rs.close();
+                }
+                if(rs2!=null){
+                    rs2.close();
                 }
                 if (psmt != null) {
                     psmt.close();
@@ -398,6 +401,7 @@ public class StatisticsDAO {
         try{
             conn = DBconnection.getConnection();
             psmt = conn.prepareStatement(sql);
+            psmt.setString(1, sortation);
             rs = psmt.executeQuery();
             while(rs.next()){
                 String code = rs.getString("code");
@@ -409,13 +413,12 @@ public class StatisticsDAO {
                 conn = DBconnection.getConnection();
                 psmt = conn.prepareStatement(sql2);
                 psmt.setString(1, code);
-                rs = psmt.executeQuery();
-                rs.next();
-                int count = rs.getInt(1);
+                rs2 = psmt.executeQuery(); // 진짜 한현택 임포스터
+                rs2.next();
+                int count = rs2.getInt(1);
                 DestinationDTO destinationDTO = new DestinationDTO(code, sortation, name,  forest_lodge_code , beach_code, tourist_spot_code);
                 destinationDTO.setCount(count);
                 list.add(destinationDTO);
-                
             }
             
         }catch (SQLException sqle) {
@@ -427,6 +430,9 @@ public class StatisticsDAO {
                 }
                 if (psmt != null) {
                     psmt.close();
+                }
+                if(rs2!=null){
+                    rs2.close();
                 }
                 if (conn != null) {
                     conn.close();

@@ -28,7 +28,7 @@ public class InquireByRegionDAO {
                 pstmt.setString(1,Do);
             }
             //  구분 없이 도, 시/군 선택
-            else if(sortation.equals("")){
+            else if(sortation.equals(" ")){
                 query = "select * from destination where do = ? and city = ?"; 
                 pstmt = conn.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
                 pstmt.setString(1,Do);
@@ -36,7 +36,7 @@ public class InquireByRegionDAO {
 
             }
             //  구분 선택 and 특별시, 광역시 선택
-            else if(city.equals("")){
+            else if(city.equals(" ")){
                 query = "select * from destination where sortation = ? AND do = ?"; 
                 pstmt = conn.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
                 pstmt.setString(1,sortation);

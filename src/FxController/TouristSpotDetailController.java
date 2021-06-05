@@ -84,7 +84,7 @@ public class TouristSpotDetailController implements Initializable {
 				System.out.println(html);
 			}/*from w  w  w.java  2s.co  m*/
 		});
-		webEngine.load("http://localhost:8080/detail.html");
+		webEngine.load("http://localhost:8081/detail.html");
 	}
 	public void setTouristCode(String touristCode){
 		this.touristCode = touristCode;
@@ -163,7 +163,6 @@ public class TouristSpotDetailController implements Initializable {
 		tc_content.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getContent()));
 		tc_star.setCellValueFactory(cellData -> new SimpleStringProperty(Integer.toString(cellData.getValue().getScope())));
 		tc_writer.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getUser_id()));
-
 	}
 	// 	즐겨찾기 등록
 	@FXML

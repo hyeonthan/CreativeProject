@@ -88,7 +88,7 @@ public class ForestLodgeDetailController implements Initializable {
 				System.out.println(html);
 			}/*from w  w  w.java  2s.co  m*/
 		});
-		webEngine.load("http://localhost:8080/detail.html");
+		webEngine.load("http://localhost:8081/detail.html");
 	}
 	public void setForestLodgeCode(String forestcode){
 		this.forestCode = forestcode;
@@ -105,6 +105,8 @@ public class ForestLodgeDetailController implements Initializable {
 		resultTextHomePage.setText(forestLodgeDTO.getHome_page());
 		latitude = forestLodgeDTO.getLatitude();
 		longitude = forestLodgeDTO.getLongitude();
+
+		
 	}
 	public void setSaveUserId(String userId){
 		this.userId = userId;
@@ -170,7 +172,6 @@ public class ForestLodgeDetailController implements Initializable {
 		tc_content.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getContent()));
 		tc_star.setCellValueFactory(cellData -> new SimpleStringProperty(Integer.toString(cellData.getValue().getScope())));
 		tc_writer.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getUser_id()));
-
 	}
 	// 	즐겨찾기 등록
 	@FXML
