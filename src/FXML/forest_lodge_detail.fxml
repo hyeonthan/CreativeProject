@@ -25,7 +25,7 @@
          </columns>
       </TableView>
       <Button fx:id="btn_registerReview" layoutX="1015.0" layoutY="548.0" mnemonicParsing="false" onAction="#registerReview" text="리뷰 등록" />
-      <TextArea fx:id="ta_reviewContent" layoutX="769.0" layoutY="574.0" prefHeight="236.0" prefWidth="314.0" style="overflow:hidden"/>
+      <TextArea fx:id="ta_reviewContent" layoutX="769.0" layoutY="574.0" prefHeight="236.0" prefWidth="314.0"/>
       <ComboBox fx:id="cb_star" layoutX="935.0" layoutY="548.0" prefHeight="23.0" prefWidth="68.0" promptText="별점" />
       <Text layoutX="769.0" layoutY="566.0" strokeType="OUTSIDE" strokeWidth="0.0" text="리뷰 작성" wrappingWidth="91.99999862909317">
          <font>
@@ -131,6 +131,6 @@
          </font>
       </Text>
       <PieChart fx:id="pieChart" layoutX="178.0" layoutY="316.0" prefHeight="210.0" prefWidth="502.0" />
-      <TextArea fx:id="resultTextHomePage" layoutX="540.0" layoutY="86.0" prefHeight="200.0" prefWidth="200.0" />
+      <TextArea fx:id="resultTextHomePage" layoutX="540.0" layoutY="86.0" prefHeight="200.0" prefWidth="200.0" style="overflow:hidden"/>
    </children>
 </AnchorPane>
