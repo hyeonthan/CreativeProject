@@ -6,12 +6,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Savepoint;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import DBcontrol.DBconnection;
-import DTO.*;
+import DTO.BeachDTO;
+import DTO.FavoriteDTO;
+import DTO.ForestLodgeDTO;
+import DTO.ReviewDTO;
+import DTO.TouristSpotDTO;
 import DataSetControl.RegionList;
 
 public class DetailDAO {
@@ -229,13 +232,12 @@ public class DetailDAO {
             // pstmt.close();
             // conn.close();
 
-            int scope=0;
-            pstmt = conn.prepareStatement(query2);
+            double scope=0;
+            pstmt = conn.prepareStatement(query2, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
             pstmt.setString(1,dto.getDestination_code());
             rs= pstmt.executeQuery();
-            while(rs.next()){
-                scope= rs.getInt(1);
-            }
+            rs.next();
+            scope= rs.getDouble(1);
             // pstmt.close();
             // conn.close();
 
@@ -243,7 +245,7 @@ public class DetailDAO {
             pstmt.setDouble(1,scope);
             pstmt.setString(2,dto.getDestination_code());
             pstmt.executeUpdate();
-
+            System.out.println("scope: " + scope);
             conn.commit();
             check = true;
 
