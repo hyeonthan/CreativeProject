@@ -94,7 +94,6 @@ public class MypageController implements Initializable {
 
         ArrayList<Object> arrList = (ArrayList<Object>)clientMain.readObject();
         String protocol = (String)arrList.get(0);
-        System.out.println(protocol + ","+(String)arrList.get(1));
 
         if (protocol.equals(Protocol.PT_RES_VIEW)) {
             switch ((String)arrList.get(1)) {
@@ -139,19 +138,24 @@ public class MypageController implements Initializable {
     //	즐겨찾기 리스트 불러오기
     public void setFavoriteList(String userId) {
         tv_favorite.getItems().clear();
-        clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_FAVORITES +"`"+ userId);
-        String packet = clientMain.readPacket();
-        System.out.println("즐겨찾기 : "  +packet);
+        //clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_FAVORITES +"`"+ userId);
+        ArrayList<Object> objectList = new ArrayList<Object>();
+        objectList.add(Protocol.PT_REQ_VIEW);
+        objectList.add(Protocol.REQ_FAVORITES);
+        objectList.add(userId);
+        clientMain.writeObject(objectList);
+        objectList.clear();
 
-        String packetArr[] = packet.split("`");
-        String packetType = packetArr[0];
-        String packetCode = packetArr[1];
-        System.out.println(packetType + ","+ packetCode);
+        ArrayList<Object> packet = (ArrayList<Object>) clientMain.readObject();
+        System.out.println("즐겨찾기 : "  +packet);
+        //String packetArr[] = packet.split("`");
+        String packetType = (String)packet.get(0);
+        String packetCode = (String)packet.get(1);
 
         if (packetType.equals(Protocol.PT_RES_VIEW)) {
             switch (packetCode) {
                 case Protocol.RES_FAVORITES_Y:{
-                    ArrayList<FavoriteDTO> arrayList = (ArrayList<FavoriteDTO>) clientMain.readObject();
+                    ArrayList<FavoriteDTO> arrayList = (ArrayList<FavoriteDTO>) packet.get(2);
                     tv_favorite.getItems().addAll(arrayList);
                     return;
                 }
@@ -167,12 +171,18 @@ public class MypageController implements Initializable {
     public void setReviewList(String userId) throws IOException {
         tv_review.getItems().clear();
         System.out.println(userId);
-        clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_REVIEWS + "`"+userId);
-        String packet = clientMain.readPacket();
-        String packetArr[] = packet.split("`");
-        System.out.println("리뷰 : "  +packet);
-        String packetType = packetArr[0];
-        String packetCode = packetArr[1];
+        //clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_REVIEWS + "`"+userId);
+        ArrayList<Object> objectList = new ArrayList<Object>();
+        objectList.add(Protocol.PT_REQ_VIEW);
+        objectList.add(Protocol.REQ_REVIEWS);
+        objectList.add(userId);
+        clientMain.writeObject(objectList);
+        objectList.clear();
+
+        ArrayList<Object> packet = (ArrayList<Object>) clientMain.readObject();
+        //String packetArr[] = packet.split("`");
+        String packetType = (String)packet.get(0);
+        String packetCode = (String)packet.get(1);
 
 
 
@@ -180,7 +190,7 @@ public class MypageController implements Initializable {
             switch (packetCode) {
                 case Protocol.RES_REVIEWS_Y:{
 
-                    ArrayList<ReviewDTO> arrayList = (ArrayList<ReviewDTO>) clientMain.readObject();
+                    ArrayList<ReviewDTO> arrayList = (ArrayList<ReviewDTO>) packet.get(2);
                     tv_review.getItems().addAll(arrayList);
                     return;
                 }
@@ -259,14 +269,21 @@ public class MypageController implements Initializable {
         String city = cbBoxCity.getValue();
         String address = tfAddress.getText();
 
-        clientMain.writePacket(Protocol.PT_REQ_RENEWAL + "`" + Protocol.REQ_UPDATE_USER);
-        clientMain.writeObject(new UserDTO(id, name, Integer.parseInt(age), gender, Do, city, address, Timestamp.valueOf(LocalDateTime.now())));
+//        clientMain.writePacket(Protocol.PT_REQ_RENEWAL + "`" + Protocol.REQ_UPDATE_USER);
+//        clientMain.writeObject(new UserDTO(id, name, Integer.parseInt(age), gender, Do, city, address, Timestamp.valueOf(LocalDateTime.now())));
+
+        ArrayList<Object> objectList = new ArrayList<Object>();
+        objectList.add(Protocol.PT_REQ_RENEWAL);
+        objectList.add(Protocol.REQ_UPDATE_USER);
+        objectList.add(new UserDTO(id, name, Integer.parseInt(age), gender, Do, city, address, Timestamp.valueOf(LocalDateTime.now())));
+        clientMain.writeObject(objectList);
+        objectList.clear();
 
         while (true) {
-            String packet = clientMain.readPacket();
-            String packetArr[] = packet.split("`");
-            String packetType = packetArr[0];
-            String packetCode = packetArr[1];
+            ArrayList<Object> packet = (ArrayList<Object>) clientMain.readObject();
+            //String packetArr[] = packet.split("`");
+            String packetType = (String)packet.get(0);
+            String packetCode = (String)packet.get(1);
 
             if (packetType.equals(Protocol.PT_RES_RENEWAL)) {
                 switch (packetCode) {
@@ -316,12 +333,19 @@ public class MypageController implements Initializable {
                 ButtonType result = deleteAlert("선택한 즐겨찾기를 삭제하겠습니까?", "확인 버튼 클릭 시 즐겨찾기 삭제");
                 if (result == ButtonType.OK) {
                     int no = tv_favorite.getSelectionModel().getSelectedItem().getNo();
-					clientMain.writePacket(Protocol.PT_REQ_RENEWAL + "`" + Protocol.REQ_DELETE_FAVORITES + "`"+no);
+					//clientMain.writePacket(Protocol.PT_REQ_RENEWAL + "`" + Protocol.REQ_DELETE_FAVORITES + "`"+no);
+                    ArrayList<Object> objectList = new ArrayList<Object>();
+                    objectList.add(Protocol.PT_REQ_RENEWAL);
+                    objectList.add(Protocol.REQ_DELETE_FAVORITES);
+                    objectList.add(no);
+                    clientMain.writeObject(objectList);
+                    objectList.clear();
 
-					String packet = clientMain.readPacket();
-					String packetArr[] = packet.split("`");
-					String packetType = packetArr[0];
-					String packetCode = packetArr[1];
+
+                    ArrayList<Object> packet = (ArrayList<Object>) clientMain.readObject();
+                    //String packetArr[] = packet.split("`");
+                    String packetType = (String)packet.get(0);
+                    String packetCode = (String)packet.get(1);
 
 					if (packetType.equals(Protocol.PT_RES_RENEWAL)) {
 						switch (packetCode) {
@@ -358,11 +382,20 @@ public class MypageController implements Initializable {
                 ButtonType result = deleteAlert("선택한 리뷰를 삭제하겠습니까?", "확인 버튼 클릭 시 리뷰 삭제");
                 if (result == ButtonType.OK) {
                     ReviewDTO reviewDTO = tv_review.getSelectionModel().getSelectedItem();
-                    clientMain.writePacket(Protocol.PT_REQ_RENEWAL + "`" + Protocol.REQ_DELETE_REVIEW +"`"+ reviewDTO.getNo()+"`"+ reviewDTO.getDestination_code());
-                    String packet = clientMain.readPacket();
-                    String packetArr[] = packet.split("`");
-                    String packetType = packetArr[0];
-                    String packetCode = packetArr[1];
+                   // clientMain.writePacket(Protocol.PT_REQ_RENEWAL + "`" + Protocol.REQ_DELETE_REVIEW +"`"+ reviewDTO.getNo()+"`"+ reviewDTO.getDestination_code());
+                    ArrayList<Object> objectList = new ArrayList<Object>();
+                    objectList.add(Protocol.PT_REQ_RENEWAL);
+                    objectList.add(Protocol.REQ_DELETE_REVIEW);
+                    objectList.add(reviewDTO.getNo());
+                    objectList.add(reviewDTO.getDestination_code());
+                    clientMain.writeObject(objectList);
+                    objectList.clear();
+
+                    ArrayList<Object> packet = (ArrayList<Object>) clientMain.readObject();
+                    //String packetArr[] = packet.split("`");
+                    System.out.println(packet);
+                    String packetType = (String)packet.get(0);
+                    String packetCode = (String)packet.get(1);
 
                     if (packetType.equals(Protocol.PT_RES_RENEWAL)) {
                         switch (packetCode) {
@@ -411,12 +444,18 @@ public class MypageController implements Initializable {
                 try {
                     String destinationCode = tv_favorite.getSelectionModel().getSelectedItem().getDestination_code();
                     String destinationName = tv_favorite.getSelectionModel().getSelectedItem().getDestination_name();
-                    clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_DESTINATION +"`"+destinationCode);
+                   // clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_DESTINATION +"`"+destinationCode);
+                    ArrayList<Object> objectList = new ArrayList<Object>();
+                    objectList.add(Protocol.PT_REQ_VIEW);
+                    objectList.add(Protocol.REQ_DESTINATION);
+                    objectList.add(destinationCode);
+                    clientMain.writeObject(objectList);
+                    objectList.clear();
 
-                    String packet = clientMain.readPacket();
-                    String packetArr[] = packet.split("`");
-                    String packetType = packetArr[0];
-                    String packetCode = packetArr[1];
+                    ArrayList<Object> packet = (ArrayList<Object>) clientMain.readObject();
+                    //String packetArr[] = packet.split("`");
+                    String packetType = (String)packet.get(0);
+                    String packetCode = (String)packet.get(1);
                     DestinationDTO destinationDTO =null;
 
                     System.out.println(packetType + " , "+ packetCode);
@@ -424,7 +463,7 @@ public class MypageController implements Initializable {
                     if (packetType.equals(Protocol.PT_RES_VIEW)) {
                         switch (packetCode) {
                             case Protocol.RES_DESTINATION_Y:{
-                                destinationDTO = (DestinationDTO) clientMain.readObject();
+                                destinationDTO = (DestinationDTO) packet.get(2);
                                 break;
                             }
                             case Protocol.RES_DESTINATION_N:{
@@ -479,12 +518,19 @@ public class MypageController implements Initializable {
                 try {
                     String destinationCode = tv_recent.getSelectionModel().getSelectedItem().getCode();
                     String destinationName = tv_recent.getSelectionModel().getSelectedItem().getName();
-                    clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_DESTINATION +"`"+destinationCode);
+                    //clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_DESTINATION +"`"+destinationCode);
+                    ArrayList<Object> objectList = new ArrayList<Object>();
+                    objectList.add(Protocol.PT_REQ_VIEW);
+                    objectList.add(Protocol.REQ_DESTINATION);
+                    objectList.add(destinationCode);
+                    clientMain.writeObject(objectList);
+                    objectList.clear();
 
-                    String packet = clientMain.readPacket();
-                    String packetArr[] = packet.split("`");
-                    String packetType = packetArr[0];
-                    String packetCode = packetArr[1];
+
+                    ArrayList<Object> packet = (ArrayList<Object>) clientMain.readObject();
+                    //String packetArr[] = packet.split("`");
+                    String packetType = (String)packet.get(0);
+                    String packetCode = (String)packet.get(1);
                     DestinationDTO destinationDTO =null;
 
                     System.out.println(packetType + " , "+ packetCode);
@@ -492,7 +538,7 @@ public class MypageController implements Initializable {
                     if (packetType.equals(Protocol.PT_RES_VIEW)) {
                         switch (packetCode) {
                             case Protocol.RES_DESTINATION_Y:{
-                                destinationDTO = (DestinationDTO) clientMain.readObject();
+                                destinationDTO = (DestinationDTO) packet.get(2);
                                 break;
                             }
                             case Protocol.RES_DESTINATION_N:{

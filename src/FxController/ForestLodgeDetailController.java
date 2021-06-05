@@ -308,7 +308,7 @@ public class ForestLodgeDetailController implements Initializable {
 			if (packetType.equals(Protocol.PT_RES_VIEW)) {
 				switch (packetCode) {
 					case Protocol.RES_STATISTICS_DETAIL_Y: {
-						String genderResult = (String)clientMain.readObject();
+						String genderResult = (String)packet.get(2);
 						//	"/"로 구분 -> 남성 인원수/여성 인원수
 						int menCount = Integer.parseInt(genderResult.split("/")[0]);
 						int womenCount = Integer.parseInt(genderResult.split("/")[1]);

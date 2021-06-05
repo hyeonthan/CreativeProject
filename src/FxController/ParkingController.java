@@ -77,6 +77,7 @@ public class ParkingController implements Initializable {
                 ShowAlert.showAlert("WARNING", "경고창", "정수만 입력해주세요");
                 return;
             }
+            System.out.println(event.getData());
             String lat = event.getData().split(" ")[0];
             String lng = event.getData().split(" ")[1];
 

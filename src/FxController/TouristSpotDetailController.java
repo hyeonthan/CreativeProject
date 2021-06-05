@@ -122,7 +122,14 @@ public class TouristSpotDetailController implements Initializable {
 		System.out.println(touristCode);
 		System.out.println(destinationCode);
 
-		clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_TOURIST_DETAIL+ "`" + touristCode + "`" + destinationCode);
+		//clientMain.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.REQ_TOURIST_DETAIL+ "`" + touristCode + "`" + destinationCode);
+		ArrayList<Object> objectList = new ArrayList<Object>();
+		objectList.add(Protocol.PT_REQ_VIEW);
+		objectList.add(Protocol.REQ_TOURIST_DETAIL);
+		objectList.add(touristCode);
+		objectList.add(destinationCode);
+		clientMain.writeObject(objectList);
+		objectList.clear();
 
 		while (true) {
 			// String packet = clientMain.readPacket();

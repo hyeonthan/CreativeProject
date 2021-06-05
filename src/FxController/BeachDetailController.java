@@ -303,7 +303,7 @@ public class BeachDetailController extends Object implements Initializable {
 			if (packetType.equals(Protocol.PT_RES_VIEW)) {
 				switch (packetCode) {
 					case Protocol.RES_STATISTICS_DETAIL_Y: {
-						String genderResult = clientMain.readPacket();
+						String genderResult =(String) packet.get(2);
 						//	"/"로 구분 -> 남성 인원수/여성 인원수
 						int menCount = Integer.parseInt(genderResult.split("/")[0]);
 						int womenCount = Integer.parseInt(genderResult.split("/")[1]);
@@ -503,7 +503,7 @@ public class BeachDetailController extends Object implements Initializable {
 //		clientMain.writeObject(reviewDTO);
 
 		ArrayList<Object> objectList = new ArrayList<Object>();
-		objectList.add(Protocol.PT_REQ_VIEW);
+		objectList.add(Protocol.PT_REQ_RENEWAL);
 		objectList.add(Protocol.REQ_CREATE_REVIEW);
 		objectList.add(reviewDTO);
 		clientMain.writeObject(objectList);
@@ -511,7 +511,7 @@ public class BeachDetailController extends Object implements Initializable {
 		
 		while (true) {
 			ArrayList<Object> packet = (ArrayList<Object>) clientMain.readObject();
-			System.out.println(packet);
+			System.out.println(packet + ",");
 			//String packetArr[] = packet.split("`");
 			String packetType =(String) packet.get(0);
 			String packetCode = (String) packet.get(1);
