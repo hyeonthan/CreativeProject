@@ -37,7 +37,7 @@ public class Main extends Application {
 		String id = tf_id.getText();
 		String pw = pf_password.getText();
 		
-//		  clientMain.writePacket(Protocol.PT_REQ_LOGIN + "`" + id + "`" + pw);
+		//  clientMain.writePacket(Protocol.PT_REQ_LOGIN + "`" + id + "`" + pw);
 		ArrayList<Object> objectList = new ArrayList<Object>();
 		objectList.add(Protocol.PT_REQ_LOGIN);
 		objectList.add(id);
@@ -65,6 +65,7 @@ public class Main extends Application {
 
 		  						Stage primaryStage = (Stage) btn_login.getScene().getWindow();
 		  						primaryStage.setScene(new Scene(root));
+		  						primaryStage.centerOnScreen();
 		  						primaryStage.show();
 		  						return;
 		  					} catch (Exception e) {
@@ -81,7 +82,7 @@ public class Main extends Application {
 		  }
 		
 		//	id, pw 입력 정보 체크
-		//UserDAO userDAO = new UserDAO();
+//		UserDAO userDAO = new UserDAO();
 //		boolean checkUser = userDAO.checkUser(id, pw);
 //		if(!checkUser){
 //			ShowAlert.showAlert("WARNING", "로그인 알림창", "로그인 실패 : 아이디 또는 비밀번호가 일치하지 않습니다.");
