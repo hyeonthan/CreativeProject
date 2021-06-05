@@ -113,6 +113,7 @@ public class BeachDetailController extends Object implements Initializable {
 		resultTextHomepage.setDisable(true);
 		latitude = beachDTO.getLatitude();
 		longitude = beachDTO.getLongitude();
+
 	}
 	public void setSaveUserId(String userId){
 		this.userId = userId;
@@ -176,7 +177,6 @@ public class BeachDetailController extends Object implements Initializable {
 		tc_content.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getContent()));
 		tc_star.setCellValueFactory(cellData -> new SimpleStringProperty(Integer.toString(cellData.getValue().getScope())));
 		tc_writer.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getUser_id()));
-
 	}
 	// 	즐겨찾기 등록
 	@FXML

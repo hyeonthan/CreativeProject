@@ -399,6 +399,7 @@ public class StatisticsDAO {
         try{
             conn = DBconnection.getConnection();
             psmt = conn.prepareStatement(sql);
+            psmt.setString(1, sortation);
             rs = psmt.executeQuery();
             while(rs.next()){
                 String code = rs.getString("code");

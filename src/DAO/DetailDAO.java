@@ -245,7 +245,6 @@ public class DetailDAO {
             pstmt.setDouble(1,scope);
             pstmt.setString(2,dto.getDestination_code());
             pstmt.executeUpdate();
-            System.out.println("scope: " + scope);
             conn.commit();
             check = true;
 
