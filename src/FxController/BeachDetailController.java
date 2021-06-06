@@ -386,6 +386,7 @@ public class BeachDetailController extends Object implements Initializable {
 		objectList.add(Protocol.REQ_STATISTICS_DETAIL);
 		objectList.add("출신지");
 		objectList.add(destinationCode);
+		System.out.println(destinationCode);
 		clientMain.writeObject(objectList);
 		objectList.clear();
 		
