@@ -565,6 +565,40 @@ public class Server extends Thread{
 									writeObject(objectList);
 									objectList.clear();
 								}
+								break;
+							}
+							case Protocol.REQ_NEARBYLATLON: {
+								InquireByLocationDAO inquireDAO = new InquireByLocationDAO();
+								HashMap<String, String> hsMap = null;
+								String sortation = (String)objectList.get(2);
+								String lat = (String)objectList.get(3);
+								String lon = (String)objectList.get(4);
+								String range = (String)objectList.get(5);
+
+								if (sortation.equals("통합검색")) {
+									hsMap = inquireDAO.inquireAllLatLng(lat, lon, range);
+								}
+								else {
+									hsMap = inquireDAO.inquireLatLng(sortation, lat, lon, range);
+								}
+								
+								if (hsMap != null) {
+									objectList.clear();
+									objectList.add(Protocol.PT_RES_VIEW);
+									objectList.add(Protocol.RES_NEARBYLATLON_Y);
+									objectList.add(hsMap);
+									writeObject(objectList);
+									objectList.clear();
+								}
+								else {
+									objectList.clear();
+									objectList.add(Protocol.PT_RES_VIEW);
+									objectList.add(Protocol.RES_NEARBYLATLON_N);
+									writeObject(objectList);
+									objectList.clear();
+								}
+
+								break;
 							}
                     	}
                     	break;
