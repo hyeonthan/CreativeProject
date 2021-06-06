@@ -540,11 +540,13 @@ public class TouristSpotDetailController implements Initializable {
 		objectList.add(Protocol.PT_REQ_RENEWAL);
 		objectList.add(Protocol.REQ_CREATE_REVIEW);
 		objectList.add(reviewDTO);
+		System.out.println(reviewDTO);
 		clientMain.writeObject(objectList);
 		objectList.clear();
 		
 		while (true) {
 			ArrayList<Object> packet = (ArrayList<Object>) clientMain.readObject();
+			System.out.println(packet);
 			//String packetArr[] = packet.split("`");
 			String packetType = (String)packet.get(0);
 			String packetCode = (String)packet.get(1);

@@ -394,7 +394,7 @@ public class SignUp {
 			return;
 		}
 		else if(mb_city.getText().equals("시/군") && !(mb_do.getText().equals("서울특별시") || mb_do.getText().equals("인천광역시") || mb_do.getText().equals("울산광역시")
-		&& mb_do.getText().equals("대전광역시") || mb_do.getText().equals("대구광역시") || mb_do.getText().equals("세종특별자치시") || mb_do.getText().equals("제주특별자치도"))){
+		|| mb_do.getText().equals("대전광역시") || mb_do.getText().equals("대구광역시") || mb_do.getText().equals("세종특별자치시") || mb_do.getText().equals("제주특별자치도") || mb_do.getText().equals("부산광역시") || mb_do.getText().equals("광주광역시"))){
 			ShowAlert.showAlert("WARNING", "경고", "시/군 미입력");
 			return;
 		}

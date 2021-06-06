@@ -106,18 +106,19 @@ public class ParkingController implements Initializable {
             				System.out.println(list.get(0).getAddress());
             	            myTableView.getItems().clear();
             	            myTableView.getItems().addAll(list);
-            	            String sumLat = "", sumLng = "";
+            	            String sumName = "", sumLat = "", sumLng = "";
             	            int index = list.size();
                             for(int i =0; i < list.size(); i++){
+                                sumName +=  list.get(i).getName();
                                 sumLat +=  Double.toString(list.get(i).getLatitude());
                                 sumLng +=  Double.toString(list.get(i).getLongitude());
                                 if(i + 1 != list.size()){
+                                    sumName += " ";
                                     sumLat += " ";
                                     sumLng += " ";
                                 }
                             }
-
-                            engine.executeScript("loadMarker('" + sumLat + "', '" + sumLng +"','" + index + "')");
+                            engine.executeScript("loadMarker('" + sumLat + "', '" + sumLng +"','" + index +"','"+sumName +"')");
             	            try {
             	                System.out.println(lat);
             	                System.out.println(lng);
