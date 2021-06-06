@@ -1,17 +1,15 @@
 package FxController;
 
-import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
-import DAO.DetailDAO;
 import DAO.InquireByLocationDAO;
 import DTO.DestinationDTO;
 import DataSetControl.RecentInquiryData;
 import Network.Protocol;
 import Network.clientMain;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -130,7 +128,7 @@ public class NearbyController implements Initializable {
     						try {
     							dtos = (ArrayList<DestinationDTO>)packet.get(2);
     					        myTableView.getItems().addAll(dtos);
-                                engine.executeScript("loadMarker('33.311500250000000', '126.458761000000000', 1)");
+                                setLatLon("통합검색", Double.toString(lat), Double.toString(lng), distance);
                             } catch (Exception e) {
     							e.printStackTrace();
     						}
@@ -168,6 +166,7 @@ public class NearbyController implements Initializable {
     						try {
     							dtos = (ArrayList<DestinationDTO>)packet.get(2);
     					        myTableView.getItems().addAll(dtos);
+                                setLatLon("해수욕장", Double.toString(lat), Double.toString(lng), distance);
     						} catch (Exception e) {
     							e.printStackTrace();
     						}
@@ -205,6 +204,7 @@ public class NearbyController implements Initializable {
     						try {
     							dtos = (ArrayList<DestinationDTO>)packet.get(2);
     					        myTableView.getItems().addAll(dtos);
+                                setLatLon("휴양림", Double.toString(lat), Double.toString(lng), distance);
     						} catch (Exception e) {
     							e.printStackTrace();
     						}
@@ -242,6 +242,7 @@ public class NearbyController implements Initializable {
     						try {
     							dtos = (ArrayList<DestinationDTO>)packet.get(2);
     					        myTableView.getItems().addAll(dtos);
+                                setLatLon("관광지", Double.toString(lat), Double.toString(lng), distance);
     						} catch (Exception e) {
     							e.printStackTrace();
     						}
@@ -255,6 +256,45 @@ public class NearbyController implements Initializable {
     			}
     		}
         }
+    }
+    public void setLatLon(String sortation, String selLatitude, String selLongitude, String range) {
+            ArrayList<Object> objectList = new ArrayList<Object>();
+            objectList.add(Protocol.PT_REQ_VIEW);
+            objectList.add(Protocol.REQ_NEARBYLATLON);
+            objectList.add(sortation);
+            objectList.add(selLatitude);
+            objectList.add(selLongitude);
+            objectList.add(range);
+            clientMain.writeObject(objectList);
+            objectList.clear();
+
+    		while (true) {
+    			ArrayList<Object> packet =(ArrayList<Object>) clientMain.readObject();
+    			//String packetArr[] = packet.split("`");
+    			String packetType = (String) packet.get(0);
+    			String packetCode = (String) packet.get(1);
+    			
+    			if (packetType.equals(Protocol.PT_RES_VIEW)) {
+    				switch (packetCode) {
+    					case Protocol.RES_NEARBYLATLON_Y: {
+    						try {
+                                HashMap<String, String> hsMap = (HashMap<String, String>)packet.get(2);
+                                String sumLat = hsMap.get("위도");
+                                String sumLng = hsMap.get("경도");
+                                int index = Integer.parseInt(hsMap.get("INDEX"));
+                                engine.executeScript("loadMarker('" + sumLat + "', '" + sumLng +"','" + index + "')");
+    						} catch (Exception e) {
+    							e.printStackTrace();
+    						}
+    						return;
+    					}
+    					case Protocol.RES_NEARBYLATLON_N: {
+    						ShowAlert.showAlert("WARNING", "경고", "위경도 조회에 실패하였습니다.");
+    						return;
+    					}
+    				}
+    			}
+    		}
     }
 
      //  더블 클릭시 해당 여행지 상세정보
