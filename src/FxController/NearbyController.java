@@ -279,10 +279,11 @@ public class NearbyController implements Initializable {
     					case Protocol.RES_NEARBYLATLON_Y: {
     						try {
                                 HashMap<String, String> hsMap = (HashMap<String, String>)packet.get(2);
+                                String sumName = hsMap.get("이름");
                                 String sumLat = hsMap.get("위도");
                                 String sumLng = hsMap.get("경도");
                                 int index = Integer.parseInt(hsMap.get("INDEX"));
-                                engine.executeScript("loadMarker('" + sumLat + "', '" + sumLng +"','" + index + "')");
+                                engine.executeScript("loadMarker('" + sumLat + "', '" + sumLng +"','" + index +"','"+sumName +"')");
     						} catch (Exception e) {
     							e.printStackTrace();
     						}
