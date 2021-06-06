@@ -1,0 +1,10 @@
+
+.mypage {
+    -fx-font-family: 'Cafe24 Ssurround';
+}
+
+.button {
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+    -fx-background-color: linear-gradient(#ffffff, #dddede);
+}
