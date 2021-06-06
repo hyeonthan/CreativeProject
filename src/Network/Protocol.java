@@ -33,6 +33,7 @@ public class Protocol {
     public static final String REQ_REVIEWS = "6-D";                 //리뷰 조회 요청
     public static final String REQ_DESTINATION = "6-E";             //여행지 하나 조회 요청
     public static final String REQ_LATLON = "6-F";                  //위경도 요청
+    public static final String REQ_NEARBYLATLON = "6-10";           //주변검색 위경도 요청
 
     //조회 요청에 대한 응답
     public static final String RES_DESTINATION_REGION_Y = "7-0";      //여행지 조회 요청 승인
@@ -67,6 +68,8 @@ public class Protocol {
     public static final String RES_DESTINATION_N = "7-23";             //여행지 하나 조회 요청 거절
     public static final String RES_LATLON_Y = "6-24";                   //위경도 요청 승인
     public static final String RES_LATLON_N = "6-25";                   //위경도 요청 거절
+    public static final String RES_NEARBYLATLON_Y = "6-26";             //주변검색 위경도 요청 승인
+    public static final String RES_NEARBYLATLON_N = "6-27";             //주변검색 위경도 요청 거절
 
 
     // 갱신 요청
